@@ -1,11 +1,12 @@
 {...}: {
   programs.btop = {
     enable = true;
-    extraConfig = ''
-      theme_background = False
-      truecolor = True
-      vim_keys = True
-      update_ms = 1000
-    '';
+    settings = {
+      shown_boxes = "proc cpu mem net gpu0";
+      theme_background = false;
+      truecolor = true;
+      update_ms = 1000;
+      vim_keys = true;
+    };
   };
 }
