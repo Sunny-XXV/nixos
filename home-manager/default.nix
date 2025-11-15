@@ -6,6 +6,7 @@
   imports = [
     ./modules/config-btop.nix
     ./modules/config-claudecode.nix
+    ./modules/config-desktop
     ./modules/config-direnv.nix
     ./modules/config-eza.nix
     ./modules/config-fastfetch.nix
@@ -19,6 +20,7 @@
     ./modules/config-yazi.nix
     ./modules/packages-font.nix
     ./modules/packages-general.nix
+    ./modules/packages-gui.nix
     ./modules/packages-media.nix
     ./modules/packages-tex.nix
   ];
