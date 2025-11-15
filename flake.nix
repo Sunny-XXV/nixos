@@ -26,7 +26,7 @@
         modules = [
           ./hosts/Syy-PC
           ./sys-boot.nix
-          ./desktop.nix
+          ./desktop
           ./lang-kbd.nix
           ./nix-conf.nix
           ./miscs.nix

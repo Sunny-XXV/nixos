@@ -1,8 +1,13 @@
 {pkgs, ...}: {
+  imports = [
+    ./browser.nix
+    ./gaming.nix
+  ];
   programs.niri.enable = true;
   environment.systemPackages = with pkgs; [
-    xwayland-satellite
+    fuzzel
     wl-clipboard
+    xwayland-satellite
   ];
 
   services.pipewire.enable = true;
