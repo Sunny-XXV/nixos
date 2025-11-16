@@ -10,6 +10,7 @@
     ./modules/config-direnv.nix
     ./modules/config-eza.nix
     ./modules/config-fastfetch.nix
+    ./modules/config-fonts.nix
     ./modules/config-gpg.nix
     ./modules/config-fish
     ./modules/config-git.nix
@@ -18,7 +19,6 @@
     ./modules/config-ssh.nix
     ./modules/config-tmux.nix
     ./modules/config-yazi.nix
-    ./modules/packages-font.nix
     ./modules/packages-general.nix
     # ./modules/packages-gui.nix
     ./modules/packages-media.nix
