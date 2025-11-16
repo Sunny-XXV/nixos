@@ -7,6 +7,9 @@
     enable = true;
     enableSshSupport = true;
     enableFishIntegration = true;
-    pinentry.package = pkgs.pinentry-curses;
+    pinentry = {
+      package = pkgs.pinentry-curses;
+      program = "pinentry";
+    };
   };
 }
