@@ -7,7 +7,6 @@
     historyLimit = 50000;
     keyMode = "vi";
     mouse = true;
-    newSession = true;
     terminal = "tmux-256color";
 
     extraConfig = ''
