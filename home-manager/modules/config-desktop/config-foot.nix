@@ -4,7 +4,7 @@
   programs.foot.settings = {
     main = {
       term = "foot";
-      font = "JetBrainsMono Nerd Font Mono:size=12";
+      font = "JetBrainsMono Nerd Font Mono:size=17";
       dpi-aware = "yes";
     };
     mouse = {
