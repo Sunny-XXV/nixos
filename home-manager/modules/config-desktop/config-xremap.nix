@@ -2,25 +2,22 @@
   inputs,
   ...
 }: {
-  hardware.uinput.enable = true;
-  # users.groups.input.members = [ username ];
-  # users.groups.uinput.members = [ username ];
-
-  imports = [ inputs.xremap.nixosModules.default ];
+  imports = [ inputs.xremap.homeManagerModules.default ];
   services.xremap = {
     enable = true;
     withNiri = true;
-    # userName = username;
-    # serviceMode = "user";
   };
+  systemd.user.services.xremap.Install.WantedBy = [ "default.target" ];
 
   services.xremap.config.modmap = [
     {
       name = "CapsLock";
       remap = {
         "CapsLock" = {
+          skip_key_event = true;
           held = "Ctrl_L";
-          tapped = "ESC";
+          alone = "ESC";
+          alone_timeout_millis = 300;
         };
       };
     }

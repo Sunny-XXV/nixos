@@ -3,7 +3,7 @@
     ./fonts.nix
     ./browser.nix
     ./gaming.nix
-    ./xremap.nix
+    # ./xremap.nix
   ];
 
   programs.niri.enable = true;

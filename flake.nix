@@ -20,8 +20,6 @@
   outputs = inputs @ {
     nixpkgs,
     home-manager,
-    nixvim,
-    xremap,
     ...
   }: {
     nixosConfigurations = {
@@ -41,11 +39,12 @@
 
           home-manager.nixosModules.home-manager
           {
+            home-manager.extraSpecialArgs = { inherit inputs; };
+
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.sunya.imports = [
               ./home-manager
-              nixvim.homeModules.nixvim
             ];
           }
         ];
