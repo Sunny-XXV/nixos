@@ -1,4 +1,6 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
+  home.packages = [ pkgs.pinentry-tty ];
+
   programs.gpg = {
     enable = true;
   };
