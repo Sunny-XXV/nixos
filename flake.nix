@@ -11,17 +11,23 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    xremap = {
+      url = "github:xremap/nix-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {
     nixpkgs,
     home-manager,
     nixvim,
+    xremap,
     ...
   }: {
     nixosConfigurations = {
       Syy-PC = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
 
         modules = [
           ./hosts/Syy-PC

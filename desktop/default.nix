@@ -3,6 +3,7 @@
     ./fonts.nix
     ./browser.nix
     ./gaming.nix
+    ./xremap.nix
   ];
 
   programs.niri.enable = true;
@@ -10,8 +11,13 @@
     fuzzel
     wl-clipboard
     xwayland-satellite
+    ddcutil
   ];
 
+  # audio
+  security.rtkit.enable = true;
   services.pipewire.enable = true;
+  systemd.user.services.wireplumber.wantedBy = ["default.target"];
+
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 }
