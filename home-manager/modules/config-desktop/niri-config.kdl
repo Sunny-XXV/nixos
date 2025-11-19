@@ -1,31 +1,16 @@
-// Input device configuration.
-// Find the full list of options on the wiki:
-//
-// https://yalter.github.io/niri/Configuration:-Input
 input {
+   mod-key "Alt"
+   mod-key-nested "Super"
+
     keyboard {
         xkb {
-            // You can set rules, model, layout, variant and options.
-            // For more information, see xkeyboard-config(7).
-
-            // For example:
             layout "us"
-            // options "grp:win_space_toggle,compose:ralt,ctrl:nocaps"
-
-            // If this section is empty, niri will fetch xkb settings
-            // from org.freedesktop.locale1. You can control these using
-            // localectl set-x11-keymap.
         }
         repeat-delay 250
         repeat-rate 80
 
-        // Enable numlock on startup, omitting this setting disables it.
-        numlock
     }
 
-    // Next sections include libinput settings.
-    // Omitting settings disables them, or leaves them at their default values.
-    // All commented-out settings here are examples, not defaults.
     touchpad {
         // off
         tap
@@ -48,34 +33,16 @@ input {
         // scroll-method "no-scroll"
     }
 
-    trackpoint {
-        // off
-        // natural-scroll
-        // accel-speed 0.2
-        // accel-profile "flat"
-        // scroll-method "on-button-down"
-        // scroll-button 273
-        // scroll-button-lock
-        // middle-emulation
-    }
-
-    // Uncomment this to make the mouse warp to the center of newly focused windows.
-    // warp-mouse-to-focus
+    warp-mouse-to-focus mode="center-xy"
 
     // Focus windows and outputs automatically when moving the mouse into them.
     // Setting max-scroll-amount="0%" makes it work only on windows already fully on screen.
-    // focus-follows-mouse max-scroll-amount="0%"
+    focus-follows-mouse max-scroll-amount="15%"
 }
 
-// You can configure outputs by their name, which you can find
-// by running `niri msg outputs` while inside a niri instance.
-// The built-in laptop monitor is usually called "eDP-1".
-// Find more information on the wiki:
-// https://yalter.github.io/niri/Configuration:-Outputs
-// Remember to uncomment the node by removing "/-"!
+// Run `niri msg outputs` while inside a niri instance to list all outputs and their modes.
 output "HDMI-A-2" {
     // off
-    // Run `niri msg outputs` while inside a niri instance to list all outputs and their modes.
     mode "2560x1600@120.003"
     scale 1.75
 
@@ -90,11 +57,7 @@ output "DP-1" {
     position x=0 y=0
 }
 
-// Settings that influence how windows are positioned and sized.
-// Find more information on the wiki:
-// https://yalter.github.io/niri/Configuration:-Layout
 layout {
-    // Set gaps around windows in logical pixels.
     gaps 2
 
     // When to center a column when changing focus, options are:
@@ -122,7 +85,7 @@ layout {
     // preset-window-heights { }
 
     // You can change the default width of the new windows.
-    default-column-width { proportion 0.5; }
+    default-column-width { proportion 0.8; }
     // If you leave the brackets empty, the windows themselves will decide their initial width.
     // default-column-width {}
 
@@ -272,7 +235,7 @@ prefer-no-csd
 // You can change the path where screenshots are saved.
 // A ~ at the front will be expanded to the home directory.
 // The path is formatted with strftime(3) to give you the screenshot date and time.
-screenshot-path "~/Pictures/Screenshots/%Y-%m-%d %H-%M-%S.png"
+screenshot-path "~/pictures/screenshots/%Y-%m-%d_%H-%M-%S.png"
 
 // You can also set this to null to disable saving screenshots to disk.
 // screenshot-path null
@@ -380,25 +343,25 @@ binds {
 
     Mod+Q repeat=false { close-window; }
 
-    Mod+H     { focus-column-left; }
-    Mod+L     { focus-column-right; }
-    Mod+J     { focus-window-or-workspace-down; }
-    Mod+K     { focus-window-or-workspace-up; }
+    Mod+H          { focus-column-left; }
+    Mod+L          { focus-column-right; }
+    Mod+J          { focus-window-or-workspace-down; }
+    Mod+K          { focus-window-or-workspace-up; }
 
-    Mod+Shift+H     { move-column-left; }
-    Mod+Shift+L     { move-column-right; }
-    Mod+Shift+J     { move-window-down-or-to-workspace-down; }
-    Mod+Shift+K     { move-window-up-or-to-workspace-up; }
+    Mod+Shift+H    { move-column-left; }
+    Mod+Shift+L    { move-column-right; }
+    Mod+Shift+J    { move-window-down-or-to-workspace-down; }
+    Mod+Shift+K    { move-window-up-or-to-workspace-up; }
 
     Mod+Ctrl+Left  { move-column-left; }
     Mod+Ctrl+Down  { move-window-down; }
     Mod+Ctrl+Up    { move-window-up; }
     Mod+Ctrl+Right { move-column-right; }
 
-    Mod+Left  { focus-column-left; }
-    Mod+Down  { focus-window-down; }
-    Mod+Up    { focus-window-up; }
-    Mod+Right { focus-column-right; }
+    Mod+Left       { focus-column-left; }
+    Mod+Down       { focus-window-down; }
+    Mod+Up         { focus-window-up; }
+    Mod+Right      { focus-column-right; }
 
 
     // Alternative commands that move across workspaces when reaching
@@ -408,10 +371,10 @@ binds {
     // Mod+Ctrl+J     { move-window-down-or-to-workspace-down; }
     // Mod+Ctrl+K     { move-window-up-or-to-workspace-up; }
 
-    Mod+Home { focus-column-first; }
-    Mod+End  { focus-column-last; }
-    Mod+Ctrl+Home { move-column-to-first; }
-    Mod+Ctrl+End  { move-column-to-last; }
+    Mod+Home       { focus-column-first; }
+    Mod+End        { focus-column-last; }
+    Mod+Ctrl+Home  { move-column-to-first; }
+    Mod+Ctrl+End   { move-column-to-last; }
 
     Mod+Shift+Left  { focus-monitor-left; }
     Mod+Shift+Down  { focus-monitor-down; }
@@ -498,15 +461,16 @@ binds {
     //
     // For example, with 2 workspaces + 1 empty, indices 3, 4, 5 and so on
     // will all refer to the 3rd workspace.
-    Mod+1 { focus-workspace 1; }
-    Mod+2 { focus-workspace 2; }
-    Mod+3 { focus-workspace 3; }
-    Mod+4 { focus-workspace 4; }
-    Mod+5 { focus-workspace 5; }
-    Mod+6 { focus-workspace 6; }
-    Mod+7 { focus-workspace 7; }
-    Mod+8 { focus-workspace 8; }
-    Mod+9 { focus-workspace 9; }
+    Mod+1       { focus-workspace 1; }
+    Mod+2       { focus-workspace 2; }
+    Mod+3       { focus-workspace 3; }
+    Mod+4       { focus-workspace 4; }
+    Mod+5       { focus-workspace 5; }
+    Mod+6       { focus-workspace 6; }
+    Mod+7       { focus-workspace 7; }
+    Mod+8       { focus-workspace 8; }
+    Mod+9       { focus-workspace 9; }
+
     Mod+Shift+1 { move-column-to-workspace 1; }
     Mod+Shift+2 { move-column-to-workspace 2; }
     Mod+Shift+3 { move-column-to-workspace 3; }
