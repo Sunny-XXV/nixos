@@ -25,7 +25,7 @@
     nixosConfigurations = {
       Syy-PC = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
+        specialArgs = {inherit inputs;};
 
         modules = [
           ./hosts/Syy-PC
@@ -39,7 +39,7 @@
 
           home-manager.nixosModules.home-manager
           {
-            home-manager.extraSpecialArgs = { inherit inputs; };
+            home-manager.extraSpecialArgs = {inherit inputs;};
 
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;

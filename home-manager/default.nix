@@ -10,9 +10,10 @@
     ./modules/config-direnv.nix
     ./modules/config-eza.nix
     ./modules/config-fastfetch.nix
-    ./modules/config-fonts.nix
-    ./modules/config-gpg.nix
     ./modules/config-fish
+    ./modules/config-fonts.nix
+    ./modules/config-fzf.nix
+    ./modules/config-gpg.nix
     ./modules/config-git.nix
     ./modules/config-nvim
     ./modules/config-secrets

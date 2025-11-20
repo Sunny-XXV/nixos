@@ -5,7 +5,6 @@
     delta
     fastfetch
     fd
-    fzf
     jq
     lazygit
     ncdu

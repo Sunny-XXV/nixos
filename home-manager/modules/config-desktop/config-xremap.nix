@@ -1,13 +1,10 @@
-{
-  inputs,
-  ...
-}: {
-  imports = [ inputs.xremap.homeManagerModules.default ];
+{inputs, ...}: {
+  imports = [inputs.xremap.homeManagerModules.default];
   services.xremap = {
     enable = true;
     withNiri = true;
   };
-  systemd.user.services.xremap.Install.WantedBy = [ "default.target" ];
+  systemd.user.services.xremap.Install.WantedBy = ["default.target"];
 
   services.xremap.config.modmap = [
     {
@@ -44,6 +41,9 @@
         "Super-f" = "C-f";
         "Super-s" = "C-s";
         "Super-w" = "C-w";
+        "Super-t" = "C-t";
+        "Super-l" = "C-l";
+        "Super-o" = "C-o";
       };
     }
   ];

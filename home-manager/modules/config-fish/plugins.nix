@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   programs.fish.plugins = [
     {
-      name = "fzf-fish";
+      name = "fzf";
       src = pkgs.fishPlugins.fzf-fish.src;
     }
   ];
