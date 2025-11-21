@@ -1,5 +1,6 @@
 {
   imports = [
+    ./config-cursor.nix
     ./config-foot.nix
     ./config-xremap.nix
   ];
