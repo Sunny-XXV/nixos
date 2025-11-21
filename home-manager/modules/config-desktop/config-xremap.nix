@@ -2,8 +2,10 @@
   imports = [inputs.xremap.homeManagerModules.default];
   services.xremap = {
     enable = true;
+    watch = true;
     withNiri = true;
   };
+  services.xremap.deviceNames = ["Keychron Keychron K3 Max"];
   systemd.user.services.xremap.Install.WantedBy = ["default.target"];
 
   services.xremap.config.modmap = [
@@ -42,7 +44,6 @@
         "Super-s" = "C-s";
         "Super-w" = "C-w";
         "Super-t" = "C-t";
-        "Super-l" = "C-l";
         "Super-o" = "C-o";
       };
     }

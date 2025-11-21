@@ -1,6 +1,5 @@
 {...}: {
   programs.fish.functions = {
-
     cat = {
       body = ''bat $argv'';
     };
@@ -37,7 +36,7 @@
     ff = {
       body = ''fastfetch $argv'';
     };
-    
+
     ll = {
       body = ''eza -l --git --header $argv'';
     };
