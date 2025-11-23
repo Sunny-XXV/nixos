@@ -19,4 +19,5 @@
   systemd.user.services.wireplumber.wantedBy = ["default.target"];
 
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
+  environment.sessionVariables.GDK_DEBUG = "portals";
 }

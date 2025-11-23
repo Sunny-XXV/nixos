@@ -1,16 +1,18 @@
-{
+{pkgs, ...}: {
   imports = [
     ./config-cursor.nix
     ./config-foot.nix
     ./config-launcher.nix
+    ./config-portal.nix
+    ./config-theme.nix
     ./config-vscode
     ./config-xremap.nix
   ];
-
-  xdg.configFile."niri/config.kdl".source = ./niri-config.kdl;
 
   services.cliphist = {
     enable = true;
     allowImages = true;
   };
+
+  xdg.configFile."niri/config.kdl".source = ./niri-config.kdl;
 }
