@@ -2,6 +2,7 @@
   imports = [
     ./config-cursor.nix
     ./config-foot.nix
+    ./config-vscode
     ./config-xremap.nix
   ];
 
