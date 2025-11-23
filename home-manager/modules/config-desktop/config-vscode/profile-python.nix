@@ -1,8 +1,10 @@
-{ pkgs, inputs, ... }:
-let
-  pkgsExt = pkgs.extend inputs.vscode-extensions.overlays.default;
-in
 {
+  pkgs,
+  inputs,
+  ...
+}: let
+  pkgsExt = pkgs.extend inputs.vscode-extensions.overlays.default;
+in {
   programs.vscode.profiles.python.extensions = with pkgsExt.vscode-marketplace; [
     astral-sh.ty
     charliermarsh.ruff
@@ -44,31 +46,31 @@ in
     "workbench.list.horizontalScrolling" = true;
     "workbench.layoutControl.enabled" = false;
     "workbench.settings.applyToAllProfiles" = [
-        "autoDocstring.docstringFormat"
-        "chat.modeFilesLocations"
-        "editor.fontSize"
-        "editor.fontFamily"
-        "editor.cursorStyle"
-        "editor.renderWhitespace"
-        "files.autoSave"
-        "files.exclude"
-        "editor.formatOnSave"
-        "evenBetterToml.formatter.allowedBlankLines"
-        "explorer.incrementalNaming"
-        "notebook.lineNumbers"
-        "python.analysis.typeCheckingMode"
-        "todo-tree.highlights.enabled"
-        "sql-formatter.uppercase"
-        "terminal.integrated.copyOnSelection"
-        "terminal.integrated.macOptionIsMeta"
-        "terminal.integrated.shellIntegration.enabled"
-        "terminal.integrated.shellIntegration.decorationsEnabled"
-        "terminal.integrated.shellIntegration.showCommandGuide"
-        "vim.easymotion"
-        "vim.smartRelativeLine"
-        "window.title"
-        "workbench.editorLargeFileConfirmation"
-        "workbench.fontAliasing"
+      "autoDocstring.docstringFormat"
+      "chat.modeFilesLocations"
+      "editor.fontSize"
+      "editor.fontFamily"
+      "editor.cursorStyle"
+      "editor.renderWhitespace"
+      "files.autoSave"
+      "files.exclude"
+      "editor.formatOnSave"
+      "evenBetterToml.formatter.allowedBlankLines"
+      "explorer.incrementalNaming"
+      "notebook.lineNumbers"
+      "python.analysis.typeCheckingMode"
+      "todo-tree.highlights.enabled"
+      "sql-formatter.uppercase"
+      "terminal.integrated.copyOnSelection"
+      "terminal.integrated.macOptionIsMeta"
+      "terminal.integrated.shellIntegration.enabled"
+      "terminal.integrated.shellIntegration.decorationsEnabled"
+      "terminal.integrated.shellIntegration.showCommandGuide"
+      "vim.easymotion"
+      "vim.smartRelativeLine"
+      "window.title"
+      "workbench.editorLargeFileConfirmation"
+      "workbench.fontAliasing"
     ];
     "zenMode.centerLayout" = false;
     "zenMode.hideLineNumbers" = false;
@@ -76,46 +78,46 @@ in
     "explorer.confirmDragAndDrop" = false;
     "explorer.incrementalNaming" = "smart";
     "files.exclude" = {
-        ".ruff_cache" = true;
-        ".stfolder*" = true;
-        "**/__pycache__" = true;
+      ".ruff_cache" = true;
+      ".stfolder*" = true;
+      "**/__pycache__" = true;
     };
     "apc.activityBar" = {};
     "apc.electron" = {
-        "backgroundColor" = "#1a1a1a";
-        "frame" = false;
-        "transparent" = true;
-        "titleBarStyle" = "hiddenInset";
-        "vibrancy" = "ultra-dark";
-        "trafficLightPosition" = {
-            "x" = 15;
-            "y" = 13;
-        };
-        "trafficLightPositionRight" = {
-            "x" = 15;
-            "y" = 13;
-        };
+      "backgroundColor" = "#1a1a1a";
+      "frame" = false;
+      "transparent" = true;
+      "titleBarStyle" = "hiddenInset";
+      "vibrancy" = "ultra-dark";
+      "trafficLightPosition" = {
+        "x" = 15;
+        "y" = 13;
+      };
+      "trafficLightPositionRight" = {
+        "x" = 15;
+        "y" = 13;
+      };
     };
     "apc.header" = {
-        "compact" = 22;
-        "fontSize" = 12;
-        "fontWeight" = "bold";
+      "compact" = 22;
+      "fontSize" = 12;
+      "fontWeight" = "bold";
     };
     "apc.menubar.compact" = true;
     "apc.parts.font.family" = {
-        "sidebar" = "'JetBrainsMono Nerd Font Mono'";
+      "sidebar" = "'JetBrainsMono Nerd Font Mono'";
     };
     "apc.sidebar.titlebar" = {
-        "fontSize" = 11;
-        "fontWeight" = "bold";
+      "fontSize" = 11;
+      "fontWeight" = "bold";
     };
     "apc.stylesheet" = {
-        ".tabs-container .tab.active" = {
-            "border-radius" = "7px !important";
-        };
-        ".scrollbar" = {
-            "background" = "#21222f !important";
-        };
+      ".tabs-container .tab.active" = {
+        "border-radius" = "7px !important";
+      };
+      ".scrollbar" = {
+        "background" = "#21222f !important";
+      };
     };
     # === Terminal ===
     "terminal.integrated.copyOnSelection" = true;
@@ -131,8 +133,8 @@ in
     # === Editor ===
     "editor.accessibilitySupport" = "off";
     "editor.codeActionsOnSave" = {
-        "source.fixAll" = "explicit";
-        "source.organizeImports.ruff" = "always";
+      "source.fixAll" = "explicit";
+      "source.organizeImports.ruff" = "always";
     };
     "editor.cursorBlinking" = "smooth";
     "editor.cursorSmoothCaretAnimation" = "on";
@@ -152,15 +154,15 @@ in
     "explorer.confirmPasteNative" = false;
     "files.autoSave" = "onFocusChange";
     "files.readonlyInclude" = {
-        "**/*.log" = true;
+      "**/*.log" = true;
     };
     "vim.easymotion" = true;
     "vim.leader" = "<space>";
     "vim.normalModeKeyBindingsNonRecursive" = [
-        {
-            "before" = [ "s" ];
-            "after" = [ "<leader>" "<leader>" "2" "s" ];
-        }
+      {
+        "before" = ["s"];
+        "after" = ["<leader>" "<leader>" "2" "s"];
+      }
     ];
     "vim.enableNeovim" = true;
     "vim.smartRelativeLine" = true;
@@ -169,24 +171,24 @@ in
     "nix.enableLanguageServer" = true;
     "nix.serverPath" = "nil";
     "nix.serverSettings" = {
-        "nil" = {
-            "diagnostics" = {
-                "ignored" = [
-                    "unused_binding"
-                    "unused_with"
-                ];
-            };
-            "formatting" = {
-                "command" = [
-                    "alejandra"
-                ];
-            };
+      "nil" = {
+        "diagnostics" = {
+          "ignored" = [
+            "unused_binding"
+            "unused_with"
+          ];
         };
+        "formatting" = {
+          "command" = [
+            "alejandra"
+          ];
+        };
+      };
     };
     "[nix]" = {
-        "editor.formatOnSave" = true;
-        "files.autoSave" = "onFocusChange";
-        "editor.defaultFormatter" = "jnoortheen.nix-ide";
+      "editor.formatOnSave" = true;
+      "files.autoSave" = "onFocusChange";
+      "editor.defaultFormatter" = "jnoortheen.nix-ide";
     };
     # === Python ===
     "python.analysis.autoFormatStrings" = true;
@@ -200,19 +202,19 @@ in
     "notebook.output.scrolling" = true;
     "notebook.lineNumbers" = "on";
     "[python]" = {
-        "diffEditor.ignoreTrimWhitespace" = false;
-        "editor.formatOnType" = true;
-        "editor.wordBasedSuggestions" = "off";
+      "diffEditor.ignoreTrimWhitespace" = false;
+      "editor.formatOnType" = true;
+      "editor.wordBasedSuggestions" = "off";
     };
-    "ruff.path" = [ "ruff" ];
+    "ruff.path" = ["ruff"];
     "ruff.trace.server" = "messages";
-    "ruff.interpreter" = [ "python" ];
+    "ruff.interpreter" = ["python"];
     # === Copilot ===
     "inlineChat.accessibleDiffView" = "on";
     "chat.agent.maxRequests" = 100;
     "chat.mcp.gallery.enabled" = true;
     "chat.tools.terminal.autoApprove" = {
-        "mkdir" = true;
+      "mkdir" = true;
     };
     "github.copilot.advanced" = {};
     "github.copilot.chat.agent.thinkingTool" = true;
@@ -226,15 +228,15 @@ in
     "github.copilot.nextEditSuggestions.enabled" = false;
     "github.copilot.selectedCompletionModel" = "gpt-4o-copilot";
     "github.copilot.enable" = {
-        "*" = false;
-        "plaintext" = false;
-        "markdown" = false;
-        "scminput" = false;
-        "env" = false;
-        "python" = true;
-        "typescriptreact" = true;
-        "typescript" = true;
-        "jinja-sql" = true;
+      "*" = false;
+      "plaintext" = false;
+      "markdown" = false;
+      "scminput" = false;
+      "env" = false;
+      "python" = true;
+      "typescriptreact" = true;
+      "typescript" = true;
+      "jinja-sql" = true;
     };
     # === Writing ===
     "latex-workshop.formatting.latex" = "latexindent";
@@ -244,10 +246,10 @@ in
     "tinymist.exportPdf" = "onSave";
     # === File Type Specific ===
     "[log]" = {
-        "editor.wordWrap" = "off";
+      "editor.wordWrap" = "off";
     };
     "[csv]" = {
-        "editor.inlayHints.maximumLength" = 0;
+      "editor.inlayHints.maximumLength" = 0;
     };
     # === Others ===
     "security.promptForRemoteFileProtocolHandling" = false;
@@ -258,9 +260,9 @@ in
     "dataWrangler.panels.displayOnTabFocus" = false;
     "dataWrangler.defaultViewingFilterOptions" = "advanced";
     "dataWrangler.outputRenderer.enabledTypes" = {
-        "numpy.ndarray" = true;
-        "torch.Tensor" = true;
-        "polars.series.series.Series" = true;
+      "numpy.ndarray" = true;
+      "torch.Tensor" = true;
+      "polars.series.series.Series" = true;
     };
     "dataWrangler.experiments.fastCsvParsing" = true;
     "remote.SSH.useLocalServer" = false;
@@ -322,5 +324,4 @@ in
       when = "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus";
     }
   ];
-
 }

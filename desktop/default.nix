@@ -7,8 +7,8 @@
 
   programs.niri.enable = true;
   environment.systemPackages = with pkgs; [
-    fuzzel
     wl-clipboard
+    cliphist
     xwayland-satellite
     ddcutil
   ];

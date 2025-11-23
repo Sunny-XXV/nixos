@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   home.pointerCursor.enable = true;
   home.pointerCursor = {
     gtk.enable = true;

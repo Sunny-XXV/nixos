@@ -97,23 +97,26 @@ cursor {
 screenshot-path "~/pictures/screenshots/%Y-%m-%d_%H-%M-%S.png"
 
 animations {}
-window-rule {}
+window-rule {
+  match app-id="launcher"
+  open-floating true
+}
 
 binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     // Running Programs
-    Mod+T hotkey-overlay-title="Open a Terminal: foot" { spawn "footclient"; }
-    Super+Space hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
+    Mod+T hotkey-overlay-title="Terminal: foot" { spawn "footclient"; }
+    Super+Space hotkey-overlay-title="Launcher" { spawn "footclient" "-a" "launcher" "-e" "launcher"; }
 
     // Audio Volume
-    XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+"; }
-    XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
-    XF86AudioMute        allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
-    XF86AudioMicMute     allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
+    XF86AudioRaiseVolume  allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+"; }
+    XF86AudioLowerVolume  allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
+    XF86AudioMute         allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
+    XF86AudioMicMute      allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
 
     // Brightness
-    XF86MonBrightnessUp allow-when-locked=true { spawn-sh "ddcutil setvcp 10 + 20 -b 4"; }
+    XF86MonBrightnessUp   allow-when-locked=true { spawn-sh "ddcutil setvcp 10 + 20 -b 4"; }
     XF86MonBrightnessDown allow-when-locked=true { spawn-sh "ddcutil setvcp 10 - 20 -b 4"; }
 
     // General Operations
@@ -223,4 +226,7 @@ binds {
 }
 
 spawn-sh-at-startup "systemctl --user start foot-server.service"
+spawn-sh-at-startup "systemctl --user start cliphist.service"
+spawn-sh-at-startup "systemctl --user start cliphist-images.service"
+
 spawn-at-startup "footclient"
