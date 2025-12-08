@@ -21,6 +21,7 @@
     ./modules/config-ssh.nix
     ./modules/config-tmux.nix
     ./modules/config-yazi.nix
+    ./modules/config-zoxide.nix
     ./modules/packages-general.nix
     # ./modules/packages-gui.nix
     ./modules/packages-media.nix
