@@ -1,17 +1,16 @@
 {...}: {
+  programs.delta.enable = true;
+  programs.delta.enableGitIntegration = true;
+
   programs.git = {
     enable = true;
 
     ignores = [
-      # macOS
       ".DS_Store"
-      # Python
       "__pycache__/"
       "*.pyc"
       ".venv/"
-      # Node.js
       "node_modules/"
-      # Editor/IDE
       ".vscode/"
       ".idea/"
     ];
@@ -29,11 +28,6 @@
 
       core = {
         whitespace = "trailing-space,space-before-tab";
-        pager = "delta";
-      };
-
-      interactive = {
-        diffFilter = "delta --color-only";
       };
 
       merge = {

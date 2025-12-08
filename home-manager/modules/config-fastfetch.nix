@@ -31,7 +31,6 @@
           "showPeCoreCount" = true;
           "temp" = true;
         }
-        "cpuusage"
         {
           "type" = "gpu";
           "driverSpecific" = true;
