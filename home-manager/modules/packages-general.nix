@@ -2,13 +2,11 @@
   home.packages = with pkgs; [
     bat
     cloc
-    delta
     fastfetch
     fd
     jq
     lazygit
     ncdu
-    tldr
     ripgrep
     zoxide
     less
