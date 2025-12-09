@@ -13,6 +13,7 @@
     netcat
     nil
     powertop
+    procs
     rsync
     sshpass
     strace
