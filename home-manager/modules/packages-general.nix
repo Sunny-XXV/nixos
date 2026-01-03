@@ -8,6 +8,7 @@
     ncdu
     ripgrep
     less
+    libqalculate
     lsof
     mailutils
     netcat
