@@ -37,10 +37,6 @@
       body = ''fastfetch $argv'';
     };
 
-    ll = {
-      body = ''eza -l --git --header $argv'';
-    };
-
     ls = {
       body = ''command ls -F --color=auto $argv'';
     };
