@@ -1,6 +1,7 @@
 {
   imports = [
     ./nginx.nix
+    ./earlyoom.nix
     ./fail2ban.nix
     ./firewall.nix
     ./openssh.nix

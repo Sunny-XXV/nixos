@@ -20,4 +20,11 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIpReUt3bToa+UM0TZx0aFGWBvWpFHBPb03sDsKDo7ab ydsunyan123@gmail.com"
     ];
   };
+
+  systemd.services.sshd.serviceConfig = {
+    CPUWeight = 1000;
+    IOWeight = 1000;
+    MemoryMin = "50M";
+    OOMScoreAdjust = -1000;
+  };
 }
