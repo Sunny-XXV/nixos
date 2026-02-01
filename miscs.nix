@@ -1,8 +1,4 @@
 {
-  config,
-  pkgs,
-  ...
-}: {
   time.timeZone = "Asia/Shanghai";
   networking.networkmanager.enable = true;
   networking.nameservers = [

@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -21,9 +17,10 @@
   boot.kernel.sysctl = {
     "net.core.default_qdisc" = "fq";
     "net.ipv4.tcp_congestion_control" = "bbr";
-    
+
     "vm.swappiness" = 10;
-    
+
+    "kernel.sysrq" = 1;
     "kernel.panic" = 10;
     "kernel.panic_on_oops" = 1;
   };

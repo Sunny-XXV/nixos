@@ -5,9 +5,9 @@
     freeSwapThreshold = 5;
     extraArgs = [
       "--avoid"
-      "^(sshd|tailscaled|systemd|nix_daemon)$"
+      "^(sshd|tailscaled|systemd|login|fish|bash)$"
       "--prefer"
-      "^(java|python|chromium|docker)$"
+      "^(nix-daemon|cc1plus|c\+\+|cargo|rustc|go|java|python|chromium|docker)$"
     ];
   };
 }

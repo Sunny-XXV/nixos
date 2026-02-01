@@ -1,8 +1,4 @@
 {
-  config,
-  lib,
-  ...
-}: {
   services.fail2ban.enable = true;
   services.fail2ban = {
     maxretry = 5;

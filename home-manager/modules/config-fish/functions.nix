@@ -29,6 +29,50 @@
       '';
     };
 
+    safe = {
+      body = ''
+        argparse 'm/mem=' 's/swap=' 'c/cpu=' 'n/name=' 'h/help' -- $argv
+        or return
+
+        if set -q _flag_help
+          echo "Usage: safe [options] -- <command>"
+          echo "Options:"
+          echo "  -m, --mem <size>   MemoryMax limit (default: 4G)"
+          echo "  -s, --swap <size>  MemorySwapMax limit (default: 0)"
+          echo "  -c, --cpu <weight> CPUWeight (1-100, default: 50)"
+          echo "  -n, --name <name>  Unit name description"
+          return 0
+        end
+
+        set -l mem_max "24G"
+        if set -q _flag_mem; set mem_max $_flag_mem; end
+
+        set -l swap_max "0"
+        if set -q _flag_swap; set swap_max $_flag_swap; end
+
+        set -l cpu_weight "30"
+        if set -q _flag_cpu; set cpu_weight $_flag_cpu; end
+
+        set -l unit_name_arg ""
+        if set -q _flag_name; set unit_name_arg "--unit=$_flag_name"; end
+
+        if test (count $argv) -eq 0
+          echo "Error: No command specified."
+          return 1
+        end
+
+        set_color cyan
+        echo "Safe Run: Memory=$mem_max | Swap=$swap_max | CPU=$cpu_weight"
+        set_color normal
+
+        systemd-run --user --scope $unit_name_arg \
+            -p MemoryMax=$mem_max \
+            -p MemorySwapMax=$swap_max \
+            -p CPUWeight=$cpu_weight \
+            -- $argv
+      '';
+    };
+
     tree = {
       body = ''eza -l -T $argv'';
     };

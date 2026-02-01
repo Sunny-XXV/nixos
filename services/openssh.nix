@@ -1,14 +1,12 @@
 {
-  config,
-  pkgs,
-  ...
-}: {
   services.openssh = {
     enable = true;
     settings = {
       X11Forwarding = true;
       PermitRootLogin = "no";
       PasswordAuthentication = false;
+      ClientAliveInterval = 60;
+      ClientAliveCountMax = 5;
     };
     openFirewall = true;
     ports = [22 24247];
@@ -26,5 +24,8 @@
     IOWeight = 1000;
     MemoryMin = "50M";
     OOMScoreAdjust = -1000;
+
+    Restart = "always";
+    RestartSec = "5s";
   };
 }

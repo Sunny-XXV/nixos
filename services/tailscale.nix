@@ -1,8 +1,4 @@
 {
-  config,
-  pkgs,
-  ...
-}: {
   services.tailscale = {
     enable = true;
     openFirewall = true;
@@ -20,5 +16,8 @@
     IOWeight = 1000;
     MemoryMin = "100M";
     OOMScoreAdjust = -1000;
+
+    Restart = "always";
+    RestartSec = "5s";
   };
 }
