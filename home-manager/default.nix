@@ -61,6 +61,8 @@
 
   home.sessionVariables = {
     EDITOR = "nvim";
+    UV_NO_SYNC = "1";
+    UV_PYTHON_DOWNLOADS = "never";
   };
 
   # Use fish as default shell
