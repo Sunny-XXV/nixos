@@ -44,16 +44,16 @@
           return 0
         end
 
-        set -l mem_max "24G"
+        set -l mem_max 24G
         if set -q _flag_mem; set mem_max $_flag_mem; end
 
-        set -l swap_max "0"
+        set -l swap_max 0
         if set -q _flag_swap; set swap_max $_flag_swap; end
 
-        set -l cpu_weight "30"
+        set -l cpu_weight 30
         if set -q _flag_cpu; set cpu_weight $_flag_cpu; end
 
-        set -l unit_name_arg ""
+        set -l unit_name_arg
         if set -q _flag_name; set unit_name_arg "--unit=$_flag_name"; end
 
         if test (count $argv) -eq 0
