@@ -31,8 +31,8 @@
     ];
 
     forceSSL = true;
-    sslCertificate = "/etc/nginx/tailscale-certs/syy-pc.taile2b66b.ts.net.crt";
-    sslCertificateKey = "/etc/nginx/tailscale-certs/syy-pc.taile2b66b.ts.net.key";
+    sslCertificate = "/var/lib/tailscale/certs/syy-pc.taile2b66b.ts.net.crt";
+    sslCertificateKey = "/var/lib/tailscale/certs/syy-pc.taile2b66b.ts.net.key";
 
     locations = {
       "/" = {
@@ -46,25 +46,4 @@
       };
     };
   };
-
-  systemd.services.nginx-tailscale-cert-sync = {
-    description = "Copy Tailscale certs for nginx";
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = lib.mkForce "${pkgs.coreutils}/bin/install -D -m 0640 -o root -g nginx /var/lib/tailscale/certs/syy-pc.taile2b66b.ts.net.crt /etc/nginx/tailscale-certs/syy-pc.taile2b66b.ts.net.crt";
-      ExecStartPost = "${pkgs.coreutils}/bin/install -D -m 0640 -o root -g nginx /var/lib/tailscale/certs/syy-pc.taile2b66b.ts.net.key /etc/nginx/tailscale-certs/syy-pc.taile2b66b.ts.net.key";
-    };
-    after = ["tailscaled.service"];
-    wantedBy = ["multi-user.target"];
-  };
-
-  systemd.paths.nginx-tailscale-cert-sync = {
-    description = "Watch for Tailscale cert updates";
-    pathConfig = {
-      PathChanged = ["/var/lib/tailscale/certs"];
-    };
-    wantedBy = ["multi-user.target"];
-  };
-
-  systemd.services.nginx.after = ["nginx-tailscale-cert-sync.service"];
 }
