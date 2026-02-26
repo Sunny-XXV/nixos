@@ -19,6 +19,9 @@ in {
     useRoutingFeatures = "server";
   };
 
+  services.tailscale.extraUpFlags = [
+    "--ssh"
+  ];
   services.tailscale.extraSetFlags = [
     "--relay-server-port=41232"
   ];
