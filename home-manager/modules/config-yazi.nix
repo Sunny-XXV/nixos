@@ -1,8 +1,11 @@
-{...}: {
+{
   programs.yazi = {
     enable = true;
+    shellWrapperName = "y";
 
     enableFishIntegration = true;
+    enableBashIntegration = true;
+
     settings = {
       mgr = {
         ratio = [1 4 3];
