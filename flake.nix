@@ -7,6 +7,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixvim = {
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -24,6 +28,7 @@
   outputs = inputs @ {
     nixpkgs,
     home-manager,
+    nix-darwin,
     ...
   }: {
     nixosConfigurations = {
@@ -42,6 +47,28 @@
           ./services
 
           home-manager.nixosModules.home-manager
+          {
+            home-manager.extraSpecialArgs = {inherit inputs;};
+
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.sunya.imports = [
+              ./home-manager
+            ];
+          }
+        ];
+      };
+    };
+
+    darwinConfigurations = {
+      Syy-Mac = nix-darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        specialArgs = {inherit inputs;};
+
+        modules = [
+          ./hosts/Syy-Mac
+
+          home-manager.darwinModules.home-manager
           {
             home-manager.extraSpecialArgs = {inherit inputs;};
 
