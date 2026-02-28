@@ -1,37 +1,44 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }: {
-  imports = [
-    ./modules/config-btop.nix
-    ./modules/config-claudecode.nix
-    ./modules/config-desktop
-    ./modules/config-direnv.nix
-    ./modules/config-eza.nix
-    ./modules/config-fastfetch.nix
-    ./modules/config-fish
-    ./modules/config-fonts.nix
-    ./modules/config-fzf.nix
-    ./modules/config-gpg.nix
-    ./modules/config-git.nix
-    ./modules/config-man.nix
-    ./modules/config-nvim
-    ./modules/config-secrets
-    ./modules/config-ssh.nix
-    ./modules/config-tmux.nix
-    ./modules/config-yazi.nix
-    ./modules/config-zoxide.nix
-    ./modules/packages-general.nix
-    # ./modules/packages-gui.nix
-    ./modules/packages-media.nix
-    ./modules/packages-tex.nix
-  ];
+  imports =
+    [
+      ./modules/config-btop.nix
+      ./modules/config-claudecode.nix
+      ./modules/config-direnv.nix
+      ./modules/config-eza.nix
+      ./modules/config-fastfetch.nix
+      ./modules/config-fish
+      ./modules/config-fzf.nix
+      ./modules/config-gpg.nix
+      ./modules/config-git.nix
+      ./modules/config-man.nix
+      ./modules/config-nvim
+      ./modules/config-secrets
+      ./modules/config-ssh.nix
+      ./modules/config-tmux.nix
+      ./modules/config-yazi.nix
+      ./modules/config-zoxide.nix
+      ./modules/packages-general.nix
+      # ./modules/packages-gui.nix
+      ./modules/packages-media.nix
+      ./modules/packages-tex.nix
+    ]
+    ++ lib.optionals (!pkgs.stdenv.isDarwin) [
+      ./modules/config-desktop
+      ./modules/config-fonts.nix
+    ];
 
   programs.home-manager.enable = true;
 
   home.username = "sunya";
-  home.homeDirectory = "/home/sunya";
+  home.homeDirectory =
+    if pkgs.stdenv.isDarwin
+    then "/Users/sunya"
+    else "/home/sunya";
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
