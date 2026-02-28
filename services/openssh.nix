@@ -45,4 +45,9 @@
     Restart = "always";
     RestartSec = "5s";
   };
+
+  programs.mosh = {
+    enable = true;
+    openFirewall = true;
+  };
 }
