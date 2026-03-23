@@ -3,6 +3,10 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -24,6 +28,7 @@
   outputs = inputs @ {
     nixpkgs,
     home-manager,
+    nix-darwin,
     ...
   }: {
     nixosConfigurations = {
@@ -42,6 +47,27 @@
           ./services
 
           home-manager.nixosModules.home-manager
+          {
+            home-manager.extraSpecialArgs = {inherit inputs;};
+
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.sunya.imports = [
+              ./home-manager
+            ];
+          }
+        ];
+      };
+    };
+    darwinConfigurations = {
+      Syy-Mac = nix-darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        specialArgs = {inherit inputs;};
+
+        modules = [
+          ./hosts/Syy-Mac
+
+          home-manager.darwinModules.home-manager
           {
             home-manager.extraSpecialArgs = {inherit inputs;};
 
