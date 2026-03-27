@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   gtk.enable = true;
 
   gtk.font = {
@@ -20,6 +24,7 @@
       ];
     };
   };
+  gtk.gtk4.theme = config.gtk.theme;
 
   gtk.iconTheme = {
     name = "Colloid-dark";
