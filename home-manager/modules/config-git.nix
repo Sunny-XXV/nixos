@@ -6,13 +6,15 @@
     enable = true;
 
     ignores = [
-      ".DS_Store"
       "__pycache__/"
       "*.pyc"
-      ".venv/"
-      "node_modules/"
-      ".vscode/"
+      ".claude/"
+      ".direnv/"
+      ".DS_Store"
       ".idea/"
+      ".venv/"
+      ".vscode/"
+      "node_modules/"
     ];
 
     settings = {
