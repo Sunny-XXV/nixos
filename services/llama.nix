@@ -1,5 +1,5 @@
 {
-  services.llama-cpp.enable = true;
+  services.llama-cpp.enable = false;
   services.llama-cpp = {
     host = "100.100.140.8";
     port = 6868;
