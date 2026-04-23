@@ -6,6 +6,7 @@
   imports = [
     ./modules/config-btop.nix
     ./modules/config-claudecode.nix
+    ./modules/config-codex.nix
     ./modules/config-desktop
     ./modules/config-direnv.nix
     ./modules/config-eza.nix
