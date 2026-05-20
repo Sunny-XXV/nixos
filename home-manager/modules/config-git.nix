@@ -9,6 +9,7 @@
       "__pycache__/"
       "*.pyc"
       ".claude/"
+      ".codex/"
       ".direnv/"
       ".DS_Store"
       ".idea/"

@@ -8,7 +8,7 @@
     approval_policy = "on-request";
 
     agents = {
-      max_threads = 12;
+      max_threads = 24;
       job_max_runtime_seconds = 7200;
 
       default = {

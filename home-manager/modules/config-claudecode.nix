@@ -1,6 +1,6 @@
 {pkgs, ...}: {
   programs.claude-code.enable = true;
-  programs.claude-code.package = pkgs.claude-code-bin;
+  programs.claude-code.package = pkgs.claude-code;
   programs.claude-code.settings = {
     env = {
       CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC = "1";

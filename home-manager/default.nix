@@ -4,6 +4,7 @@
   ...
 }: {
   imports = [
+    ./modules/config-ampcode.nix
     ./modules/config-btop.nix
     ./modules/config-claudecode.nix
     ./modules/config-codex.nix
