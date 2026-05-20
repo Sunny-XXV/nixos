@@ -7,6 +7,7 @@
     ./llama.nix
     ./openssh.nix
     ./proxy-dae.nix
+    ./rclone.nix
     ./tailscale.nix
     ./vaultwarden.nix
     ./virtualisation.nix

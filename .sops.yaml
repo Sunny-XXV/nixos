@@ -1,0 +1,5 @@
+keys:
+  - &sunya_age age1h2f8mkplk3zp3hs0yknr80rs3e5h348vxjmm6glxaqtxljxsg3rqv4g3ch
+creation_rules:
+  - path_regex: services/.*_secrets\.yaml$
+    age: *sunya_age
