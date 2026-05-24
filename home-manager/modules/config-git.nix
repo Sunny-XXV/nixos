@@ -16,6 +16,7 @@
       ".venv/"
       ".vscode/"
       "node_modules/"
+      "AGENTS.md"
     ];
 
     settings = {
