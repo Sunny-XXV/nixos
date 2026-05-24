@@ -14,7 +14,6 @@ in {
     github.copilot
     github.copilot-chat
     gruntfuggly.todo-tree
-    ms-python.python
     ms-python.debugpy
     pkief.material-icon-theme
     vscodevim.vim
