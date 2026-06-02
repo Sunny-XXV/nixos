@@ -11,6 +11,7 @@
   tsDir = "/var/lib/tailscale";
   tsCertFile = "${tsDir}/certs/${tailnetDomain}.crt";
   tsKeyFile = "${tsDir}/certs/${tailnetDomain}.key";
+  renewalWindowSeconds = toString (30 * 24 * 60 * 60);
 in {
   services.tailscale = {
     enable = true;
@@ -38,27 +39,39 @@ in {
   };
 
   systemd.services.tailscale-cert-generator = {
-    description = "Ensure Tailscale Certs Exist with Correct Permissions";
+    description = "Ensure Tailscale certs exist and are fresh";
     after = ["tailscaled.service" "network-online.target"];
     wants = ["tailscaled.service" "network-online.target"];
     wantedBy = ["multi-user.target"];
-    path = [pkgs.tailscale pkgs.acl pkgs.util-linux];
+    path = [pkgs.tailscale pkgs.acl pkgs.openssl pkgs.systemd pkgs.util-linux];
     serviceConfig = {
       Type = "oneshot";
       User = "root";
+      TimeoutStartSec = "5min";
       ExecStart = pkgs.writeShellScript "generate-ts-cert" ''
         set -e
         CERT="${tsCertFile}"
         KEY="${tsKeyFile}"
+        RENEW_BEFORE_SECONDS="${renewalWindowSeconds}"
+        cert_updated=0
 
         if [ ! -f "$CERT" ] || [ ! -f "$KEY" ]; then
-          echo "Certificates missing. Requesting new execution..."
+          echo "Certificates missing. Requesting new certificate..."
+          needs_renew=1
+        elif ! openssl x509 -checkend "$RENEW_BEFORE_SECONDS" -noout -in "$CERT"; then
+          echo "Certificate expires within $RENEW_BEFORE_SECONDS seconds or is invalid. Renewing..."
+          needs_renew=1
+        else
+          echo "Certificate is still valid for at least $RENEW_BEFORE_SECONDS seconds."
+          needs_renew=0
+        fi
+
+        if [ "$needs_renew" -eq 1 ]; then
           ${pkgs.tailscale}/bin/tailscale cert \
             --cert-file "$CERT" \
             --key-file "$KEY" \
             "${tailnetDomain}"
-        else
-          echo "Certificates found. Checking permissions..."
+          cert_updated=1
         fi
 
         echo "Applying ACL for user ${nginxUser}..."
@@ -75,7 +88,23 @@ in {
           getfacl "$CERT"
           exit 1
         fi
+
+        if [ "$cert_updated" -eq 1 ] && systemctl is-active --quiet nginx.service; then
+          echo "Reloading nginx to pick up renewed certificate..."
+          systemctl --no-block reload nginx.service
+        fi
       '';
+    };
+  };
+
+  systemd.timers.tailscale-cert-generator = {
+    description = "Refresh Tailscale certs";
+    wantedBy = ["timers.target"];
+    timerConfig = {
+      OnCalendar = "daily";
+      Persistent = true;
+      RandomizedDelaySec = "1h";
+      Unit = "tailscale-cert-generator.service";
     };
   };
 

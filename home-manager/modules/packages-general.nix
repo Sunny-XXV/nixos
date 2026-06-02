@@ -3,6 +3,7 @@
     bat
     cloc
     fd
+    gurobi
     jq
     lazygit
     ncdu
