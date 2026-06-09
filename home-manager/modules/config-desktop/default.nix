@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{ config, ... }: 
+let
+hmRoot = "${config.home.homeDirectory}/.config/nixos/home-manager";
+  in
+{
   imports = [
     ./config-cursor.nix
     ./config-foot.nix
@@ -14,5 +18,5 @@
     allowImages = true;
   };
 
-  xdg.configFile."niri/config.kdl".source = ./niri-config.kdl;
+  xdg.configFile."niri/config.kdl".source = config.lib.file.mkOutOfStoreSymlink "${hmRoot}/dotfiles/niri/config.kdl";
 }

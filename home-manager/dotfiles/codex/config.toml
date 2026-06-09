@@ -1,0 +1,18 @@
+approval_policy = "on-request"
+background_terminal_max_timeout = 7200
+network_access = true
+personality = "pragmatic"
+sandbox_mode = "workspace-write"
+
+[agents]
+job_max_runtime_seconds = 7200
+max_threads = 24
+
+[features]
+multi_agent = true
+parallel = true
+plan_tool = true
+skills = true
+steer = true
+unified_exec = true
+view_image_tool = true
