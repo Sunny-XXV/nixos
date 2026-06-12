@@ -17,6 +17,8 @@
       set -g repeat-time 800
       set -g renumber-windows on
       set -g set-titles on
+      set -g extended-keys on
+      set -g extended-keys-format csi-u
 
       set -ga terminal-overrides ",**256col*:Tc"
       set -ga terminal-overrides '*:Ss=\E[%p1%d q:Se=\E[ q'

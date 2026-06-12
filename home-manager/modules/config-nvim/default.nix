@@ -19,6 +19,7 @@
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
+    nixpkgs.source = pkgs.path;
 
     opts = {
       foldlevel = 99;
