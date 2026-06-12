@@ -17,6 +17,7 @@
     ./modules/config-fzf.nix
     ./modules/config-gpg.nix
     ./modules/config-git.nix
+    ./modules/config-llama.nix
     ./modules/config-man.nix
     ./modules/config-nvim
     ./modules/config-secrets
