@@ -1,8 +1,6 @@
-{ config, ... }: 
-let
-hmRoot = "${config.home.homeDirectory}/.config/nixos/home-manager";
-  in
-{
+{config, ...}: let
+  hmRoot = "${config.home.homeDirectory}/.config/nixos/home-manager";
+in {
   imports = [
     ./config-cursor.nix
     ./config-foot.nix
