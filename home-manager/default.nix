@@ -4,7 +4,7 @@
   ...
 }: {
   imports = [
-    ./modules/config-ampcode.nix
+    # ./modules/config-ampcode.nix
     ./modules/config-btop.nix
     ./modules/config-claudecode.nix
     ./modules/config-codex.nix
@@ -21,6 +21,7 @@
     ./modules/config-man.nix
     ./modules/config-nvim
     ./modules/config-secrets
+    ./modules/config-skills.nix
     ./modules/config-ssh.nix
     ./modules/config-tmux.nix
     ./modules/config-yazi.nix
