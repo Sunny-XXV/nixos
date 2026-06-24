@@ -27,4 +27,5 @@
   ];
 
   environment.variables.EDITOR = "nvim";
+  environment.enableAllTerminfo = true;
 }
