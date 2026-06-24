@@ -14,6 +14,7 @@
 
       set -sg exit-empty on
 
+      set -g set-clipboard on
       set -g repeat-time 800
       set -g renumber-windows on
       set -g set-titles on
@@ -22,6 +23,7 @@
 
       set -ga terminal-overrides ",**256col*:Tc"
       set -ga terminal-overrides '*:Ss=\E[%p1%d q:Se=\E[ q'
+      set -as terminal-features ',xterm*:clipboard'
 
       setw -g automatic-rename on
 
