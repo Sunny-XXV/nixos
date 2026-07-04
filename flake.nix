@@ -23,6 +23,7 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    daeuniverse.url = "github:daeuniverse/flake.nix";
     vscode-extensions = {
       url = "github:nix-community/nix-vscode-extensions";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -50,6 +51,7 @@
           ./usr-packages.nix
           ./services
 
+          inputs.daeuniverse.nixosModules.daed
           inputs.sops-nix.nixosModules.sops
           home-manager.nixosModules.home-manager
           {
