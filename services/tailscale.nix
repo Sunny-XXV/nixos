@@ -24,6 +24,7 @@ in {
     "--ssh"
   ];
   services.tailscale.extraSetFlags = [
+    "--accept-dns=false"
     "--relay-server-port=41232"
   ];
   networking.firewall.allowedUDPPorts = [41232];

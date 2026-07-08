@@ -43,8 +43,6 @@
     };
   };
 in {
-  sops.age.keyFile = "/home/${user}/.config/sops/age/keys.txt";
-
   sops.secrets."rclone/config" = {
     sopsFile = ./rclone_secrets.yaml;
     key = "rclone_conf";

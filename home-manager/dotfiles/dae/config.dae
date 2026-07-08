@@ -123,7 +123,7 @@ global {
     # The default value is the Google's DNS (8.8.8.8:53). For IPv4 DNS servers, the format is "ipv4:port", such as "8.8.8.8:53". 
     # For IPv6 DNS servers, the format is "[ipv6]:port", such as "[2001:4860:4860::8888]:53". 
     # Fallback resolver will always be available, even if you do not specify it in the configuration file.
-    # fallback_resolver: '8.8.8.8:53'
+    fallback_resolver: '8.8.8.8:53'
 }
 
 # Subscriptions defined here will be resolved as nodes and merged as a part of the global node pool.
@@ -157,7 +157,7 @@ node {
 dns {
     # For example, if ipversion_prefer is 4 and the domain name has both type A and type AAAA records, the dae will only
     # respond to type A queries and response empty answer to type AAAA queries.
-    #ipversion_prefer: 4
+    ipversion_prefer: 4
 
     # Give a fixed ttl for domains. Zero means that dae will request to upstream every time and not cache DNS results
     # for these domains.
@@ -180,8 +180,8 @@ dns {
         # Please make sure DNS traffic will go through and be forwarded by dae, which is REQUIRED for domain routing.
         # If dial_mode is "ip", the upstream DNS answer SHOULD NOT be polluted, so domestic public DNS is not recommended.
 
-        alidns: 'udp://dns.alidns.com:53'
-        googledns: 'tcp+udp://dns.google:53'
+        alidns:    'tcp+udp://dns.alidns.com:53'
+        googledns: 'tcp+udp://8.8.8.8:53'
 	tailscale: 'udp://100.100.100.100:53'
 
         # alih3: 'h3://dns.alidns.com:443'
@@ -318,6 +318,8 @@ routing {
     pname(tailscale) -> direct
     dip(100.64.0.0/10) -> direct
     dip(100.100.100.100) -> direct
+
+    domain(moelink.top) -> direct
 
     fallback: US
 }
