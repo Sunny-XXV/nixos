@@ -6,7 +6,7 @@
   users.users.sunya = {
     isNormalUser = true;
     description = "sunya";
-    extraGroups = ["networkmanager" "wheel" "podman" "audio" "video" "input" "uinput"];
+    extraGroups = ["networkmanager" "wheel" "podman" "audio" "video" "render" "input" "uinput"];
     packages = with pkgs; [];
   };
 

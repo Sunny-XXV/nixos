@@ -10,6 +10,8 @@
     wl-clipboard
     cliphist
     xwayland-satellite
+    wlr-randr
+    grim
     ddcutil
   ];
 

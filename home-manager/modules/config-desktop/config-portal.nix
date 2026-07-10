@@ -36,6 +36,13 @@ in {
     default = ["gtk"];
     "org.freedesktop.impl.portal.FileChooser" = ["termfilechooser"];
   };
+  xdg.portal.config.niri = {
+    default = ["gnome" "gtk"];
+    "org.freedesktop.impl.portal.Access" = ["gtk"];
+    "org.freedesktop.impl.portal.FileChooser" = ["termfilechooser"];
+    "org.freedesktop.impl.portal.Notification" = ["gtk"];
+    "org.freedesktop.impl.portal.Secret" = ["gnome-keyring"];
+  };
 
   xdg.configFile."xdg-desktop-portal-termfilechooser/config".text = ''
     [filechooser]
