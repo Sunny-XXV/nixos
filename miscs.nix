@@ -9,5 +9,4 @@
     "1.1.1.1"
     "8.8.8.8"
   ];
-  programs.fuse.userAllowOther = true;
 }

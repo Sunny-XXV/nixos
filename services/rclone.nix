@@ -53,6 +53,7 @@ in {
 
   environment.systemPackages = [pkgs.rclone];
 
+  programs.fuse.enable = true;
   programs.fuse.userAllowOther = true;
 
   users.users.${user}.extraGroups = ["fuse"];
