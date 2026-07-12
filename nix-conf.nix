@@ -4,6 +4,8 @@
   nix.settings.experimental-features = ["nix-command" "flakes"];
   nix.settings.trusted-users = ["root" "sunya"];
 
+  nix.settings.extra-deprecated-features = ["broken-string-escape" "or-as-identifier"];
+
   nix.settings.auto-optimise-store = true;
   nix.gc = {
     automatic = true;

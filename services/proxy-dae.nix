@@ -5,7 +5,7 @@
   daeConfigTemplate = builtins.readFile ../home-manager/dotfiles/dae/config.dae;
 in {
   sops.secrets."dae/sub_nacho" = {
-    sopsFile = ./dae_secrets.yaml;
+    sopsFile = ./proxy_dae_secrets.yaml;
     key = "sub_nacho";
     owner = "root";
     group = "root";
