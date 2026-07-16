@@ -321,5 +321,10 @@ routing {
 
     domain(moelink.top) -> direct
 
+    domain(geosite:steam@cn, geosite:steam) -> steam
+
+    domain(suffix: nixos.org) -> US
+    domain(suffix: cachix.org) -> US
+
     fallback: US
 }

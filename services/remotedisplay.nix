@@ -92,6 +92,12 @@ in {
     };
   };
 
+  systemd.services.greetd = {
+    startLimitIntervalSec = 60;
+    startLimitBurst = 3;
+    serviceConfig.RestartSec = "5s";
+  };
+
   services.sunshine = {
     enable = true;
     autoStart = false; 

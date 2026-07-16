@@ -1,8 +1,8 @@
 {
   services.earlyoom = {
     enable = true;
-    freeMemThreshold = 5;
-    freeSwapThreshold = 5;
+    freeMemThreshold = 10;
+    freeSwapThreshold = 10;
     extraArgs = [
       "--avoid"
       "^(sshd|tailscaled|systemd|login|fish|bash)$"
