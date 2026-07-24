@@ -80,7 +80,7 @@
     '';
 
   steamBigPicture = hyprlandDispatch "/run/current-system/sw/bin/steam steam://open/bigpicture";
-  closeSteamBigPicture = hyprlandDispatch "/run/current-system/sw/bin/steam steam://close/bigpicture";
+  closeSteamBigPicture = hyprlandDispatch "/run/current-system/sw/bin/steam -shutdown";
 in {
   programs.hyprland.enable = true;
 
