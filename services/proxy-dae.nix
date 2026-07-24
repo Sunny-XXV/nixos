@@ -4,7 +4,7 @@
   inputs,
   ...
 }: let
-  daePackage = inputs.daeuniverse.packages.${pkgs.system}.dae-unstable;
+  daePackage = inputs.daeuniverse.packages.${pkgs.system}.dae-release;
   daeConfigTemplate = builtins.readFile ../home-manager/dotfiles/dae/config.dae;
 in {
   sops.secrets."dae/sub_nacho" = {
@@ -36,7 +36,7 @@ in {
   };
 
   systemd.services.dae.serviceConfig = {
-    MemoryHigh = "500M";
+    MemoryHigh = "300M";
     MemoryMax = "1G";
   };
 }

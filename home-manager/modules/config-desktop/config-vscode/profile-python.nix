@@ -11,8 +11,6 @@ in {
     drcika.apc-extension
     fisheva.eva-theme
     jnoortheen.nix-ide
-    github.copilot
-    github.copilot-chat
     gruntfuggly.todo-tree
     ms-python.debugpy
     pkief.material-icon-theme

@@ -4,8 +4,8 @@
   ...
 }: {
   imports = [
-    ./profile-default.nix
-    ./profile-python.nix
+    # ./profile-default.nix
+    # ./profile-python.nix
   ];
 
   programs.vscode.enable = true;

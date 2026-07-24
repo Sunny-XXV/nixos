@@ -9,8 +9,6 @@ in {
     drcika.apc-extension
     fisheva.eva-theme
     jnoortheen.nix-ide
-    github.copilot
-    github.copilot-chat
     gruntfuggly.todo-tree
     pkief.material-icon-theme
     vscodevim.vim
