@@ -9,7 +9,7 @@
   },
   "includeCoAuthoredBy": false,
   "permissions": {
-    "defaultMode": "acceptEdits",
+    "defaultMode": "auto",
     "disableBypassPermissionsMode": "disable"
   },
   "hooks": {
