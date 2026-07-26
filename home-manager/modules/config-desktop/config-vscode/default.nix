@@ -8,7 +8,7 @@
     # ./profile-python.nix
   ];
 
-  programs.vscode.enable = true;
-  programs.vscode.profiles.default.enableExtensionUpdateCheck = false;
-  programs.vscode.profiles.default.enableUpdateCheck = false;
+  programs.vscodium.enable = true;
+  programs.vscodium.profiles.default.enableExtensionUpdateCheck = false;
+  programs.vscodium.profiles.default.enableUpdateCheck = false;
 }

@@ -5,7 +5,7 @@
 }: let
   pkgsExt = pkgs.extend inputs.vscode-extensions.overlays.default;
 in {
-  programs.vscode.profiles.default.extensions = with pkgsExt.vscode-marketplace; [
+  programs.vscodium.profiles.default.extensions = with pkgsExt.vscode-marketplace; [
     drcika.apc-extension
     fisheva.eva-theme
     jnoortheen.nix-ide
@@ -14,7 +14,7 @@ in {
     vscodevim.vim
   ];
 
-  programs.vscode.profiles.default.userSettings = {
+  programs.vscodium.profiles.default.userSettings = {
     # === Appearance ===
     "window.autoDetectColorScheme" = true;
     "window.commandCenter" = false;
@@ -265,7 +265,7 @@ in {
     "debug.inlineValues" = "off";
   };
 
-  programs.vscode.profiles.default.keybindings = [
+  programs.vscodium.profiles.default.keybindings = [
     {
       key = "ctrl+h";
       command = "workbench.action.navigateLeft";
