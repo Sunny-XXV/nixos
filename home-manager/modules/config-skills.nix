@@ -18,39 +18,39 @@
 
   skillEntries =
     lib.concatMap
-    (group:
-      let
-        groupDir = skillsDir + "/${group}";
-        groupRoot = "${skillsRoot}/${group}";
-        groupEntries = builtins.readDir groupDir;
+    (group: let
+      groupDir = skillsDir + "/${group}";
+      groupRoot = "${skillsRoot}/${group}";
+      groupEntries = builtins.readDir groupDir;
 
-        markdownSkills =
-          lib.filter
-          (
-            name:
-              groupEntries.${name} == "regular"
-              && lib.hasSuffix ".md" name
-              && name != "README.md"
-          )
-          (builtins.attrNames groupEntries);
+      markdownSkills =
+        lib.filter
+        (
+          name:
+            groupEntries.${name}
+            == "regular"
+            && lib.hasSuffix ".md" name
+            && name != "README.md"
+        )
+        (builtins.attrNames groupEntries);
 
-        directorySkills =
-          lib.filter
-          (name: groupEntries.${name} == "directory" && builtins.pathExists (groupDir + "/${name}/SKILL.md"))
-          (builtins.attrNames groupEntries);
-      in
-        (map (fileName: {
-            name = stripMd fileName;
-            source = "${groupRoot}/${fileName}";
-            target = "file";
-          })
-          markdownSkills)
-        ++ (map (name: {
-            inherit name;
-            source = "${groupRoot}/${name}";
-            target = "directory";
-          })
-          directorySkills))
+      directorySkills =
+        lib.filter
+        (name: groupEntries.${name} == "directory" && builtins.pathExists (groupDir + "/${name}/SKILL.md"))
+        (builtins.attrNames groupEntries);
+    in
+      (map (fileName: {
+          name = stripMd fileName;
+          source = "${groupRoot}/${fileName}";
+          target = "file";
+        })
+        markdownSkills)
+      ++ (map (name: {
+          inherit name;
+          source = "${groupRoot}/${name}";
+          target = "directory";
+        })
+        directorySkills))
     groupNames;
 
   skillNames = map (skill: skill.name) skillEntries;
