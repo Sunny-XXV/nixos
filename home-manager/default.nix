@@ -26,9 +26,7 @@
     ./modules/config-yazi.nix
     ./modules/config-zoxide.nix
     ./modules/packages-general.nix
-    # ./modules/packages-gui.nix
     ./modules/packages-media.nix
-    # ./modules/packages-tex.nix
   ];
 
   programs.home-manager.enable = true;

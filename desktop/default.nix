@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   imports = [
     ./fonts.nix
-    ./browser.nix
+    # ./browser.nix
     ./gaming.nix
   ];
 

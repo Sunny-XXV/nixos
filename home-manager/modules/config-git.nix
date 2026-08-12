@@ -28,6 +28,7 @@
       help.autocorrect = 1;
       color.ui = true;
       pull.rebase = true;
+      init.defaultBranch = "main";
       # commit.gpgsign = true;
 
       core = {
