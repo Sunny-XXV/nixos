@@ -29,4 +29,9 @@
     "kernel.panic" = 10;
     "kernel.panic_on_oops" = 1;
   };
+
+  systemd.user.tmpfiles.rules = [
+    "d %h/.local/share/Trash/files 0700 - - 30d"
+    "d %h/.local/share/Trash/info 0700 - - 30d"
+  ];
 }
