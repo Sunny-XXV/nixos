@@ -11,8 +11,10 @@
     # macOS-specific tools that were previously in the nix-darwin system
     # profile. They are user-facing, so Home Manager is their natural owner.
     home.packages = with pkgs; [
+      claude-code
       gcc
       imagemagick
+      mcp-server-sequential-thinking
       qalculate-qt
       zathura
     ];

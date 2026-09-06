@@ -25,7 +25,8 @@ Home Manager is embedded in both system configurations. On macOS,
 applies the Brewfile. Declared formulae and casks are upgraded during activation;
 undeclared Homebrew packages are uninstalled without `--zap`, preserving user
 data. Homebrew installs VSCodium itself, while Home Manager declaratively owns
-its extensions. Microsoft Word, Excel, and PowerPoint are excluded from
+its extensions and CLI tools such as Claude Code and the sequential-thinking
+MCP server. Microsoft Word, Excel, and PowerPoint are excluded from
 automatic cask upgrades, and Microsoft AutoUpdate is set to manual mode.
 Upgrade those three only when intended:
 

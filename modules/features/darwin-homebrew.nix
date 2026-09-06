@@ -162,12 +162,6 @@
         "zotero"
       ];
 
-      # Homebrew Bundle is also the source of truth for the existing global
-      # npm tools. These are kept here until they are packaged in Nix/HM.
-      extraConfig = ''
-        npm "@anthropic-ai/claude-code"
-        npm "@modelcontextprotocol/server-sequential-thinking"
-      '';
     };
   };
 }
