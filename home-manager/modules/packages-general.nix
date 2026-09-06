@@ -1,24 +1,31 @@
-{pkgs, ...}: {
-  home.packages = with pkgs; [
-    bat
-    cloc
-    fd
-    gurobi
-    jq
-    lazygit
-    ncdu
-    ripgrep
-    less
-    libqalculate
-    lsof
-    mailutils
-    netcat
-    nil
-    powertop
-    procs
-    rsync
-    sshpass
-    strace
-    usbutils
-  ];
+{
+  lib,
+  pkgs,
+  ...
+}: {
+  home.packages = with pkgs;
+    [
+      bat
+      cloc
+      fd
+      jq
+      lazygit
+      ncdu
+      ripgrep
+      less
+      libqalculate
+      lsof
+      nil
+      procs
+      rsync
+    ]
+    ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
+      gurobi
+      mailutils
+      netcat
+      powertop
+      sshpass
+      strace
+      usbutils
+    ];
 }

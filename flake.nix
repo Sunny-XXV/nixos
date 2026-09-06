@@ -1,12 +1,17 @@
 {
-  description = "NixOS flake";
+  description = "Syy's NixOS and nix-darwin systems";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+    flake-parts.url = "git+https://github.com/hercules-ci/flake-parts.git";
+    import-tree.url = "git+https://github.com/vic/import-tree.git";
+
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-homebrew.url = "git+https://github.com/zhaofengli/nix-homebrew.git";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -33,62 +38,7 @@
     };
   };
 
-  outputs = inputs @ {
-    nixpkgs,
-    home-manager,
-    nix-darwin,
-    ...
-  }: {
-    nixosConfigurations = {
-      Syy-PC = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = {inherit inputs;};
-
-        modules = [
-          ./hosts/Syy-PC
-          ./sys-boot.nix
-          ./desktop
-          ./lang-kbd.nix
-          ./nix-conf.nix
-          ./miscs.nix
-          ./usr-packages.nix
-          ./services
-
-          inputs.daeuniverse.nixosModules.daed
-          inputs.sops-nix.nixosModules.sops
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.extraSpecialArgs = {inherit inputs;};
-
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.sunya.imports = [
-              ./home-manager
-            ];
-          }
-        ];
-      };
-    };
-    darwinConfigurations = {
-      Syy-Mac = nix-darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        specialArgs = {inherit inputs;};
-
-        modules = [
-          ./hosts/Syy-Mac
-
-          home-manager.darwinModules.home-manager
-          {
-            home-manager.extraSpecialArgs = {inherit inputs;};
-
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.sunya.imports = [
-              ./home-manager
-            ];
-          }
-        ];
-      };
-    };
-  };
+  outputs = inputs:
+    inputs.flake-parts.lib.mkFlake {inherit inputs;}
+    (inputs.import-tree ./modules);
 }
