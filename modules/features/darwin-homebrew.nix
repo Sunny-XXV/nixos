@@ -21,11 +21,12 @@
       user = "sunya";
 
       onActivation = {
-        autoUpdate = false;
-        upgrade = false;
-        # Start non-destructively. Change to "uninstall" only after the
-        # generated Brewfile has been reviewed on the target Mac.
-        cleanup = "none";
+        autoUpdate = true;
+        upgrade = true;
+        # Homebrew is declarative: packages omitted from this module are
+        # removed on the next activation. Avoid `zap` so application data is
+        # retained when a cask is removed from the declaration.
+        cleanup = "uninstall";
       };
 
       taps = [
@@ -82,6 +83,7 @@
         "pkgconf"
         "python-lsp-server"
         "scrcpy"
+        "asmvik/formulae/yabai"
         {
           name = "sleepwatcher";
           restart_service = "changed";
@@ -92,6 +94,7 @@
         "uv"
         "watch"
         "yt-dlp"
+        "lizardbyte/homebrew/sunshine"
         {
           name = "acsandmann/tap/rift";
           trusted = true;
@@ -121,9 +124,22 @@
         "iterm2"
         "karabiner-elements"
         "maccy"
-        "microsoft-excel"
-        "microsoft-powerpoint"
-        "microsoft-word"
+        # Office casks declare `auto_updates = true`. Keeping greedy disabled
+        # makes normal activation ensure they are installed without upgrading
+        # them. Upgrade Office only with an explicit command such as:
+        #   brew upgrade --cask --greedy microsoft-excel microsoft-powerpoint microsoft-word
+        {
+          name = "microsoft-excel";
+          greedy = false;
+        }
+        {
+          name = "microsoft-powerpoint";
+          greedy = false;
+        }
+        {
+          name = "microsoft-word";
+          greedy = false;
+        }
         "mono-mdk-for-visual-studio"
         "moonlight"
         "obs"

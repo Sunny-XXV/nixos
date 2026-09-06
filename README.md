@@ -22,8 +22,15 @@ sudo darwin-rebuild switch --flake ~/.config/nixos#Syy-Mac
 
 Home Manager is embedded in both system configurations. On macOS,
 `nix-homebrew` owns the Homebrew installation while nix-darwin generates and
-applies the Brewfile. During the initial migration Homebrew cleanup is disabled
-so activation cannot remove software that was installed imperatively.
+applies the Brewfile. Declared formulae and casks are upgraded during activation;
+undeclared Homebrew packages are uninstalled without `--zap`, preserving user
+data. Microsoft Word, Excel, and PowerPoint are excluded from automatic cask
+upgrades, and Microsoft AutoUpdate is set to manual mode. Upgrade those three
+only when intended:
+
+```sh
+brew upgrade --cask --greedy microsoft-excel microsoft-powerpoint microsoft-word
+```
 
 ## Layout
 

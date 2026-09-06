@@ -22,6 +22,12 @@
       primaryUser = "sunya";
       stateVersion = 6;
       configurationRevision = inputs.self.rev or inputs.self.dirtyRev or null;
+
+      # Office upgrades are opt-in. This complements the non-greedy Homebrew
+      # cask declarations by disabling Microsoft AutoUpdate's background
+      # installation; `msupdate` or `brew upgrade --cask --greedy ...` can
+      # still be run explicitly.
+      defaults.CustomUserPreferences."com.microsoft.autoupdate2".HowToCheck = "Manual";
     };
 
     users.users.sunya.home = "/Users/sunya";
