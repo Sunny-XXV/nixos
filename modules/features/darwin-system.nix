@@ -23,10 +23,10 @@
       stateVersion = 6;
       configurationRevision = inputs.self.rev or inputs.self.dirtyRev or null;
 
-      # Office upgrades are opt-in. This complements the non-greedy Homebrew
-      # cask declarations by disabling Microsoft AutoUpdate's background
-      # installation; `msupdate` or `brew upgrade --cask --greedy ...` can
-      # still be run explicitly.
+      # Word upgrades are opt-in. This complements its non-greedy Homebrew
+      # cask declaration by disabling Microsoft AutoUpdate's background
+      # installation; `msupdate` or an explicit greedy brew upgrade can still
+      # be run when requested.
       defaults.CustomUserPreferences."com.microsoft.autoupdate2".HowToCheck = "Manual";
     };
 

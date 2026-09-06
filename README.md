@@ -26,12 +26,12 @@ applies the Brewfile. Declared formulae and casks are upgraded during activation
 undeclared Homebrew packages are uninstalled without `--zap`, preserving user
 data. Homebrew installs VSCodium itself, while Home Manager declaratively owns
 its extensions and CLI tools such as Claude Code and the sequential-thinking
-MCP server. Microsoft Word, Excel, and PowerPoint are excluded from
-automatic cask upgrades, and Microsoft AutoUpdate is set to manual mode.
-Upgrade those three only when intended:
+MCP server. Microsoft Word is installed but excluded from automatic cask
+upgrades, and Microsoft AutoUpdate is set to manual mode. Excel and PowerPoint
+are intentionally absent. Upgrade Word only when intended:
 
 ```sh
-brew upgrade --cask --greedy microsoft-excel microsoft-powerpoint microsoft-word
+brew upgrade --cask --greedy microsoft-word
 ```
 
 ## Layout

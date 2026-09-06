@@ -124,18 +124,10 @@
         "iterm2"
         "karabiner-elements"
         "maccy"
-        # Office casks declare `auto_updates = true`. Keeping greedy disabled
-        # makes normal activation ensure they are installed without upgrading
-        # them. Upgrade Office only with an explicit command such as:
-        #   brew upgrade --cask --greedy microsoft-excel microsoft-powerpoint microsoft-word
-        {
-          name = "microsoft-excel";
-          greedy = false;
-        }
-        {
-          name = "microsoft-powerpoint";
-          greedy = false;
-        }
+        # Word declares `auto_updates = true`. Keeping greedy disabled makes
+        # normal activation ensure it is installed without upgrading it.
+        # Upgrade Word only with an explicit command such as:
+        #   brew upgrade --cask --greedy microsoft-word
         {
           name = "microsoft-word";
           greedy = false;
