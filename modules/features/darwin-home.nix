@@ -23,9 +23,8 @@
     programs.vscodium = {
       enable = true;
       package = null;
+      mutableExtensionsDir = false;
       profiles.default = {
-        enableExtensionUpdateCheck = false;
-        enableUpdateCheck = false;
         extensions = with pkgsExt.vscode-marketplace; [
           drcika.apc-extension
           fisheva.eva-theme
