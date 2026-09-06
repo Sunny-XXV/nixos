@@ -162,14 +162,6 @@
         "zotero"
       ];
 
-      vscode = [
-        "drcika.apc-extension"
-        "fisheva.eva-theme"
-        "jeanp413.open-remote-ssh"
-        "pkief.material-icon-theme"
-        "vscodevim.vim"
-      ];
-
       # Homebrew Bundle is also the source of truth for the existing global
       # npm tools. These are kept here until they are packaged in Nix/HM.
       extraConfig = ''

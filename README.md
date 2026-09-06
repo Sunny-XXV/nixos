@@ -24,9 +24,10 @@ Home Manager is embedded in both system configurations. On macOS,
 `nix-homebrew` owns the Homebrew installation while nix-darwin generates and
 applies the Brewfile. Declared formulae and casks are upgraded during activation;
 undeclared Homebrew packages are uninstalled without `--zap`, preserving user
-data. Microsoft Word, Excel, and PowerPoint are excluded from automatic cask
-upgrades, and Microsoft AutoUpdate is set to manual mode. Upgrade those three
-only when intended:
+data. Homebrew installs VSCodium itself, while Home Manager declaratively owns
+its extensions. Microsoft Word, Excel, and PowerPoint are excluded from
+automatic cask upgrades, and Microsoft AutoUpdate is set to manual mode.
+Upgrade those three only when intended:
 
 ```sh
 brew upgrade --cask --greedy microsoft-excel microsoft-powerpoint microsoft-word
