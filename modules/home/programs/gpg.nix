@@ -1,5 +1,10 @@
-{pkgs, ...}: {
-  home.packages = [pkgs.pinentry-tty];
+{pkgs, ...}: let
+  pinentryPackage =
+    if pkgs.stdenv.hostPlatform.isDarwin
+    then pkgs.pinentry_mac
+    else pkgs.pinentry-tty;
+in {
+  home.packages = [pinentryPackage];
 
   programs.gpg = {
     enable = true;
@@ -15,9 +20,6 @@
     defaultCacheTtlSsh = 14400;
     maxCacheTtlSsh = 86400;
 
-    pinentry = {
-      package = pkgs.pinentry-tty;
-      program = "pinentry";
-    };
+    pinentry.package = pinentryPackage;
   };
 }

@@ -49,9 +49,7 @@
         ../../modules/home/dotfiles
         ../../modules/home/packages/general.nix
         ../../modules/home/packages/media.nix
-        ../../modules/home/packages/optimization.nix
-        ../../modules/home/packages/pdf-tools.nix
-        ../../modules/home/packages/system-tools.nix
+        ../../modules/home/packages/operation.nix
         ../../modules/home/programs/btop.nix
         ../../modules/home/programs/claudecode.nix
         ../../modules/home/programs/codex.nix

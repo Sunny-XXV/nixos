@@ -13,7 +13,7 @@
     ../../modules/system/basic.nix
     ../../modules/desktop/homebrew.nix
     ../../modules/desktop/darwin-apps.nix
-    ../../modules/desktop/darwin-fonts.nix
+    ../../modules/desktop/fonts.nix
     ../../modules/services/sleep-bt.nix
     ../../modules/services/mihomo.nix
   ];
@@ -51,6 +51,7 @@
         ../../modules/home/programs/fonts.nix
         ../../modules/home/programs/fzf.nix
         ../../modules/home/programs/git.nix
+        ../../modules/home/programs/gpg.nix
         ../../modules/home/programs/ghostty.nix
         ../../modules/home/programs/man.nix
         ../../modules/home/programs/nvim
@@ -64,7 +65,6 @@
         ../../modules/home/programs/zoxide.nix
         ../../modules/home/desktop/karabiner.nix
         ../../modules/home/services/espanso.nix
-        ../../modules/home/packages/development.nix
       ];
     };
   };

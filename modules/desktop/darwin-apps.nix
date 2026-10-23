@@ -1,18 +1,7 @@
-{pkgs, ...}: let
-  betterdisplay = pkgs.symlinkJoin {
-    name = "betterdisplay-with-cli-${pkgs.betterdisplay.version}";
-    paths = [pkgs.betterdisplay];
-    nativeBuildInputs = [pkgs.makeWrapper];
-    postBuild = ''
-      mkdir -p "$out/bin"
-      makeWrapper \
-        "$out/Applications/BetterDisplay.app/Contents/MacOS/BetterDisplay" \
-        "$out/bin/betterdisplaycli"
-    '';
-  };
-in {
+{pkgs, ...}: {
   environment.systemPackages = with pkgs; [
     aldente
+    android-tools
     betterdisplay
     dbeaver-bin
     ghostty-bin

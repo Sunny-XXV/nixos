@@ -4,6 +4,7 @@
     ffmpeg
     ffmpegthumbnailer
     pandoc
+    pdftk
     poppler
     yt-dlp
   ];
