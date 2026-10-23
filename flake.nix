@@ -4,9 +4,10 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    flake-parts.url = "git+https://github.com/hercules-ci/flake-parts.git";
-    import-tree.url = "git+https://github.com/vic/import-tree.git";
-
+    daeuniverse = {
+      url = "github:daeuniverse/flake.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -20,16 +21,16 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    xremap = {
-      url = "github:xremap/nix-flake";
+    pi = {
+      url = "github:earendil-works/pi/stable";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    daeuniverse = {
-      url = "github:daeuniverse/flake.nix";
+    xremap = {
+      url = "github:xremap/nix-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     vscode-extensions = {
@@ -38,7 +39,24 @@
     };
   };
 
-  outputs = inputs:
-    inputs.flake-parts.lib.mkFlake {inherit inputs;}
-    (inputs.import-tree ./modules);
+  outputs = inputs @ {
+    nixpkgs,
+    nix-darwin,
+    ...
+  }: let
+    username = "sunya";
+    commonSpecialArgs = {inherit inputs username;};
+  in {
+    nixosConfigurations.Syy-PC = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = commonSpecialArgs // {hostPlatform = "x86_64-linux";};
+      modules = [./hosts/Syy-PC];
+    };
+
+    darwinConfigurations.Syy-Mac = nix-darwin.lib.darwinSystem {
+      system = "aarch64-darwin";
+      specialArgs = commonSpecialArgs // {hostPlatform = "aarch64-darwin";};
+      modules = [./hosts/Syy-Mac];
+    };
+  };
 }

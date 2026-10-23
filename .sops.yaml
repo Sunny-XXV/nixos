@@ -1,5 +1,10 @@
 keys:
   - &sunya_age age1h2f8mkplk3zp3hs0yknr80rs3e5h348vxjmm6glxaqtxljxsg3rqv4g3ch
+  - &syy_mac_age age10tc5wd0f2evt5h3tcgvfwcw9x66qg0xkcvj58z2f9845ntwx5cqsrjfcal
 creation_rules:
-  - path_regex: services/.*_secrets\.yaml$
+  - path_regex: modules/services/(dae|rclone)-secrets\.yaml$
     age: *sunya_age
+  - path_regex: modules/services/mihomo-secrets\.yaml$
+    age:
+      - *sunya_age
+      - *syy_mac_age
