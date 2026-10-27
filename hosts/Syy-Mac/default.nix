@@ -53,6 +53,7 @@
         ../../modules/home/programs/git.nix
         ../../modules/home/programs/gpg.nix
         ../../modules/home/programs/ghostty.nix
+        ../../modules/home/programs/llama.nix
         ../../modules/home/programs/man.nix
         ../../modules/home/programs/nvim
         ../../modules/home/programs/pi-agent.nix

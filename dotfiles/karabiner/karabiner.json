@@ -1,634 +1,671 @@
 {
-  "global": {
-    "check_for_updates": false,
-    "show_in_menu_bar": false
-  },
-  "profiles": [
-    {
-      "complex_modifications": {
-        "rules": [
-          {
-            "description": "[F6] Toggle Caffeinate",
-            "manipulators": [
-              {
-                "conditions": [
-                  {
-                    "name": "caffeinate_is_active",
-                    "type": "variable_if",
-                    "value": 0
-                  }
-                ],
-                "from": {
-                  "key_code": "f6"
-                },
-                "to": [
-                  {
-                    "set_variable": {
-                      "name": "caffeinate_is_active",
-                      "value": 1
-                    }
-                  },
-                  {
-                    "shell_command": "nohup caffeinate -di &> /dev/null & echo $! > /tmp/caffeinate.pid; osascript -e 'display notification \"Mac is Caffeinated\" with title \"Caffeinate\"'"
-                  }
-                ],
-                "type": "basic"
-              },
-              {
-                "conditions": [
-                  {
-                    "name": "caffeinate_is_active",
-                    "type": "variable_if",
-                    "value": 1
-                  }
-                ],
-                "from": {
-                  "key_code": "f6"
-                },
-                "to": [
-                  {
-                    "set_variable": {
-                      "name": "caffeinate_is_active",
-                      "value": 0
-                    }
-                  },
-                  {
-                    "shell_command": "if [ -f /tmp/caffeinate.pid ]; then kill $(cat /tmp/caffeinate.pid); rm /tmp/caffeinate.pid; fi; osascript -e 'display notification \"Mac is De-Caffeinated\" with title \"Caffeinate\"'"
-                  }
-                ],
-                "type": "basic"
-              }
-            ]
-          },
-          {
-            "description": "[CapsLock] -> ctrl if pressed with other keys, caps_lock -> esc if pressed alone.",
-            "manipulators": [
-              {
-                "from": {
-                  "key_code": "caps_lock",
-                  "modifiers": {
-                    "optional": [
-                      "any"
-                    ]
-                  }
-                },
-                "to": [
-                  {
-                    "key_code": "left_control"
-                  }
-                ],
-                "to_if_alone": [
-                  {
-                    "key_code": "escape"
-                  }
-                ],
-                "type": "basic"
-              }
-            ]
-          },
-          {
-            "description": "[Tab + HJKL] -> Arrow Keys",
-            "manipulators": [
-              {
-                "from": {
-                  "key_code": "tab",
-                  "modifiers": {
-                    "optional": [
-                      "any"
-                    ]
-                  }
-                },
-                "parameters": {
-                  "basic.to_if_alone_timeout_milliseconds": 200
-                },
-                "to_after_key_up": [
-                  {
-                    "set_variable": {
-                      "name": "tab_is_held",
-                      "value": 0
-                    }
-                  }
-                ],
-                "to_if_alone": [
-                  {
-                    "key_code": "tab"
-                  }
-                ],
-                "to_if_held_down": [
-                  {
-                    "set_variable": {
-                      "name": "tab_is_held",
-                      "value": 1
-                    }
-                  }
-                ],
-                "type": "basic"
-              },
-              {
-                "conditions": [
-                  {
-                    "name": "tab_is_held",
-                    "type": "variable_if",
-                    "value": 1
-                  }
-                ],
-                "from": {
-                  "key_code": "h"
-                },
-                "to": [
-                  {
-                    "key_code": "left_arrow"
-                  }
-                ],
-                "type": "basic"
-              },
-              {
-                "conditions": [
-                  {
-                    "name": "tab_is_held",
-                    "type": "variable_if",
-                    "value": 1
-                  }
-                ],
-                "from": {
-                  "key_code": "j"
-                },
-                "to": [
-                  {
-                    "key_code": "down_arrow"
-                  }
-                ],
-                "type": "basic"
-              },
-              {
-                "conditions": [
-                  {
-                    "name": "tab_is_held",
-                    "type": "variable_if",
-                    "value": 1
-                  }
-                ],
-                "from": {
-                  "key_code": "k"
-                },
-                "to": [
-                  {
-                    "key_code": "up_arrow"
-                  }
-                ],
-                "type": "basic"
-              },
-              {
-                "conditions": [
-                  {
-                    "name": "tab_is_held",
-                    "type": "variable_if",
-                    "value": 1
-                  }
-                ],
-                "from": {
-                  "key_code": "l"
-                },
-                "to": [
-                  {
-                    "key_code": "right_arrow"
-                  }
-                ],
-                "type": "basic"
-              }
-            ]
-          },
-          {
-            "description": "[Cmd + Option + Left Click] Drag on from Anywhere of a window",
-            "manipulators": [
-              {
-                "from": {
-                  "modifiers": {
-                    "mandatory": [
-                      "command",
-                      "option"
-                    ],
-                    "optional": [
-                      "any"
-                    ]
-                  },
-                  "pointing_button": "button1"
-                },
-                "to": [
-                  {
-                    "modifiers": [
-                      "command",
-                      "control"
-                    ],
-                    "pointing_button": "button1"
-                  }
-                ],
-                "type": "basic"
-              }
-            ]
-          },
-          {
-            "description": "[LCmd/RCmd] to En / Ch IM (Input Source Pro)",
-            "manipulators": [
-              {
-                "from": {
-                  "key_code": "left_command"
-                },
-                "to": [
-                  {
-                    "key_code": "left_command"
-                  }
-                ],
-                "to_if_alone": [
-                  {
-                    "key_code": "f19"
-                  }
-                ],
-                "to_if_held_down": [
-                  {
-                    "key_code": "left_command"
-                  }
-                ],
-                "type": "basic"
-              },
-              {
-                "from": {
-                  "key_code": "right_command"
-                },
-                "to": [
-                  {
-                    "key_code": "right_command"
-                  }
-                ],
-                "to_if_alone": [
-                  {
-                    "key_code": "f18"
-                  }
-                ],
-                "to_if_held_down": [
-                  {
-                    "key_code": "right_command"
-                  }
-                ],
-                "type": "basic"
-              }
-            ]
-          },
-          {
-            "description": "[LCmd/RCmd] to En / Ch IM (Input Source Lang)",
-            "enabled": false,
-            "manipulators": [
-              {
-                "from": {
-                  "key_code": "left_command",
-                  "modifiers": {
-                    "optional": [
-                      "any"
-                    ]
-                  }
-                },
-                "parameters": {
-                  "basic.to_if_alone_threshold_milliseconds": 0,
-                  "basic.to_if_alone_timeout_milliseconds": 300,
-                  "basic.to_if_held_down_threshold_milliseconds": 100
-                },
-                "to": [
-                  {
-                    "key_code": "left_command",
-                    "lazy": true
-                  }
-                ],
-                "to_if_alone": [
-                  {
-                    "select_input_source": {
-                      "language": "en"
-                    }
-                  }
-                ],
-                "to_if_held_down": [
-                  {
-                    "key_code": "left_command"
-                  }
-                ],
-                "type": "basic"
-              },
-              {
-                "from": {
-                  "key_code": "right_command",
-                  "modifiers": {
-                    "optional": [
-                      "any"
-                    ]
-                  }
-                },
-                "parameters": {
-                  "basic.to_if_alone_threshold_milliseconds": 0,
-                  "basic.to_if_alone_timeout_milliseconds": 300,
-                  "basic.to_if_held_down_threshold_milliseconds": 100
-                },
-                "to": [
-                  {
-                    "key_code": "right_command",
-                    "lazy": true
-                  }
-                ],
-                "to_if_alone": [
-                  {
-                    "select_input_source": {
-                      "language": "zh-Hans"
-                    }
-                  }
-                ],
-                "to_if_held_down": [
-                  {
-                    "key_code": "right_command"
-                  }
-                ],
-                "type": "basic"
-              }
-            ]
-          },
-          {
-            "description": "[LShift] En / Ch IM switching (Input Source ID)",
-            "enabled": false,
-            "manipulators": [
-              {
-                "conditions": [
-                  {
-                    "input_sources": [
-                      {
-                        "input_source_id": "com.apple.keylayout.US"
-                      }
-                    ],
-                    "type": "input_source_if"
-                  }
-                ],
-                "from": {
-                  "key_code": "left_shift"
-                },
-                "to": [
-                  {
-                    "key_code": "left_shift"
-                  }
-                ],
-                "to_if_alone": [
-                  {
-                    "halt": true,
-                    "select_input_source": {
-                      "input_source_id": "im.rime.inputmethod.Squirrel.Hans"
-                    }
-                  },
-                  {
-                    "key_code": "left_shift"
-                  }
-                ],
-                "type": "basic"
-              },
-              {
-                "conditions": [
-                  {
-                    "input_sources": [
-                      {
-                        "input_source_id": "im.rime.inputmethod.Squirrel.Hans"
-                      }
-                    ],
-                    "type": "input_source_if"
-                  }
-                ],
-                "from": {
-                  "key_code": "left_shift"
-                },
-                "to": [
-                  {
-                    "key_code": "left_shift"
-                  }
-                ],
-                "to_if_alone": [
-                  {
-                    "halt": true,
-                    "select_input_source": {
-                      "input_source_id": "com.apple.keylayout.US"
-                    }
-                  },
-                  {
-                    "key_code": "left_shift"
-                  }
-                ],
-                "type": "basic"
-              }
-            ]
-          },
-          {
-            "description": "[Opt+ Z] activate Zotero",
-            "enabled": false,
-            "manipulators": [
-              {
-                "from": {
-                  "key_code": "z",
-                  "modifiers": {
-                    "mandatory": [
-                      "option"
-                    ]
-                  }
-                },
-                "to": [
-                  {
-                    "shell_command": "osascript -e 'tell application \"Zotero\" to activate'"
-                  }
-                ],
-                "type": "basic"
-              }
-            ]
-          },
-          {
-            "description": "[Option + W] activate MS Word",
-            "enabled": false,
-            "manipulators": [
-              {
-                "from": {
-                  "key_code": "w",
-                  "modifiers": {
-                    "mandatory": [
-                      "option"
-                    ]
-                  }
-                },
-                "to": [
-                  {
-                    "shell_command": "osascript -e 'tell application \"Microsoft Word\" to activate'"
-                  }
-                ],
-                "type": "basic"
-              }
-            ]
-          },
-          {
-            "description": "[Option + M] activate Mail",
-            "enabled": true,
-            "manipulators": [
-              {
-                "from": {
-                  "key_code": "m",
-                  "modifiers": {
-                    "mandatory": [
-                      "option"
-                    ]
-                  }
-                },
-                "to": [
-                  {
-                    "shell_command": "osascript -e 'tell application \"Mail\" to activate'"
-                  }
-                ],
-                "type": "basic"
-              }
-            ]
-          },
-          {
-            "description": "[Option + T] activate Terminal",
-            "manipulators": [
-              {
-                "from": {
-                  "key_code": "t",
-                  "modifiers": {
-                    "mandatory": [
-                      "option"
-                    ]
-                  }
-                },
-                "to": [
-                  {
-                    "shell_command": "osascript -e 'tell application \"Ghostty\" to activate'"
-                  }
-                ],
-                "type": "basic"
-              }
-            ]
-          },
-          {
-            "description": "[Option + G] activate Telegram",
-            "manipulators": [
-              {
-                "from": {
-                  "key_code": "g",
-                  "modifiers": {
-                    "mandatory": [
-                      "option"
-                    ]
-                  }
-                },
-                "to": [
-                  {
-                    "shell_command": "osascript -e 'tell application \"Nagram\" to activate'"
-                  }
-                ],
-                "type": "basic"
-              }
-            ]
-          },
-          {
-            "description": "[Opt+ C] activate Coding App",
-            "manipulators": [
-              {
-                "from": {
-                  "key_code": "c",
-                  "modifiers": {
-                    "mandatory": [
-                      "option"
-                    ]
-                  }
-                },
-                "to": [
-                  {
-                    "shell_command": "osascript -e 'tell application \"VSCodium\" to activate'"
-                  }
-                ],
-                "type": "basic"
-              }
-            ]
-          },
-          {
-            "description": "[Opt+ B] activate Browser",
-            "manipulators": [
-              {
-                "from": {
-                  "key_code": "b",
-                  "modifiers": {
-                    "mandatory": [
-                      "option"
-                    ]
-                  }
-                },
-                "to": [
-                  {
-                    "shell_command": "osascript -e 'tell application \"Helium\" to activate'"
-                  }
-                ],
-                "type": "basic"
-              }
-            ]
-          },
-          {
-            "description": "Keyboard Backlight: fn + up/down arrow",
-            "manipulators": [
-              {
-                "from": {
-                  "key_code": "down_arrow",
-                  "modifiers": {
-                    "mandatory": [
-                      "fn"
-                    ],
-                    "optional": [
-                      "caps_lock"
-                    ]
-                  }
-                },
-                "to": [
-                  {
-                    "key_code": "illumination_decrement"
-                  }
-                ],
-                "type": "basic"
-              },
-              {
-                "from": {
-                  "key_code": "up_arrow",
-                  "modifiers": {
-                    "mandatory": [
-                      "fn"
-                    ],
-                    "optional": [
-                      "caps_lock"
-                    ]
-                  }
-                },
-                "to": [
-                  {
-                    "key_code": "illumination_increment"
-                  }
-                ],
-                "type": "basic"
-              }
-            ]
-          }
-        ]
-      },
-      "devices": [
+    "global": {
+        "check_for_updates": false,
+        "show_in_menu_bar": false
+    },
+    "profiles": [
         {
-          "identifiers": {
-            "is_keyboard": true,
-            "is_pointing_device": true,
-            "product_id": 2616,
-            "vendor_id": 13364
-          },
-          "ignore": false
+            "complex_modifications": {
+                "rules": [
+                    {
+                        "description": "[Left Ctrl + Left Option] Hold to dictate with Qwen3 ASR (native app)",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "simultaneous": [
+                                        {
+                                            "key_code": "left_control"
+                                        },
+                                        {
+                                            "key_code": "left_option"
+                                        }
+                                    ],
+                                    "simultaneous_options": {
+                                        "detect_key_down_uninterruptedly": true,
+                                        "key_down_order": "insensitive",
+                                        "key_up_order": "insensitive",
+                                        "key_up_when": "any"
+                                    },
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "parameters": {
+                                    "basic.simultaneous_threshold_milliseconds": 300
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "f20"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "[F6] Toggle Caffeinate",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "caffeinate_is_active",
+                                        "type": "variable_if",
+                                        "value": 0
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "f6"
+                                },
+                                "to": [
+                                    {
+                                        "set_variable": {
+                                            "name": "caffeinate_is_active",
+                                            "value": 1
+                                        }
+                                    },
+                                    {
+                                        "shell_command": "nohup caffeinate -di &> /dev/null & echo $! > /tmp/caffeinate.pid; osascript -e 'display notification \"Mac is Caffeinated\" with title \"Caffeinate\"'"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "caffeinate_is_active",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "f6"
+                                },
+                                "to": [
+                                    {
+                                        "set_variable": {
+                                            "name": "caffeinate_is_active",
+                                            "value": 0
+                                        }
+                                    },
+                                    {
+                                        "shell_command": "if [ -f /tmp/caffeinate.pid ]; then kill $(cat /tmp/caffeinate.pid); rm /tmp/caffeinate.pid; fi; osascript -e 'display notification \"Mac is De-Caffeinated\" with title \"Caffeinate\"'"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "[CapsLock] -> ctrl if pressed with other keys, caps_lock -> esc if pressed alone.",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "caps_lock",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_control"
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "escape"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "[Tab + HJKL] -> Arrow Keys",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "tab",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "parameters": {
+                                    "basic.to_if_alone_timeout_milliseconds": 200
+                                },
+                                "to_after_key_up": [
+                                    {
+                                        "set_variable": {
+                                            "name": "tab_is_held",
+                                            "value": 0
+                                        }
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "tab"
+                                    }
+                                ],
+                                "to_if_held_down": [
+                                    {
+                                        "set_variable": {
+                                            "name": "tab_is_held",
+                                            "value": 1
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "tab_is_held",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "h"
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_arrow"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "tab_is_held",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "j"
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "down_arrow"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "tab_is_held",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "k"
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "up_arrow"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "tab_is_held",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "l"
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "right_arrow"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "[Cmd + Option + Left Click] Drag on from Anywhere of a window",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "command",
+                                            "option"
+                                        ],
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    },
+                                    "pointing_button": "button1"
+                                },
+                                "to": [
+                                    {
+                                        "modifiers": [
+                                            "command",
+                                            "control"
+                                        ],
+                                        "pointing_button": "button1"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "[LCmd/RCmd] to En / Ch IM (Input Source Pro)",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "left_command"
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_command"
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "f19"
+                                    }
+                                ],
+                                "to_if_held_down": [
+                                    {
+                                        "key_code": "left_command"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "right_command"
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "right_command"
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "f18"
+                                    }
+                                ],
+                                "to_if_held_down": [
+                                    {
+                                        "key_code": "right_command"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "[LCmd/RCmd] to En / Ch IM (Input Source Lang)",
+                        "enabled": false,
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "left_command",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "parameters": {
+                                    "basic.to_if_alone_threshold_milliseconds": 0,
+                                    "basic.to_if_alone_timeout_milliseconds": 300,
+                                    "basic.to_if_held_down_threshold_milliseconds": 100
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_command",
+                                        "lazy": true
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "select_input_source": {
+                                            "language": "en"
+                                        }
+                                    }
+                                ],
+                                "to_if_held_down": [
+                                    {
+                                        "key_code": "left_command"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "right_command",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "parameters": {
+                                    "basic.to_if_alone_threshold_milliseconds": 0,
+                                    "basic.to_if_alone_timeout_milliseconds": 300,
+                                    "basic.to_if_held_down_threshold_milliseconds": 100
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "right_command",
+                                        "lazy": true
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "select_input_source": {
+                                            "language": "zh-Hans"
+                                        }
+                                    }
+                                ],
+                                "to_if_held_down": [
+                                    {
+                                        "key_code": "right_command"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "[LShift] En / Ch IM switching (Input Source ID)",
+                        "enabled": false,
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "input_sources": [
+                                            {
+                                                "input_source_id": "com.apple.keylayout.US"
+                                            }
+                                        ],
+                                        "type": "input_source_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "left_shift"
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_shift"
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "halt": true,
+                                        "select_input_source": {
+                                            "input_source_id": "im.rime.inputmethod.Squirrel.Hans"
+                                        }
+                                    },
+                                    {
+                                        "key_code": "left_shift"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "input_sources": [
+                                            {
+                                                "input_source_id": "im.rime.inputmethod.Squirrel.Hans"
+                                            }
+                                        ],
+                                        "type": "input_source_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "left_shift"
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_shift"
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "halt": true,
+                                        "select_input_source": {
+                                            "input_source_id": "com.apple.keylayout.US"
+                                        }
+                                    },
+                                    {
+                                        "key_code": "left_shift"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "[Opt+ Z] activate Zotero",
+                        "enabled": false,
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "z",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "option"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "osascript -e 'tell application \"Zotero\" to activate'"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "[Option + W] activate MS Word",
+                        "enabled": false,
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "w",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "option"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "osascript -e 'tell application \"Microsoft Word\" to activate'"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "[Option + M] activate Mail",
+                        "enabled": true,
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "m",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "option"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "osascript -e 'tell application \"Mail\" to activate'"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "[Option + T] activate Terminal",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "t",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "option"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "osascript -e 'tell application \"Ghostty\" to activate'"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "[Option + G] activate Telegram",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "g",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "option"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "osascript -e 'tell application \"Nagram\" to activate'"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "[Opt+ C] activate Coding App",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "c",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "option"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "osascript -e 'tell application \"VSCodium\" to activate'"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "[Opt+ B] activate Browser",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "b",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "option"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "osascript -e 'tell application \"Helium\" to activate'"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Keyboard Backlight: fn + up/down arrow",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "down_arrow",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "fn"
+                                        ],
+                                        "optional": [
+                                            "caps_lock"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "illumination_decrement"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "up_arrow",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "fn"
+                                        ],
+                                        "optional": [
+                                            "caps_lock"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "illumination_increment"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "devices": [
+                {
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "is_pointing_device": true,
+                        "product_id": 2616,
+                        "vendor_id": 13364
+                    },
+                    "ignore": false
+                }
+            ],
+            "name": "Default profile",
+            "selected": true,
+            "virtual_hid_keyboard": {
+                "keyboard_type_v2": "ansi"
+            }
         }
-      ],
-      "name": "Default profile",
-      "selected": true,
-      "virtual_hid_keyboard": {
-        "keyboard_type_v2": "ansi"
-      }
-    }
-  ]
+    ]
 }

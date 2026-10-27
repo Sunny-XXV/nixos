@@ -9,7 +9,7 @@
     iterm2
     maccy
     moonlight-qt
-    qbittorrent
+    # qbittorrent
     scrcpy
     sioyek
   ];
