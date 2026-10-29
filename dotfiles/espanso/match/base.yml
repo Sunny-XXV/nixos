@@ -6,3 +6,14 @@ matches:
         type: date
         params:
           format: "%m/%d/%Y"
+
+  - trigger: ":__asr_paste__"
+    force_mode: clipboard
+    replace: "{{clipboard}}"
+    vars:
+      - name: clipboard
+        type: clipboard
+
+  - trigger: "···"
+    replace: "```"
+      

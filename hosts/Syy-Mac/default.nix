@@ -28,6 +28,7 @@
   };
 
   environment.shells = [pkgs.bashInteractive];
+  programs.zsh.enable = false;
 
   users.users.${username}.home = "/Users/${username}";
   home-manager = {

@@ -36,9 +36,11 @@ in {
     "bettercmdtab"
     "calibre"
     "crossover"
+    "espanso"
     "helium-browser"
     "input-source-pro"
     "karabiner-elements"
+    "moonlight"
     {
       name = "microsoft-word";
       greedy = false;

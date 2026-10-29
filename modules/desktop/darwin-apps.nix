@@ -7,9 +7,6 @@
     ghostty-bin
     iina
     iterm2
-    maccy
-    moonlight-qt
-    # qbittorrent
     scrcpy
     sioyek
   ];
