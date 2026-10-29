@@ -1,10 +1,9 @@
 {
   config,
   pkgs,
-  inputs,
   ...
 }: let
-  daePackage = inputs.daeuniverse.packages.${pkgs.system}.dae-release;
+  daePackage = pkgs.dae;
   daeConfigTemplate = builtins.readFile ../../dotfiles/dae/config.dae;
 in {
   sops.secrets."dae/sub_nacho" = {

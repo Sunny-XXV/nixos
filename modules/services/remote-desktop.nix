@@ -53,7 +53,12 @@
       done
 
       hyprctl output create headless HEADLESS-SUNSHINE || true
-      systemctl --user start sunshine.service || true
+      systemctl --user import-environment \
+        HYPRLAND_INSTANCE_SIGNATURE \
+        WAYLAND_DISPLAY \
+        DISPLAY \
+        XDG_RUNTIME_DIR
+      systemctl --user restart sunshine.service
 
       wait "$hypr_pid"
     '';
