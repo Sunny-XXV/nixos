@@ -1,0 +1,22 @@
+# ASR 热词表
+# 每行一个词或短语，# 开头为注释。
+# 修改后无需重启服务，下一次按键说话自动生效。
+
+NixOS
+nix-darwin
+Home Manager
+flake
+nixpkgs
+Karabiner
+Espanso
+Ghostty
+Neovim
+VSCodium
+Zed
+Claude Code
+Codex
+llama.cpp
+gguf
+Qwen3-ASR
+Tailscale
+Mihomo

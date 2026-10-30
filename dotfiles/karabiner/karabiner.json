@@ -8,7 +8,7 @@
             "complex_modifications": {
                 "rules": [
                     {
-                        "description": "[Left Ctrl + Left Option] Hold to dictate with Qwen3 ASR (native app)",
+                        "description": "[Ctrl + Opt] Hold to dictate",
                         "manipulators": [
                             {
                                 "from": {
@@ -24,11 +24,16 @@
                                         "detect_key_down_uninterruptedly": true,
                                         "key_down_order": "insensitive",
                                         "key_up_order": "insensitive",
-                                        "key_up_when": "any"
+                                        "key_up_when": "any",
+                                        "to_after_key_up": [
+                                            {
+                                                "shell_command": "[ -p /tmp/asr-ptt/control.fifo ] && printf 'stop\\n' > /tmp/asr-ptt/control.fifo &"
+                                            }
+                                        ]
                                     },
                                     "modifiers": {
                                         "optional": [
-                                            "any"
+                                            "caps_lock"
                                         ]
                                     }
                                 },
@@ -37,7 +42,8 @@
                                 },
                                 "to": [
                                     {
-                                        "key_code": "f20"
+                                        "repeat": false,
+                                        "shell_command": "[ -p /tmp/asr-ptt/control.fifo ] && printf 'start\\n' > /tmp/asr-ptt/control.fifo &"
                                     }
                                 ],
                                 "type": "basic"
@@ -236,7 +242,7 @@
                         ]
                     },
                     {
-                        "description": "[Cmd + Option + Left Click] Drag on from Anywhere of a window",
+                        "description": "[Cmd + Opt + Left Click] Drag on from Anywhere of a window",
                         "manipulators": [
                             {
                                 "from": {

@@ -22,6 +22,7 @@
     ../../modules/services/earlyoom.nix
     ../../modules/services/fail2ban.nix
     ../../modules/services/firewall.nix
+    ../../modules/services/llama.nix
     ../../modules/services/openssh.nix
     ../../modules/services/dae.nix
     ../../modules/services/rclone.nix
@@ -76,7 +77,6 @@
         ../../modules/home/desktop/theme.nix
         ../../modules/home/desktop/xremap.nix
         ../../modules/home/programs/gpg.nix
-        ../../modules/home/programs/llama.nix
         ../../modules/home/programs/rbw.nix
       ];
     };
