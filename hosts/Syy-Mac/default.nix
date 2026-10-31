@@ -16,9 +16,11 @@
     ../../modules/desktop/fonts.nix
     ../../modules/services/llama.nix
     ../../modules/services/sleep-bt.nix
+    ../../modules/services/tailscale.nix
     ../../modules/services/mihomo.nix
   ];
 
+  networking.hostName = "Syy-Mac";
   nixpkgs.hostPlatform = "aarch64-darwin";
 
   system = {

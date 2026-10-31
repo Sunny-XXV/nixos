@@ -5,6 +5,8 @@
   ...
 }: let
   dataDir = config.services.vaultwarden.config.DATA_FOLDER;
+  tailnetDomain = "${lib.toLower config.networking.hostName}.taile2b66b.ts.net";
+  tsCertDir = "/var/lib/tailscale/certs";
   backup = {
     remote = "infini_cloud:vaultwarden";
     localStateDir = "/var/lib/vaultwarden-backup";
@@ -79,14 +81,14 @@ in {
     enable = true;
     config = {
       DATA_FOLDER = "/var/lib/vaultwarden";
-      DOMAIN = "https://syy-pc.taile2b66b.ts.net:8454";
+      DOMAIN = "https://${tailnetDomain}:8454";
       ROCKET_ADDRESS = "127.0.0.1";
       ROCKET_PORT = 8455;
     };
     webVaultPackage = pkgs.vaultwarden.webvault;
   };
 
-  services.nginx.virtualHosts."syy-pc.taile2b66b.ts.net" = {
+  services.nginx.virtualHosts.${tailnetDomain} = {
     http2 = true;
     listen = [
       {
@@ -102,8 +104,8 @@ in {
     ];
 
     forceSSL = true;
-    sslCertificate = "/var/lib/tailscale/certs/syy-pc.taile2b66b.ts.net.crt";
-    sslCertificateKey = "/var/lib/tailscale/certs/syy-pc.taile2b66b.ts.net.key";
+    sslCertificate = "${tsCertDir}/${tailnetDomain}.crt";
+    sslCertificateKey = "${tsCertDir}/${tailnetDomain}.key";
 
     locations = {
       "/" = {
@@ -112,7 +114,7 @@ in {
       };
 
       "/notifications/hub" = {
-        proxyPass = "http://127.0.0.1:8455";
+        proxyPass = "http://127.0.0.1:${toString config.services.vaultwarden.config.ROCKET_PORT}";
         proxyWebsockets = true;
       };
     };

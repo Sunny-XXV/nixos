@@ -58,8 +58,6 @@ rule-providers:
     behavior: classical
     payload:
       - DOMAIN,openai-api.arkoselabs.com
-      # This exact shared Arkose endpoint is deliberately pinned to OpenAI;
-      # do not match all of arkoselabs.com, auth0.com, azure.com or cloudflare.net.
       - DOMAIN,client-api.arkoselabs.com
       - AND,((PROCESS-NAME-REGEX,(?i)^(codex|chatgpt)(\.exe)?$),(DOMAIN-SUFFIX,webpubsub.azure.com))
   cn-domain:
@@ -81,7 +79,6 @@ rule-providers:
 
 # general
 mode: rule
-interface-name: en0
 ipv6: true
 mixed-port: 7890
 allow-lan: true
@@ -111,6 +108,7 @@ dns:
   fake-ip-filter:
     - "+.lan"
     - "+.local"
+    - "+.ts.net"
     - "+.msftconnecttest.com"
     - "+.msftncsi.com"
     - "localhost.ptlogin2.qq.com"
@@ -128,18 +126,19 @@ dns:
     - tls://223.5.5.5
     - tls://119.29.29.29
   nameserver-policy:
+    "+.ts.net": "system"
     "rule-set:cn-domain":
-      - "https://223.5.5.5/dns-query#en0"
-      - "https://1.12.12.12/dns-query#en0"
+      - "https://223.5.5.5/dns-query#DIRECT"
+      - "https://1.12.12.12/dns-query#DIRECT"
   nameserver:
     - "https://1.1.1.1/dns-query#Manual"
     - "https://8.8.8.8/dns-query#Manual"
   proxy-server-nameserver:
-    - "https://223.5.5.5/dns-query#en0"
-    - "https://1.12.12.12/dns-query#en0"
+    - "https://223.5.5.5/dns-query#DIRECT"
+    - "https://1.12.12.12/dns-query#DIRECT"
   direct-nameserver:
-    - "https://223.5.5.5/dns-query#en0"
-    - "https://1.12.12.12/dns-query#en0"
+    - "https://223.5.5.5/dns-query#DIRECT"
+    - "https://1.12.12.12/dns-query#DIRECT"
   direct-nameserver-follow-policy: true
 
 # time sync
@@ -160,7 +159,6 @@ tun:
   dns-hijack:
     - any:53
     - tcp://any:53
-  # Keep local networks and Tailscale reachable outside the tunnel.
   route-exclude-address:
     - 10.0.0.0/8
     - 100.64.0.0/10
@@ -170,7 +168,6 @@ tun:
 
 # sniffer
 sniffer:
-  # Recover TLS SNI / HTTP Host for TUN connections whose DNS bypassed Mihomo.
   enable: true
   force-dns-mapping: true
   parse-pure-ip: true
@@ -179,6 +176,10 @@ sniffer:
     TLS:
       ports:
         - 443
+        - 465
+        - 853
+        - 993
+        - 995
         - 8443
     HTTP:
       ports:
@@ -213,12 +214,12 @@ external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-p
 
 # proxy groups
 SelectALL: &SelectALL { type: url-test, empty-fallback: REJECT, use: [subscription], interval: 300, tolerance: 50, url: 'https://www.gstatic.com/generate_204', hidden: true, disable-udp: false }
-SelectHK: &SelectHK { type: select, proxies: [ Auto, 香港, 澳门, 台湾, 日本, 韩国, 美国, 英国, 德国, 法国, 印度, 新加坡, 印尼, 越南, 泰国, 澳洲, 巴西, 其他, DIRECT, REJECT ], disable-udp: false }
-SelectTW: &SelectTW { type: select, proxies: [ 台湾, Manual, 香港, 澳门, 日本, 韩国, 美国, 英国, 德国, 法国, 印度, 新加坡, 印尼, 越南, 泰国, 澳洲, 巴西, 其他, DIRECT, REJECT ], disable-udp: false }
-SelectDirect: &SelectDirect { type: select, proxies: [ DIRECT, REJECT, Manual, 香港, 澳门, 台湾, 日本, 韩国, 美国, 英国, 德国, 法国, 印度, 新加坡, 印尼, 越南, 泰国, 澳洲, 巴西, 其他 ], disable-udp: false }
-SelectProxy: &SelectProxy { type: select, proxies: [ Manual, 香港, 澳门, 台湾, 日本, 韩国, 美国, 英国, 德国, 法国, 印度, 新加坡, 印尼, 越南, 泰国, 澳洲, 巴西, 其他, DIRECT, REJECT ], disable-udp: false }
-# Regional groups test only nodes from the subscription provider.
-UrlTest: &UrlTest { type: url-test, empty-fallback: REJECT, use: [subscription], interval: 300, tolerance: 50, url: 'https://www.gstatic.com/generate_204', hidden: true, disable-udp: false }
+SelectHK: &SelectHK { type: select, proxies: [ Auto, 香港, 台湾, 日本, 韩国, 新加坡, 美国, 欧洲, 其他, DIRECT, REJECT ], disable-udp: false }
+SelectTW: &SelectTW { type: select, proxies: [ 台湾, Manual, 香港, 日本, 韩国, 新加坡, 美国, 欧洲, 其他, DIRECT, REJECT ], disable-udp: false }
+SelectDirect: &SelectDirect { type: select, proxies: [ DIRECT, REJECT, Manual, 香港, 台湾, 日本, 韩国, 新加坡, 美国, 欧洲, 其他 ], disable-udp: false }
+SelectProxy: &SelectProxy { type: select, proxies: [ Manual, 香港, 台湾, 日本, 韩国, 新加坡, 美国, 欧洲, 其他, DIRECT, REJECT ], disable-udp: false }
+# Regional groups allow manual selection from the subscription provider.
+UrlTest: &UrlTest { type: select, empty-fallback: REJECT, use: [subscription], url: 'https://www.gstatic.com/generate_204', disable-udp: false }
 Fallback: &Fallback { type: fallback, empty-fallback: REJECT, use: [subscription], interval: 300, tolerance: 50, url: 'https://www.gstatic.com/generate_204', hidden: true, disable-udp: false }
 
 # 代理组
@@ -246,25 +247,14 @@ proxy-groups:
   - { name: YouTube, <<: *SelectProxy, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/YouTube.png}
   - { name: 漏网之鱼, <<: *SelectProxy, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Final.png }
   - { name: 直连, <<: *SelectDirect, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Direct.png, hidden: true }
-  # 这里只匹配了一些常用地区的分组
-  - { name: 香港, <<: *UrlTest, filter: 🇭🇰|香港|港|HK|hongkong|hong kong, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png }
-  - { name: 澳门, <<: *UrlTest, filter: 🇲🇴|澳门|门|MO|macao, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Macao.png }
-  - { name: 台湾, <<: *UrlTest, filter: 🇹🇼|台湾|台|TW|taiwan|taipei, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Taiwan.png }
-  - { name: 日本, <<: *UrlTest, filter: 🇯🇵|日本|JP|japan|tokyo|osaka, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Japan.png }
-  - { name: 韩国, <<: *UrlTest, filter: 🇰🇷|韩国|韩|KR|korea|seoul, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Korea.png }
-  - { name: 美国, <<: *UrlTest, filter: 🇺🇸|美国|美|US|united states|america|los angeles|san jose|silicon valley, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png }
-  - { name: 英国, <<: *UrlTest, filter: 🇬🇧|英国|英|UK|united kingdom|london, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_Kingdom.png }
-  - { name: 德国, <<: *UrlTest, filter: 🇩🇪|德国|德|DE|germany|frankfurt, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Germany.png }
-  - { name: 法国, <<: *UrlTest, filter: 🇫🇷|法国|法|FR|france|paris, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/France.png }
-  - { name: 印度, <<: *UrlTest, filter: 🇮🇳|印度|IN|india|mumbai, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/France.png }
-  - { name: 新加坡, <<: *UrlTest, filter: 🇸🇬|新加坡|新|SG|singapore, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Singapore.png }
-  - { name: 印尼, <<: *UrlTest, filter: 🇮🇩|印尼|印度尼西亚|ID|indonesia|jakarta, icon: https://testingcf.jsdelivr.net/gh/wanswu/my-backup@master/IconSet/Country/Indonesia.png }
-  - { name: 越南, <<: *UrlTest, filter: 🇻🇳|越南|VN|vietnam, icon: https://testingcf.jsdelivr.net/gh/wanswu/my-backup@master/IconSet/Country/Vietnam.png }
-  - { name: 泰国, <<: *UrlTest, filter: 🇹🇭|泰国|TH|thailand|bangkok, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Thailand.png }
-  - { name: 澳洲, <<: *UrlTest, filter: 🇦🇺|澳大利亚|AU|australia|sydney, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Australia.png }
-  - { name: 巴西, <<: *UrlTest, filter: 🇧🇷|巴西|brazil, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Brazil.png }
-  # 除了常用的地区，其他地区都放这里
-  - { name: 其他, <<: *UrlTest, filter: '(?i)^(?!.*(香港|台湾|日本|韩国|新加坡|美国|英国|德国|法国|印度|泰国|越南|印尼|澳大利亚|巴西|港|台|日|韩|新|美|英|德|法|印|泰|越|尼|澳|巴|hk|tw|jp|kr|sg|us|uk|de|fr|in|th|vn|id|au|br)).*', icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png }
+  - { name: 香港, <<: *UrlTest, filter: '🇭🇰|(?i)(香港|港|\bHK\b|hong\s*kong)', icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png }
+  - { name: 台湾, <<: *UrlTest, filter: '🇹🇼|(?i)(台湾|台|\bTW\b|taiwan|taipei)', icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Taiwan.png }
+  - { name: 日本, <<: *UrlTest, filter: '🇯🇵|(?i)(日本|\bJP\b|japan|tokyo|osaka)', icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Japan.png }
+  - { name: 韩国, <<: *UrlTest, filter: '🇰🇷|(?i)(韩国|韩|\bKR\b|korea|seoul)', icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Korea.png }
+  - { name: 新加坡, <<: *UrlTest, filter: '🇸🇬|(?i)(新加坡|狮城|\bSG\b|singapore)', icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Singapore.png }
+  - { name: 美国, <<: *UrlTest, filter: '🇺🇸|(?i)(美国|\bUS\b|united\s*states|america|los\s*angeles|san\s*jose|silicon\s*valley|seattle)', icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png }
+  - { name: 欧洲, <<: *UrlTest, filter: '🇪🇺|🇬🇧|🇩🇪|🇫🇷|🇱🇺|🇳🇱|🇨🇭|🇮🇹|🇪🇸|🇸🇪|🇫🇮|🇳🇴|🇵🇱|🇦🇹|🇮🇪|🇧🇪|🇷🇺|🇹🇷|(?i)(欧洲|英国|德国|法国|卢森堡|荷兰|瑞士|意大利|西班牙|瑞典|芬兰|挪威|波兰|奥地利|爱尔兰|比利时|俄罗斯|土耳其|\b(EU|UK|GB|DE|FR|LU|NL|CH|IT|ES|SE|FI|NO|PL|AT|IE|BE|RU|TR)\b|united\s*kingdom|london|germany|frankfurt|france|paris|luxembourg|netherlands|amsterdam|switzerland|zurich)', icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/European_Union.png }
+  - { name: 其他, <<: *UrlTest, exclude-filter: '🇭🇰|🇹🇼|🇯🇵|🇰🇷|🇸🇬|🇺🇸|🇪🇺|🇬🇧|🇩🇪|🇫🇷|🇱🇺|🇳🇱|🇨🇭|🇮🇹|🇪🇸|🇸🇪|🇫🇮|🇳🇴|🇵🇱|🇦🇹|🇮🇪|🇧🇪|🇷🇺|🇹🇷|(?i)(香港|台湾|日本|韩国|新加坡|狮城|美国|欧洲|英国|德国|法国|卢森堡|荷兰|瑞士|意大利|西班牙|瑞典|芬兰|挪威|波兰|奥地利|爱尔兰|比利时|俄罗斯|土耳其|\b(HK|TW|JP|KR|SG|US|EU|UK|GB|DE|FR|LU|NL|CH|IT|ES|SE|FI|NO|PL|AT|IE|BE|RU|TR)\b|hong\s*kong|taiwan|taipei|japan|tokyo|osaka|korea|seoul|singapore|united\s*states|america|los\s*angeles|san\s*jose|silicon\s*valley|seattle|united\s*kingdom|london|germany|frankfurt|france|paris|luxembourg|netherlands|amsterdam|switzerland|zurich)', icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png }
 
 # First match wins. Hard local bypasses precede app policies; narrow services
 # precede parent ecosystems (Gemini/YouTube before Google, OneDrive before Microsoft).
@@ -283,6 +273,7 @@ rules:
   - DOMAIN-SUFFIX,lan,DIRECT
   - DOMAIN-SUFFIX,ts.net,DIRECT
   - DOMAIN,localhost,DIRECT
+  - DST-PORT,25/587,REJECT
   - RULE-SET,anthropic,Anthropic
   - RULE-SET,claude-extra,Anthropic
   - RULE-SET,claude-shared,Anthropic

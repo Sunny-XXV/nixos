@@ -55,7 +55,6 @@ in {
     "squirrel-app"
     "stats"
     "steam"
-    "tailscale-app"
     "tencent-meeting"
     "vscodium"
     "zed"

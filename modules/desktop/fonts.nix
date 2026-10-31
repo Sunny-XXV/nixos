@@ -8,14 +8,13 @@
 in {
   fonts =
     {
-      packages =
-        with pkgs; [
-          sarasa-gothic
-          noto-fonts
-          noto-fonts-cjk-sans
-          noto-fonts-color-emoji
-          nerd-fonts.jetbrains-mono
-        ];
+      packages = with pkgs; [
+        sarasa-gothic
+        noto-fonts
+        noto-fonts-cjk-sans
+        noto-fonts-color-emoji
+        nerd-fonts.jetbrains-mono
+      ];
     }
     // lib.optionalAttrs isLinux {
       fontconfig = {
