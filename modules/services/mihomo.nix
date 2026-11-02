@@ -28,11 +28,35 @@ in {
       mode = "0400";
     };
 
+    secrets."mihomo/warp_private_key" = {
+      sopsFile = ./mihomo-secrets.yaml;
+      key = "warp_private_key";
+      owner = "root";
+      group = "wheel";
+      mode = "0400";
+    };
+
+    secrets."mihomo/warp_ip6_address" = {
+      sopsFile = ./mihomo-secrets.yaml;
+      key = "warp_ip6_address";
+      owner = "root";
+      group = "wheel";
+      mode = "0400";
+    };
+
     templates."mihomo-config.yaml" = {
       content =
         builtins.replaceStrings
-        ["@MIHOMO_SUBSCRIPTION_URL@"]
-        [config.sops.placeholder."mihomo/subscription_url"]
+        [
+          "@MIHOMO_SUBSCRIPTION_URL@"
+          "@MIHOMO_WARP_PRIVATE_KEY@"
+          "@MIHOMO_WARP_IP6_ADDRESS@"
+        ]
+        [
+          config.sops.placeholder."mihomo/subscription_url"
+          config.sops.placeholder."mihomo/warp_private_key"
+          config.sops.placeholder."mihomo/warp_ip6_address"
+        ]
         configTemplate;
       owner = "root";
       group = "wheel";
@@ -44,6 +68,7 @@ in {
   # the repository; the subscription URL exists only in the SOPS-rendered file.
   launchd.daemons.mihomo = {
     path = [pkgs.coreutils];
+    environment.SAFE_PATHS = "/run/secrets/rendered";
     script = ''
       for attempt in $(${pkgs.coreutils}/bin/seq 1 30); do
         test -r "${configFile}" && break

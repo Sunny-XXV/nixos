@@ -212,12 +212,29 @@ secret: ""
 external-ui: "./ui/zashboard"
 external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
 
+# standalone proxies
+proxies:
+  - name: WARP
+    type: wireguard
+    server: engage.cloudflareclient.com
+    port: 2408
+    ip: 172.16.0.2/32
+    ipv6: "@MIHOMO_WARP_IP6_ADDRESS@"
+    private-key: "@MIHOMO_WARP_PRIVATE_KEY@"
+    public-key: bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=
+    udp: true
+    mtu: 1280
+    persistent-keepalive: 25
+    remote-dns-resolve: true
+    dialer-proxy: WARP前置
+
 # proxy groups
 SelectALL: &SelectALL { type: url-test, empty-fallback: REJECT, use: [subscription], interval: 300, tolerance: 50, url: 'https://www.gstatic.com/generate_204', hidden: true, disable-udp: false }
-SelectHK: &SelectHK { type: select, proxies: [ Auto, 香港, 台湾, 日本, 韩国, 新加坡, 美国, 欧洲, 其他, DIRECT, REJECT ], disable-udp: false }
-SelectTW: &SelectTW { type: select, proxies: [ 台湾, Manual, 香港, 日本, 韩国, 新加坡, 美国, 欧洲, 其他, DIRECT, REJECT ], disable-udp: false }
-SelectDirect: &SelectDirect { type: select, proxies: [ DIRECT, REJECT, Manual, 香港, 台湾, 日本, 韩国, 新加坡, 美国, 欧洲, 其他 ], disable-udp: false }
-SelectProxy: &SelectProxy { type: select, proxies: [ Manual, 香港, 台湾, 日本, 韩国, 新加坡, 美国, 欧洲, 其他, DIRECT, REJECT ], disable-udp: false }
+SelectHK: &SelectHK { type: select, proxies: [ Auto, WARP, 香港, 台湾, 日本, 韩国, 新加坡, 美国, 欧洲, 其他, DIRECT, REJECT ], disable-udp: false }
+SelectTW: &SelectTW { type: select, proxies: [ 台湾, Manual, WARP, 香港, 日本, 韩国, 新加坡, 美国, 欧洲, 其他, DIRECT, REJECT ], disable-udp: false }
+SelectDirect: &SelectDirect { type: select, proxies: [ DIRECT, REJECT, Manual, WARP, 香港, 台湾, 日本, 韩国, 新加坡, 美国, 欧洲, 其他 ], disable-udp: false }
+SelectProxy: &SelectProxy { type: select, proxies: [ Manual, WARP, 香港, 台湾, 日本, 韩国, 新加坡, 美国, 欧洲, 其他, DIRECT, REJECT ], disable-udp: false }
+SelectWarpDialer: &SelectWarpDialer { type: select, proxies: [ 日本, 新加坡, 美国, 台湾, 韩国, 欧洲, 香港, Manual, Auto, 其他 ], use: [subscription], disable-udp: false }
 # Regional groups allow manual selection from the subscription provider.
 UrlTest: &UrlTest { type: select, empty-fallback: REJECT, use: [subscription], url: 'https://www.gstatic.com/generate_204', disable-udp: false }
 Fallback: &Fallback { type: fallback, empty-fallback: REJECT, use: [subscription], interval: 300, tolerance: 50, url: 'https://www.gstatic.com/generate_204', hidden: true, disable-udp: false }
@@ -225,23 +242,24 @@ Fallback: &Fallback { type: fallback, empty-fallback: REJECT, use: [subscription
 # 代理组
 proxy-groups:
   - { name: Manual, <<: *SelectHK, use: [subscription], icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Rocket.png }
+  - { name: WARP前置, <<: *SelectWarpDialer, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Cloudflare.png }
   - { name: Auto, <<: *SelectALL, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Auto.png }
   - { name: GLOBAL, <<: *SelectDirect, use: [subscription], icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png }
   - { name: Apple, <<: *SelectProxy, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Apple.png }
   - { name: BiliBili, <<: *SelectDirect, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/bilibili_4.png }
   - { name: Anthropic, <<: *SelectProxy, icon: https://testingcf.jsdelivr.net/gh/lobehub/lobe-icons@master/packages/static-png/light/claude-color.png }
-  - { name: Disney, <<: *SelectProxy, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Disney.png }
-  - { name: Emby, <<: *SelectProxy, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Emby.png }
+  # - { name: Disney, <<: *SelectProxy, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Disney.png }
+  # - { name: Emby, <<: *SelectProxy, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Emby.png }
   - { name: Gemini, <<: *SelectProxy, icon: https://testingcf.jsdelivr.net/gh/guaishouxiaoqi/icons@master/Color/Gemini.png }
   - { name: Github, <<: *SelectProxy, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/GitHub.png }
   - { name: Google, <<: *SelectProxy, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Google_Search.png }
   - { name: Microsoft, <<: *SelectProxy, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Microsoft.png }
-  - { name: Netflix, <<: *SelectProxy, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Netflix.png }
+  # - { name: Netflix, <<: *SelectProxy, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Netflix.png }
   - { name: OpenAI, <<: *SelectProxy, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/ChatGPT.png }
   - { name: OneDrive, <<: *SelectProxy, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/OneDrive.png }
   - { name: Steam, <<: *SelectProxy, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Steam.png }
   - { name: Spotify, <<: *SelectProxy, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Spotify.png }
-  - { name: TikTok, <<: *SelectTW, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/TikTok.png }
+  # - { name: TikTok, <<: *SelectTW, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/TikTok.png }
   - { name: Telegram, <<: *SelectProxy, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Telegram.png }
   - { name: Twitter, <<: *SelectProxy, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Twitter.png }
   - { name: YouTube, <<: *SelectProxy, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/YouTube.png}
@@ -256,9 +274,6 @@ proxy-groups:
   - { name: 欧洲, <<: *UrlTest, filter: '🇪🇺|🇬🇧|🇩🇪|🇫🇷|🇱🇺|🇳🇱|🇨🇭|🇮🇹|🇪🇸|🇸🇪|🇫🇮|🇳🇴|🇵🇱|🇦🇹|🇮🇪|🇧🇪|🇷🇺|🇹🇷|(?i)(欧洲|英国|德国|法国|卢森堡|荷兰|瑞士|意大利|西班牙|瑞典|芬兰|挪威|波兰|奥地利|爱尔兰|比利时|俄罗斯|土耳其|\b(EU|UK|GB|DE|FR|LU|NL|CH|IT|ES|SE|FI|NO|PL|AT|IE|BE|RU|TR)\b|united\s*kingdom|london|germany|frankfurt|france|paris|luxembourg|netherlands|amsterdam|switzerland|zurich)', icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/European_Union.png }
   - { name: 其他, <<: *UrlTest, exclude-filter: '🇭🇰|🇹🇼|🇯🇵|🇰🇷|🇸🇬|🇺🇸|🇪🇺|🇬🇧|🇩🇪|🇫🇷|🇱🇺|🇳🇱|🇨🇭|🇮🇹|🇪🇸|🇸🇪|🇫🇮|🇳🇴|🇵🇱|🇦🇹|🇮🇪|🇧🇪|🇷🇺|🇹🇷|(?i)(香港|台湾|日本|韩国|新加坡|狮城|美国|欧洲|英国|德国|法国|卢森堡|荷兰|瑞士|意大利|西班牙|瑞典|芬兰|挪威|波兰|奥地利|爱尔兰|比利时|俄罗斯|土耳其|\b(HK|TW|JP|KR|SG|US|EU|UK|GB|DE|FR|LU|NL|CH|IT|ES|SE|FI|NO|PL|AT|IE|BE|RU|TR)\b|hong\s*kong|taiwan|taipei|japan|tokyo|osaka|korea|seoul|singapore|united\s*states|america|los\s*angeles|san\s*jose|silicon\s*valley|seattle|united\s*kingdom|london|germany|frankfurt|france|paris|luxembourg|netherlands|amsterdam|switzerland|zurich)', icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png }
 
-# First match wins. Hard local bypasses precede app policies; narrow services
-# precede parent ecosystems (Gemini/YouTube before Google, OneDrive before Microsoft).
-# Domestic and unmatched public traffic retain selectable fallback groups.
 rules:
   - IP-CIDR,10.0.0.0/8,DIRECT,no-resolve
   - IP-CIDR,100.64.0.0/10,DIRECT,no-resolve
@@ -273,7 +288,8 @@ rules:
   - DOMAIN-SUFFIX,lan,DIRECT
   - DOMAIN-SUFFIX,ts.net,DIRECT
   - DOMAIN,localhost,DIRECT
-  - DST-PORT,25/587,REJECT
+  - DST-PORT,25,REJECT
+  - AND,((NETWORK,udp),(DST-PORT,443)),REJECT
   - RULE-SET,anthropic,Anthropic
   - RULE-SET,claude-extra,Anthropic
   - RULE-SET,claude-shared,Anthropic
@@ -286,16 +302,16 @@ rules:
   - RULE-SET,telegram,Telegram
   - RULE-SET,telegram-ip,Telegram,no-resolve
   - RULE-SET,twitter,Twitter
-  - RULE-SET,tiktok,TikTok
-  - RULE-SET,netflix,Netflix
-  - RULE-SET,netflix-ip,Netflix,no-resolve
-  - RULE-SET,disney,Disney
+  # - RULE-SET,tiktok,TikTok
+  # - RULE-SET,netflix,Netflix
+  # - RULE-SET,netflix-ip,Netflix,no-resolve
+  # - RULE-SET,disney,Disney
   - RULE-SET,spotify,Spotify
   - RULE-SET,steam,Steam
   - RULE-SET,bilibili,BiliBili
-  - RULE-SET,emby,Emby
-  - PROCESS-NAME,Emby,Emby
-  - PROCESS-NAME,Emby Theater,Emby
+  # - RULE-SET,emby,Emby
+  # - PROCESS-NAME,Emby,Emby
+  # - PROCESS-NAME,Emby Theater,Emby
   - RULE-SET,apple,Apple
   - RULE-SET,microsoft,Microsoft
   - RULE-SET,google,Google
