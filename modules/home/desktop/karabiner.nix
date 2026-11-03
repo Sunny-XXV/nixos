@@ -1,3 +1,3 @@
 {
-  dotfiles.links.".config/karabiner/karabiner.json" = "karabiner/karabiner.json";
+  dotfiles.links.".config/karabiner" = "karabiner";
 }

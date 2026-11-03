@@ -12,34 +12,20 @@
                         "manipulators": [
                             {
                                 "from": {
+                                    "modifiers": { "optional": ["caps_lock"] },
                                     "simultaneous": [
-                                        {
-                                            "key_code": "left_control"
-                                        },
-                                        {
-                                            "key_code": "left_option"
-                                        }
+                                        { "key_code": "left_control" },
+                                        { "key_code": "left_option" }
                                     ],
                                     "simultaneous_options": {
                                         "detect_key_down_uninterruptedly": true,
                                         "key_down_order": "insensitive",
                                         "key_up_order": "insensitive",
                                         "key_up_when": "any",
-                                        "to_after_key_up": [
-                                            {
-                                                "shell_command": "[ -p /tmp/asr-ptt/control.fifo ] && printf 'stop\\n' > /tmp/asr-ptt/control.fifo &"
-                                            }
-                                        ]
-                                    },
-                                    "modifiers": {
-                                        "optional": [
-                                            "caps_lock"
-                                        ]
+                                        "to_after_key_up": [{ "shell_command": "[ -p /tmp/asr-ptt/control.fifo ] && printf 'stop\\n' > /tmp/asr-ptt/control.fifo &" }]
                                     }
                                 },
-                                "parameters": {
-                                    "basic.simultaneous_threshold_milliseconds": 300
-                                },
+                                "parameters": { "basic.simultaneous_threshold_milliseconds": 300 },
                                 "to": [
                                     {
                                         "repeat": false,
@@ -61,9 +47,7 @@
                                         "value": 0
                                     }
                                 ],
-                                "from": {
-                                    "key_code": "f6"
-                                },
+                                "from": { "key_code": "f6" },
                                 "to": [
                                     {
                                         "set_variable": {
@@ -71,9 +55,7 @@
                                             "value": 1
                                         }
                                     },
-                                    {
-                                        "shell_command": "nohup caffeinate -di &> /dev/null & echo $! > /tmp/caffeinate.pid; osascript -e 'display notification \"Mac is Caffeinated\" with title \"Caffeinate\"'"
-                                    }
+                                    { "shell_command": "nohup caffeinate -di &> /dev/null & echo $! > /tmp/caffeinate.pid; osascript -e 'display notification \"Mac is Caffeinated\" with title \"Caffeinate\"'" }
                                 ],
                                 "type": "basic"
                             },
@@ -85,9 +67,7 @@
                                         "value": 1
                                     }
                                 ],
-                                "from": {
-                                    "key_code": "f6"
-                                },
+                                "from": { "key_code": "f6" },
                                 "to": [
                                     {
                                         "set_variable": {
@@ -95,9 +75,7 @@
                                             "value": 0
                                         }
                                     },
-                                    {
-                                        "shell_command": "if [ -f /tmp/caffeinate.pid ]; then kill $(cat /tmp/caffeinate.pid); rm /tmp/caffeinate.pid; fi; osascript -e 'display notification \"Mac is De-Caffeinated\" with title \"Caffeinate\"'"
-                                    }
+                                    { "shell_command": "if [ -f /tmp/caffeinate.pid ]; then kill $(cat /tmp/caffeinate.pid); rm /tmp/caffeinate.pid; fi; osascript -e 'display notification \"Mac is De-Caffeinated\" with title \"Caffeinate\"'" }
                                 ],
                                 "type": "basic"
                             }
@@ -109,22 +87,10 @@
                             {
                                 "from": {
                                     "key_code": "caps_lock",
-                                    "modifiers": {
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
+                                    "modifiers": { "optional": ["any"] }
                                 },
-                                "to": [
-                                    {
-                                        "key_code": "left_control"
-                                    }
-                                ],
-                                "to_if_alone": [
-                                    {
-                                        "key_code": "escape"
-                                    }
-                                ],
+                                "to": [{ "key_code": "left_control" }],
+                                "to_if_alone": [{ "key_code": "escape" }],
                                 "type": "basic"
                             }
                         ]
@@ -135,15 +101,9 @@
                             {
                                 "from": {
                                     "key_code": "tab",
-                                    "modifiers": {
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
+                                    "modifiers": { "optional": ["any"] }
                                 },
-                                "parameters": {
-                                    "basic.to_if_alone_timeout_milliseconds": 200
-                                },
+                                "parameters": { "basic.to_if_alone_timeout_milliseconds": 200 },
                                 "to_after_key_up": [
                                     {
                                         "set_variable": {
@@ -152,11 +112,7 @@
                                         }
                                     }
                                 ],
-                                "to_if_alone": [
-                                    {
-                                        "key_code": "tab"
-                                    }
-                                ],
+                                "to_if_alone": [{ "key_code": "tab" }],
                                 "to_if_held_down": [
                                     {
                                         "set_variable": {
@@ -175,14 +131,8 @@
                                         "value": 1
                                     }
                                 ],
-                                "from": {
-                                    "key_code": "h"
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "left_arrow"
-                                    }
-                                ],
+                                "from": { "key_code": "h" },
+                                "to": [{ "key_code": "left_arrow" }],
                                 "type": "basic"
                             },
                             {
@@ -193,14 +143,8 @@
                                         "value": 1
                                     }
                                 ],
-                                "from": {
-                                    "key_code": "j"
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "down_arrow"
-                                    }
-                                ],
+                                "from": { "key_code": "j" },
+                                "to": [{ "key_code": "down_arrow" }],
                                 "type": "basic"
                             },
                             {
@@ -211,14 +155,8 @@
                                         "value": 1
                                     }
                                 ],
-                                "from": {
-                                    "key_code": "k"
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "up_arrow"
-                                    }
-                                ],
+                                "from": { "key_code": "k" },
+                                "to": [{ "key_code": "up_arrow" }],
                                 "type": "basic"
                             },
                             {
@@ -229,14 +167,8 @@
                                         "value": 1
                                     }
                                 ],
-                                "from": {
-                                    "key_code": "l"
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "right_arrow"
-                                    }
-                                ],
+                                "from": { "key_code": "l" },
+                                "to": [{ "key_code": "right_arrow" }],
                                 "type": "basic"
                             }
                         ]
@@ -247,22 +179,14 @@
                             {
                                 "from": {
                                     "modifiers": {
-                                        "mandatory": [
-                                            "command",
-                                            "option"
-                                        ],
-                                        "optional": [
-                                            "any"
-                                        ]
+                                        "mandatory": ["command", "option"],
+                                        "optional": ["any"]
                                     },
                                     "pointing_button": "button1"
                                 },
                                 "to": [
                                     {
-                                        "modifiers": [
-                                            "command",
-                                            "control"
-                                        ],
+                                        "modifiers": ["command", "control"],
                                         "pointing_button": "button1"
                                     }
                                 ],
@@ -274,45 +198,17 @@
                         "description": "[LCmd/RCmd] to En / Ch IM (Input Source Pro)",
                         "manipulators": [
                             {
-                                "from": {
-                                    "key_code": "left_command"
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "left_command"
-                                    }
-                                ],
-                                "to_if_alone": [
-                                    {
-                                        "key_code": "f19"
-                                    }
-                                ],
-                                "to_if_held_down": [
-                                    {
-                                        "key_code": "left_command"
-                                    }
-                                ],
+                                "from": { "key_code": "left_command" },
+                                "to": [{ "key_code": "left_command" }],
+                                "to_if_alone": [{ "key_code": "f19" }],
+                                "to_if_held_down": [{ "key_code": "left_command" }],
                                 "type": "basic"
                             },
                             {
-                                "from": {
-                                    "key_code": "right_command"
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "right_command"
-                                    }
-                                ],
-                                "to_if_alone": [
-                                    {
-                                        "key_code": "f18"
-                                    }
-                                ],
-                                "to_if_held_down": [
-                                    {
-                                        "key_code": "right_command"
-                                    }
-                                ],
+                                "from": { "key_code": "right_command" },
+                                "to": [{ "key_code": "right_command" }],
+                                "to_if_alone": [{ "key_code": "f18" }],
+                                "to_if_held_down": [{ "key_code": "right_command" }],
                                 "type": "basic"
                             }
                         ]
@@ -324,11 +220,7 @@
                             {
                                 "from": {
                                     "key_code": "left_command",
-                                    "modifiers": {
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
+                                    "modifiers": { "optional": ["any"] }
                                 },
                                 "parameters": {
                                     "basic.to_if_alone_threshold_milliseconds": 0,
@@ -341,28 +233,14 @@
                                         "lazy": true
                                     }
                                 ],
-                                "to_if_alone": [
-                                    {
-                                        "select_input_source": {
-                                            "language": "en"
-                                        }
-                                    }
-                                ],
-                                "to_if_held_down": [
-                                    {
-                                        "key_code": "left_command"
-                                    }
-                                ],
+                                "to_if_alone": [{ "select_input_source": { "language": "en" } }],
+                                "to_if_held_down": [{ "key_code": "left_command" }],
                                 "type": "basic"
                             },
                             {
                                 "from": {
                                     "key_code": "right_command",
-                                    "modifiers": {
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
+                                    "modifiers": { "optional": ["any"] }
                                 },
                                 "parameters": {
                                     "basic.to_if_alone_threshold_milliseconds": 0,
@@ -375,18 +253,8 @@
                                         "lazy": true
                                     }
                                 ],
-                                "to_if_alone": [
-                                    {
-                                        "select_input_source": {
-                                            "language": "zh-Hans"
-                                        }
-                                    }
-                                ],
-                                "to_if_held_down": [
-                                    {
-                                        "key_code": "right_command"
-                                    }
-                                ],
+                                "to_if_alone": [{ "select_input_source": { "language": "zh-Hans" } }],
+                                "to_if_held_down": [{ "key_code": "right_command" }],
                                 "type": "basic"
                             }
                         ]
@@ -398,64 +266,36 @@
                             {
                                 "conditions": [
                                     {
-                                        "input_sources": [
-                                            {
-                                                "input_source_id": "com.apple.keylayout.US"
-                                            }
-                                        ],
+                                        "input_sources": [{ "input_source_id": "com.apple.keylayout.US" }],
                                         "type": "input_source_if"
                                     }
                                 ],
-                                "from": {
-                                    "key_code": "left_shift"
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "left_shift"
-                                    }
-                                ],
+                                "from": { "key_code": "left_shift" },
+                                "to": [{ "key_code": "left_shift" }],
                                 "to_if_alone": [
                                     {
                                         "halt": true,
-                                        "select_input_source": {
-                                            "input_source_id": "im.rime.inputmethod.Squirrel.Hans"
-                                        }
+                                        "select_input_source": { "input_source_id": "im.rime.inputmethod.Squirrel.Hans" }
                                     },
-                                    {
-                                        "key_code": "left_shift"
-                                    }
+                                    { "key_code": "left_shift" }
                                 ],
                                 "type": "basic"
                             },
                             {
                                 "conditions": [
                                     {
-                                        "input_sources": [
-                                            {
-                                                "input_source_id": "im.rime.inputmethod.Squirrel.Hans"
-                                            }
-                                        ],
+                                        "input_sources": [{ "input_source_id": "im.rime.inputmethod.Squirrel.Hans" }],
                                         "type": "input_source_if"
                                     }
                                 ],
-                                "from": {
-                                    "key_code": "left_shift"
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "left_shift"
-                                    }
-                                ],
+                                "from": { "key_code": "left_shift" },
+                                "to": [{ "key_code": "left_shift" }],
                                 "to_if_alone": [
                                     {
                                         "halt": true,
-                                        "select_input_source": {
-                                            "input_source_id": "com.apple.keylayout.US"
-                                        }
+                                        "select_input_source": { "input_source_id": "com.apple.keylayout.US" }
                                     },
-                                    {
-                                        "key_code": "left_shift"
-                                    }
+                                    { "key_code": "left_shift" }
                                 ],
                                 "type": "basic"
                             }
@@ -468,17 +308,9 @@
                             {
                                 "from": {
                                     "key_code": "z",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "option"
-                                        ]
-                                    }
+                                    "modifiers": { "mandatory": ["option"] }
                                 },
-                                "to": [
-                                    {
-                                        "shell_command": "osascript -e 'tell application \"Zotero\" to activate'"
-                                    }
-                                ],
+                                "to": [{ "shell_command": "osascript -e 'tell application \"Zotero\" to activate'" }],
                                 "type": "basic"
                             }
                         ]
@@ -490,39 +322,22 @@
                             {
                                 "from": {
                                     "key_code": "w",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "option"
-                                        ]
-                                    }
+                                    "modifiers": { "mandatory": ["option"] }
                                 },
-                                "to": [
-                                    {
-                                        "shell_command": "osascript -e 'tell application \"Microsoft Word\" to activate'"
-                                    }
-                                ],
+                                "to": [{ "shell_command": "osascript -e 'tell application \"Microsoft Word\" to activate'" }],
                                 "type": "basic"
                             }
                         ]
                     },
                     {
                         "description": "[Option + M] activate Mail",
-                        "enabled": true,
                         "manipulators": [
                             {
                                 "from": {
                                     "key_code": "m",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "option"
-                                        ]
-                                    }
+                                    "modifiers": { "mandatory": ["option"] }
                                 },
-                                "to": [
-                                    {
-                                        "shell_command": "osascript -e 'tell application \"Mail\" to activate'"
-                                    }
-                                ],
+                                "to": [{ "shell_command": "osascript -e 'tell application \"Mail\" to activate'" }],
                                 "type": "basic"
                             }
                         ]
@@ -533,17 +348,9 @@
                             {
                                 "from": {
                                     "key_code": "t",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "option"
-                                        ]
-                                    }
+                                    "modifiers": { "mandatory": ["option"] }
                                 },
-                                "to": [
-                                    {
-                                        "shell_command": "osascript -e 'tell application \"Ghostty\" to activate'"
-                                    }
-                                ],
+                                "to": [{ "shell_command": "osascript -e 'tell application \"Ghostty\" to activate'" }],
                                 "type": "basic"
                             }
                         ]
@@ -554,17 +361,9 @@
                             {
                                 "from": {
                                     "key_code": "g",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "option"
-                                        ]
-                                    }
+                                    "modifiers": { "mandatory": ["option"] }
                                 },
-                                "to": [
-                                    {
-                                        "shell_command": "osascript -e 'tell application \"Nagram\" to activate'"
-                                    }
-                                ],
+                                "to": [{ "shell_command": "osascript -e 'tell application \"Nagram\" to activate'" }],
                                 "type": "basic"
                             }
                         ]
@@ -575,17 +374,9 @@
                             {
                                 "from": {
                                     "key_code": "c",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "option"
-                                        ]
-                                    }
+                                    "modifiers": { "mandatory": ["option"] }
                                 },
-                                "to": [
-                                    {
-                                        "shell_command": "osascript -e 'tell application \"VSCodium\" to activate'"
-                                    }
-                                ],
+                                "to": [{ "shell_command": "osascript -e 'tell application \"VSCodium\" to activate'" }],
                                 "type": "basic"
                             }
                         ]
@@ -596,17 +387,9 @@
                             {
                                 "from": {
                                     "key_code": "b",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "option"
-                                        ]
-                                    }
+                                    "modifiers": { "mandatory": ["option"] }
                                 },
-                                "to": [
-                                    {
-                                        "shell_command": "osascript -e 'tell application \"Helium\" to activate'"
-                                    }
-                                ],
+                                "to": [{ "shell_command": "osascript -e 'tell application \"Helium\" to activate'" }],
                                 "type": "basic"
                             }
                         ]
@@ -618,38 +401,22 @@
                                 "from": {
                                     "key_code": "down_arrow",
                                     "modifiers": {
-                                        "mandatory": [
-                                            "fn"
-                                        ],
-                                        "optional": [
-                                            "caps_lock"
-                                        ]
+                                        "mandatory": ["fn"],
+                                        "optional": ["caps_lock"]
                                     }
                                 },
-                                "to": [
-                                    {
-                                        "key_code": "illumination_decrement"
-                                    }
-                                ],
+                                "to": [{ "key_code": "illumination_decrement" }],
                                 "type": "basic"
                             },
                             {
                                 "from": {
                                     "key_code": "up_arrow",
                                     "modifiers": {
-                                        "mandatory": [
-                                            "fn"
-                                        ],
-                                        "optional": [
-                                            "caps_lock"
-                                        ]
+                                        "mandatory": ["fn"],
+                                        "optional": ["caps_lock"]
                                     }
                                 },
-                                "to": [
-                                    {
-                                        "key_code": "illumination_increment"
-                                    }
-                                ],
+                                "to": [{ "key_code": "illumination_increment" }],
                                 "type": "basic"
                             }
                         ]
@@ -665,13 +432,20 @@
                         "vendor_id": 13364
                     },
                     "ignore": false
+                },
+                {
+                    "identifiers": {
+                        "is_pointing_device": true,
+                        "product_id": 50498,
+                        "vendor_id": 1133
+                    },
+                    "ignore": false,
+                    "mouse_flip_vertical_wheel": true
                 }
             ],
             "name": "Default profile",
             "selected": true,
-            "virtual_hid_keyboard": {
-                "keyboard_type_v2": "ansi"
-            }
+            "virtual_hid_keyboard": { "keyboard_type_v2": "ansi" }
         }
     ]
 }
