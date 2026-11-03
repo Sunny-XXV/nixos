@@ -24,6 +24,13 @@ input {
 }
 
 // Run `niri msg outputs` inside a niri instance to list all outputs and modes.
+output "HDMI-A-1" {
+    mode "2560x1600"
+    scale 1.75
+    transform "normal"
+    position x=0 y=0
+}
+
 output "HDMI-A-2" {
     mode "2560x1600@120.003"
     scale 1.75
