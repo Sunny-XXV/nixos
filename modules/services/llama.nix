@@ -42,7 +42,7 @@ in
     nixpkgs.overlays = [
       (_final: prev: {
         llama-cpp = prev.llama-cpp.overrideAttrs (finalAttrs: previousAttrs: {
-          version = "11852";
+          version = "12211";
           src = prev.fetchFromGitHub {
             owner = "ggml-org";
             repo = "llama.cpp";
