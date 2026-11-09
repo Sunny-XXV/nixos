@@ -15,14 +15,21 @@ in {
   sops = {
     age = {
       keyFile = "${config.users.users.${username}.home}/.config/sops/age/keys.txt";
-      # Use only the dedicated SOPS identity, not macOS SSH host keys.
       sshKeyPaths = [];
     };
     gnupg.sshKeyPaths = [];
 
-    secrets."mihomo/subscription_url" = {
+    secrets."mihomo/sub_nacho_url" = {
       sopsFile = ./mihomo-secrets.yaml;
-      key = "subscription_url";
+      key = "sub_nacho";
+      owner = "root";
+      group = "wheel";
+      mode = "0400";
+    };
+
+    secrets."mihomo/sub_pokem_url" = {
+      sopsFile = ./mihomo-secrets.yaml;
+      key = "sub_pokem";
       owner = "root";
       group = "wheel";
       mode = "0400";
@@ -48,12 +55,14 @@ in {
       content =
         builtins.replaceStrings
         [
-          "@MIHOMO_SUBSCRIPTION_URL@"
+          "@MIHOMO_SUB_NACHO_URL@"
+          "@MIHOMO_SUB_POKEM_URL@"
           "@MIHOMO_WARP_PRIVATE_KEY@"
           "@MIHOMO_WARP_IP6_ADDRESS@"
         ]
         [
-          config.sops.placeholder."mihomo/subscription_url"
+          config.sops.placeholder."mihomo/sub_nacho_url"
+          config.sops.placeholder."mihomo/sub_pokem_url"
           config.sops.placeholder."mihomo/warp_private_key"
           config.sops.placeholder."mihomo/warp_ip6_address"
         ]

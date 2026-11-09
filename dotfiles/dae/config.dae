@@ -131,6 +131,7 @@ global {
 subscription {
     # Add your subscription links here.
     nachoneko: '@DAE_SUB_NACHO@'
+    pokemon: '@DAE_SUB_POKEM@'
     # 'https://example.com/no_tag_link'
     # 'file://relative/path/to/mysub.sub' # Put subscription content in /etc/dae/relative/path/to/mysub.sub
 
@@ -272,7 +273,7 @@ group {
 
     steam {
         # Filter nodes from the global node pool defined by the subscription and node section above.
-        filter: subtag(nachoneko) && !name(keyword: 'ExpireAt:')
+        filter: subtag(nachoneko, pokemon) && !name(keyword: 'ExpireAt:')
         # Select the node with min moving average of latencies from the group for every connection.
         policy: min_moving_avg
 

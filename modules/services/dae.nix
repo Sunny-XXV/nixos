@@ -14,11 +14,25 @@ in {
     mode = "0400";
   };
 
+  sops.secrets."dae/sub_pokem" = {
+    sopsFile = ./dae-secrets.yaml;
+    key = "sub_pokem";
+    owner = "root";
+    group = "root";
+    mode = "0400";
+  };
+
   sops.templates."dae-config.dae" = {
     content =
       builtins.replaceStrings
-      ["@DAE_SUB_NACHO@"]
-      [config.sops.placeholder."dae/sub_nacho"]
+      [
+        "@DAE_SUB_NACHO@"
+        "@DAE_SUB_POKEM@"
+      ]
+      [
+        config.sops.placeholder."dae/sub_nacho"
+        config.sops.placeholder."dae/sub_pokem"
+      ]
       daeConfigTemplate;
     owner = "root";
     mode = "0400";

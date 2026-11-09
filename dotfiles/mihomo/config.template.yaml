@@ -1,9 +1,13 @@
 Providers: &Providers { exclude-filter: "(?i)Expire|到期|剩余|Traffic|官网|官方网站|流量|套餐",  type: http, interval: 86400, health-check: { enable: true, url: https://www.gstatic.com/generate_204, interval: 300 } }
 proxy-providers:
-  subscription:
+  nachoneko:
     <<: *Providers
-    url: "@MIHOMO_SUBSCRIPTION_URL@"
-    path: ./proxy_providers/subscription.yaml
+    url: "@MIHOMO_SUB_NACHO_URL@"
+    path: ./proxy_providers/nachoneko.yaml
+  pokemon:
+    <<: *Providers
+    url: "@MIHOMO_SUB_POKEM_URL@"
+    path: ./proxy_providers/pokemon.yaml
 
 # Public domain MRS files use behavior=domain; IP MRS files use ipcidr.
 DomainRules: &DomainRules { type: http, behavior: domain, format: mrs, interval: 86400, proxy: Manual }
@@ -229,22 +233,22 @@ proxies:
     dialer-proxy: WARP前置
 
 # proxy groups
-SelectALL: &SelectALL { type: url-test, empty-fallback: REJECT, use: [subscription], interval: 300, tolerance: 50, url: 'https://www.gstatic.com/generate_204', hidden: true, disable-udp: false }
+SelectALL: &SelectALL { type: url-test, empty-fallback: REJECT, use: [nachoneko, pokemon], interval: 300, tolerance: 50, url: 'https://www.gstatic.com/generate_204', hidden: true, disable-udp: false }
 SelectHK: &SelectHK { type: select, proxies: [ Auto, WARP, 香港, 台湾, 日本, 韩国, 新加坡, 美国, 欧洲, 其他, DIRECT, REJECT ], disable-udp: false }
 SelectTW: &SelectTW { type: select, proxies: [ 台湾, Manual, WARP, 香港, 日本, 韩国, 新加坡, 美国, 欧洲, 其他, DIRECT, REJECT ], disable-udp: false }
 SelectDirect: &SelectDirect { type: select, proxies: [ DIRECT, REJECT, Manual, WARP, 香港, 台湾, 日本, 韩国, 新加坡, 美国, 欧洲, 其他 ], disable-udp: false }
 SelectProxy: &SelectProxy { type: select, proxies: [ Manual, WARP, 香港, 台湾, 日本, 韩国, 新加坡, 美国, 欧洲, 其他, DIRECT, REJECT ], disable-udp: false }
-SelectWarpDialer: &SelectWarpDialer { type: select, proxies: [ 日本, 新加坡, 美国, 台湾, 韩国, 欧洲, 香港, Manual, Auto, 其他 ], use: [subscription], disable-udp: false }
+SelectWarpDialer: &SelectWarpDialer { type: select, proxies: [ 日本, 新加坡, 美国, 台湾, 韩国, 欧洲, 香港, Manual, Auto, 其他 ], use: [nachoneko, pokemon], disable-udp: false }
 # Regional groups allow manual selection from the subscription provider.
-UrlTest: &UrlTest { type: select, empty-fallback: REJECT, use: [subscription], url: 'https://www.gstatic.com/generate_204', disable-udp: false }
-Fallback: &Fallback { type: fallback, empty-fallback: REJECT, use: [subscription], interval: 300, tolerance: 50, url: 'https://www.gstatic.com/generate_204', hidden: true, disable-udp: false }
+UrlTest: &UrlTest { type: select, empty-fallback: REJECT, use: [nachoneko, pokemon], url: 'https://www.gstatic.com/generate_204', disable-udp: false }
+Fallback: &Fallback { type: fallback, empty-fallback: REJECT, use: [nachoneko, pokemon], interval: 300, tolerance: 50, url: 'https://www.gstatic.com/generate_204', hidden: true, disable-udp: false }
 
 # 代理组
 proxy-groups:
-  - { name: Manual, <<: *SelectHK, use: [subscription], icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Rocket.png }
+  - { name: Manual, <<: *SelectHK, use: [nachoneko, pokemon], icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Rocket.png }
   - { name: WARP前置, <<: *SelectWarpDialer, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Cloudflare.png }
   - { name: Auto, <<: *SelectALL, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Auto.png }
-  - { name: GLOBAL, <<: *SelectDirect, use: [subscription], icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png }
+  - { name: GLOBAL, <<: *SelectDirect, use: [nachoneko, pokemon], icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png }
   - { name: Apple, <<: *SelectProxy, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Apple.png }
   - { name: BiliBili, <<: *SelectDirect, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/bilibili_4.png }
   - { name: Anthropic, <<: *SelectProxy, icon: https://testingcf.jsdelivr.net/gh/lobehub/lobe-icons@master/packages/static-png/light/claude-color.png }
