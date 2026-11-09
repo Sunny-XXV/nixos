@@ -1,6 +1,5 @@
 {pkgs, ...}: {
   environment.systemPackages = with pkgs; [
-    aldente
     android-tools
     betterdisplay
     dbeaver-bin

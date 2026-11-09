@@ -113,6 +113,8 @@ dns:
     - "+.lan"
     - "+.local"
     - "+.ts.net"
+    - "+.tailscale.com"
+    - "+.tailscale.io"
     - "+.msftconnecttest.com"
     - "+.msftncsi.com"
     - "localhost.ptlogin2.qq.com"

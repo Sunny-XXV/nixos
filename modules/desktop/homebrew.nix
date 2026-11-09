@@ -3,6 +3,11 @@
     inherit name;
     trusted = true;
   };
+
+  pinnedCasks = map (name: {
+    inherit name;
+    greedy = false;
+  });
 in {
   nix-homebrew = {
     enable = true;
@@ -23,41 +28,40 @@ in {
   };
 
   homebrew.taps = map trustedTap [
-    "acsandmann/tap"
     "barutsrb/tap"
   ];
 
   homebrew.brews = [
-    "acsandmann/tap/rift"
     "mgba"
   ];
 
-  homebrew.casks = [
-    "bettercmdtab"
-    "calibre"
-    "crossover"
-    "espanso"
-    "helium-browser"
-    "input-source-pro"
-    "karabiner-elements"
-    "moonlight"
-    {
-      name = "microsoft-word";
-      greedy = false;
-    }
-    "obs"
-    "orbstack"
-    "parallels-client"
-    "pearcleaner"
-    "raycast"
-    "readest"
-    "retroarch-metal"
-    "squirrel-app"
-    "stats"
-    "steam"
-    "tencent-meeting"
-    "vscodium"
-    "zed"
-    "zotero"
-  ];
+  homebrew.casks =
+    [
+      "bettercmdtab"
+      "calibre"
+      "crossover"
+      "espanso"
+      "helium-browser"
+      "input-source-pro"
+      "karabiner-elements"
+      "moonlight"
+      "obs"
+      "orbstack"
+      "pearcleaner"
+      "raycast"
+      "readest"
+      "retroarch-metal"
+      "squirrel-app"
+      "stats"
+      "steam"
+      "tencent-meeting"
+      "vscodium"
+      "zed"
+      "zotero"
+    ]
+    ++ pinnedCasks [
+      "aldente"
+      "microsoft-word"
+      "parallels-client"
+    ];
 }

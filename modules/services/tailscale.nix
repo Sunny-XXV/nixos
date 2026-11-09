@@ -127,6 +127,13 @@ in
     }))
 
     (lib.optionalAttrs isDarwin {
-      launchd.daemons.tailscaled.serviceConfig.KeepAlive = true;
+      launchd.daemons.tailscaled.serviceConfig = {
+        KeepAlive = true;
+        EnvironmentVariables = {
+          HTTP_PROXY = "http://127.0.0.1:7890";
+          HTTPS_PROXY = "http://127.0.0.1:7890";
+          ALL_PROXY = "socks5://127.0.0.1:7890";
+        };
+      };
     })
   ]
