@@ -32,7 +32,7 @@ in {
         LC_ALL = "en_US.UTF-8";
         ASR_RUNTIME_DIR = runtimeDir;
         ASR_HOTWORDS_FILE = hotwordsFile;
-        ASR_SERVER_URL = "http://127.0.0.1:9931/v1/audio/transcriptions";
+        ASR_SERVER_URL = "http://syy-pc:9931/v1/audio/transcriptions";
       };
       RunAtLoad = true;
       KeepAlive = true;

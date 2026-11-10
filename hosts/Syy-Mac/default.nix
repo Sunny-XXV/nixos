@@ -14,7 +14,7 @@
     ../../modules/desktop/homebrew.nix
     ../../modules/desktop/darwin-apps.nix
     ../../modules/desktop/fonts.nix
-    ../../modules/services/llama.nix
+    # ../../modules/services/llama.nix
     ../../modules/services/sleep-bt.nix
     ../../modules/services/tailscale.nix
     ../../modules/services/mihomo.nix
