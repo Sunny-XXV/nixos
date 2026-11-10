@@ -1,0 +1,18 @@
+patch:
+  __include: rime_ice_suggestion:/
+
+  schema_list:
+    - schema: rime_ice
+
+  menu:
+    page_size: 8
+
+  ascii_composer:
+    good_old_caps_lock: true
+    switch_key:
+      Shift_L: commit_code
+      Shift_R: noop
+      Control_L: noop
+      Control_R: noop
+      Caps_Lock: noop
+      Eisu_toggle: clear

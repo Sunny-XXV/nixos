@@ -69,6 +69,7 @@
         ../../modules/home/programs/zed.nix
         ../../modules/home/programs/zoxide.nix
         ../../modules/home/desktop/karabiner.nix
+        ../../modules/home/desktop/rime.nix
         ../../modules/home/services/asr-ptt
         ../../modules/home/services/espanso.nix
       ];
