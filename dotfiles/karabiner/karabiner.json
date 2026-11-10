@@ -40,42 +40,11 @@
                         "description": "[F6] Toggle Caffeinate",
                         "manipulators": [
                             {
-                                "conditions": [
-                                    {
-                                        "name": "caffeinate_is_active",
-                                        "type": "variable_if",
-                                        "value": 0
-                                    }
-                                ],
                                 "from": { "key_code": "f6" },
                                 "to": [
                                     {
-                                        "set_variable": {
-                                            "name": "caffeinate_is_active",
-                                            "value": 1
-                                        }
-                                    },
-                                    { "shell_command": "nohup caffeinate -di &> /dev/null & echo $! > /tmp/caffeinate.pid; osascript -e 'display notification \"Mac is Caffeinated\" with title \"Caffeinate\"'" }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "name": "caffeinate_is_active",
-                                        "type": "variable_if",
-                                        "value": 1
+                                        "shell_command": "if pgrep -x caffeinate >/dev/null; then pkill -x caffeinate; rm -f /tmp/caffeinate.pid; osascript -e 'display notification \"Mac is De-Caffeinated\" with title \"Caffeinate\"'; else nohup caffeinate -di &>/dev/null & echo $! > /tmp/caffeinate.pid; osascript -e 'display notification \"Mac is Caffeinated\" with title \"Caffeinate\"'; fi"
                                     }
-                                ],
-                                "from": { "key_code": "f6" },
-                                "to": [
-                                    {
-                                        "set_variable": {
-                                            "name": "caffeinate_is_active",
-                                            "value": 0
-                                        }
-                                    },
-                                    { "shell_command": "if [ -f /tmp/caffeinate.pid ]; then kill $(cat /tmp/caffeinate.pid); rm /tmp/caffeinate.pid; fi; osascript -e 'display notification \"Mac is De-Caffeinated\" with title \"Caffeinate\"'" }
                                 ],
                                 "type": "basic"
                             }
