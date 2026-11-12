@@ -113,8 +113,8 @@
       "language_servers": ["nil", "!nixd"],
       "formatter": {
         "external": {
-          "command": "alejandra", // or "nixfmt"
-          "arguments": ["--quiet", "--"],
+          "command": "nixfmt",
+          "arguments": [],
         },
       },
     },
