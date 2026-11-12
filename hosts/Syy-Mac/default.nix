@@ -11,6 +11,7 @@
 
     ../../modules/system/nix.nix
     ../../modules/system/basic.nix
+    ../../modules/system/darwin-pref.nix
     ../../modules/desktop/homebrew.nix
     ../../modules/desktop/darwin-apps.nix
     ../../modules/desktop/fonts.nix
@@ -27,7 +28,6 @@
     primaryUser = username;
     stateVersion = 6;
     configurationRevision = inputs.self.rev or inputs.self.dirtyRev or null;
-    defaults.CustomUserPreferences."com.microsoft.autoupdate2".HowToCheck = "Manual";
   };
 
   environment.shells = [pkgs.bashInteractive];

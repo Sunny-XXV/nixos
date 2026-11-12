@@ -6,7 +6,6 @@
     proton-ge-bin
   ];
 
-
   hardware.steam-hardware.enable = true;
 
   programs.gamescope.enable = true;
