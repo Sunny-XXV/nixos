@@ -1,4 +1,5 @@
-{pkgs, ...}: let
+{ pkgs, ... }:
+let
   yazi-picker = pkgs.writeShellScriptBin "yazi-picker" ''
     mtp="$1"
     dir="$2"
@@ -22,8 +23,9 @@
 
     exec "''${cmd[@]}"
   '';
-in {
-  home.packages = [yazi-picker];
+in
+{
+  home.packages = [ yazi-picker ];
 
   xdg.portal.enable = true;
   xdg.portal.extraPortals = with pkgs; [
@@ -31,15 +33,18 @@ in {
     xdg-desktop-portal-gtk
   ];
   xdg.portal.config.common = {
-    default = ["gtk"];
-    "org.freedesktop.impl.portal.FileChooser" = ["termfilechooser"];
+    default = [ "gtk" ];
+    "org.freedesktop.impl.portal.FileChooser" = [ "termfilechooser" ];
   };
   xdg.portal.config.niri = {
-    default = ["gnome" "gtk"];
-    "org.freedesktop.impl.portal.Access" = ["gtk"];
-    "org.freedesktop.impl.portal.FileChooser" = ["termfilechooser"];
-    "org.freedesktop.impl.portal.Notification" = ["gtk"];
-    "org.freedesktop.impl.portal.Secret" = ["gnome-keyring"];
+    default = [
+      "gnome"
+      "gtk"
+    ];
+    "org.freedesktop.impl.portal.Access" = [ "gtk" ];
+    "org.freedesktop.impl.portal.FileChooser" = [ "termfilechooser" ];
+    "org.freedesktop.impl.portal.Notification" = [ "gtk" ];
+    "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
   };
 
   xdg.configFile."xdg-desktop-portal-termfilechooser/config".text = ''

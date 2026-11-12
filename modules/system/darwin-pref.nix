@@ -1,4 +1,4 @@
-{lib, ...}: {
+{ lib, ... }: {
   system = {
     defaults = {
       NSGlobalDomain = {
@@ -37,7 +37,7 @@
         orientation = "right";
         minimize-to-application = true;
         mru-spaces = false;
-        persistent-apps = [];
+        persistent-apps = [ ];
       };
 
       finder = {
@@ -72,19 +72,25 @@
       };
 
       CustomUserPreferences = {
-        "com.microsoft.autoupdate2" = {HowToCheck = "Manual";};
+        "com.microsoft.autoupdate2" = {
+          HowToCheck = "Manual";
+        };
 
         "com.apple.desktopservices" = {
           DSDontWriteNetworkStores = true;
           DSDontWriteUSBStores = true;
         };
 
-        "com.apple.CrashReporter" = {DialogType = "none";};
+        "com.apple.CrashReporter" = {
+          DialogType = "none";
+        };
       };
 
       CustomSystemPreferences = {
         "/Library/Preferences/FeatureFlags/Domain/UIKit.plist" = {
-          redesigned_text_cursor = {Enabled = false;};
+          redesigned_text_cursor = {
+            Enabled = false;
+          };
         };
       };
     };

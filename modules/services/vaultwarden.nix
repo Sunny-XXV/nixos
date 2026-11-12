@@ -3,7 +3,8 @@
   pkgs,
   lib,
   ...
-}: let
+}:
+let
   dataDir = config.services.vaultwarden.config.DATA_FOLDER;
   tailnetDomain = "${lib.toLower config.networking.hostName}.taile2b66b.ts.net";
   tsCertDir = "/var/lib/tailscale/certs";
@@ -76,7 +77,8 @@
       find "$archive_dir" -type f -name "vaultwarden-*.tar.zst" -mtime ${backup.localRetention} -delete
     '';
   };
-in {
+in
+{
   services.vaultwarden = {
     enable = true;
     config = {
@@ -122,8 +124,11 @@ in {
 
   systemd.services.vaultwarden-backup = {
     description = "Back up Vaultwarden data to infini_cloud";
-    after = ["network-online.target" "sops-nix.service"];
-    wants = ["network-online.target"];
+    after = [
+      "network-online.target"
+      "sops-nix.service"
+    ];
+    wants = [ "network-online.target" ];
 
     environment = {
       HOME = backup.localStateDir;
@@ -132,7 +137,10 @@ in {
 
     unitConfig = {
       ConditionPathIsDirectory = dataDir;
-      RequiresMountsFor = [dataDir backup.localStateDir];
+      RequiresMountsFor = [
+        dataDir
+        backup.localStateDir
+      ];
     };
 
     serviceConfig = {
@@ -142,7 +150,7 @@ in {
       StateDirectoryMode = "0700";
       UMask = "0077";
 
-      CapabilityBoundingSet = ["CAP_DAC_OVERRIDE"];
+      CapabilityBoundingSet = [ "CAP_DAC_OVERRIDE" ];
       LockPersonality = true;
       MemoryDenyWriteExecute = true;
       NoNewPrivileges = true;
@@ -156,7 +164,7 @@ in {
       ProtectKernelModules = true;
       ProtectKernelTunables = true;
       ProtectSystem = "strict";
-      ReadWritePaths = [backup.localStateDir];
+      ReadWritePaths = [ backup.localStateDir ];
       RestrictRealtime = true;
       RestrictSUIDSGID = true;
       SystemCallArchitectures = "native";
@@ -165,7 +173,7 @@ in {
 
   systemd.timers.vaultwarden-backup = {
     description = "Run Vaultwarden backups";
-    wantedBy = ["timers.target"];
+    wantedBy = [ "timers.target" ];
     timerConfig = {
       OnCalendar = "03:15";
       Persistent = true;

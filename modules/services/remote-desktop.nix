@@ -2,12 +2,13 @@
   pkgs,
   username,
   ...
-}: let
+}:
+let
   defaultMode = "2560x1600@60";
 
   setResolution = pkgs.writeShellApplication {
     name = "sunshine-set-resolution";
-    runtimeInputs = with pkgs; [niri];
+    runtimeInputs = with pkgs; [ niri ];
     text = ''
       w="''${SUNSHINE_CLIENT_WIDTH:-2560}"
       h="''${SUNSHINE_CLIENT_HEIGHT:-1600}"
@@ -19,21 +20,23 @@
 
   resetResolution = pkgs.writeShellApplication {
     name = "sunshine-reset-resolution";
-    runtimeInputs = with pkgs; [niri];
+    runtimeInputs = with pkgs; [ niri ];
     text = ''
       niri msg output HDMI-A-1 mode "${defaultMode}" 2>/dev/null || \
         niri msg output HDMI-A-1 mode "2560x1600"
     '';
   };
 
-  niriDispatch = command:
+  niriDispatch =
+    command:
     pkgs.writeShellScript "sunshine-niri-dispatch" ''
       exec ${pkgs.niri}/bin/niri msg action spawn-sh -- "${command}"
     '';
 
   steamBigPicture = niriDispatch "/run/current-system/sw/bin/steam steam://open/bigpicture";
   closeSteamBigPicture = niriDispatch "/run/current-system/sw/bin/steam -shutdown";
-in {
+in
+{
   services.greetd = {
     enable = true;
     settings.default_session = {

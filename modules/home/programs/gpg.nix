@@ -1,10 +1,9 @@
-{pkgs, ...}: let
-  pinentryPackage =
-    if pkgs.stdenv.hostPlatform.isDarwin
-    then pkgs.pinentry_mac
-    else pkgs.pinentry-tty;
-in {
-  home.packages = [pinentryPackage];
+{ pkgs, ... }:
+let
+  pinentryPackage = if pkgs.stdenv.hostPlatform.isDarwin then pkgs.pinentry_mac else pkgs.pinentry-tty;
+in
+{
+  home.packages = [ pinentryPackage ];
 
   programs.gpg = {
     enable = true;

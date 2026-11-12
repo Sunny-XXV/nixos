@@ -39,13 +39,16 @@
     };
   };
 
-  outputs = inputs @ {
-    nixpkgs,
-    nix-darwin,
+  outputs =
+    inputs@{
+      self,
+      nixpkgs,
+      nix-darwin,
       treefmt-nix,
-    ...
-  }: let
-    username = "sunya";
+      ...
+    }:
+    let
+      username = "sunya";
       commonSpecialArgs = { inherit inputs username; };
       systems = [
         "x86_64-linux"
@@ -81,16 +84,20 @@
         formatting = eval.config.build.check self;
       }) treefmt;
 
-    nixosConfigurations.Syy-PC = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = commonSpecialArgs // {hostPlatform = "x86_64-linux";};
-      modules = [./hosts/Syy-PC];
-    };
+      nixosConfigurations.Syy-PC = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = commonSpecialArgs // {
+          hostPlatform = "x86_64-linux";
+        };
+        modules = [ ./hosts/Syy-PC ];
+      };
 
-    darwinConfigurations.Syy-Mac = nix-darwin.lib.darwinSystem {
-      system = "aarch64-darwin";
-      specialArgs = commonSpecialArgs // {hostPlatform = "aarch64-darwin";};
-      modules = [./hosts/Syy-Mac];
+      darwinConfigurations.Syy-Mac = nix-darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        specialArgs = commonSpecialArgs // {
+          hostPlatform = "aarch64-darwin";
+        };
+        modules = [ ./hosts/Syy-Mac ];
+      };
     };
-  };
 }

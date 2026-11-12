@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   programs.bash.initExtra = ''
     if [[ $(${pkgs.procps}/bin/ps -p $PPID -o comm=) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
     then

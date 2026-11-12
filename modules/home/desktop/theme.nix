@@ -2,7 +2,8 @@
   pkgs,
   config,
   ...
-}: {
+}:
+{
   gtk.enable = true;
 
   gtk.font = {
@@ -13,9 +14,9 @@
   gtk.theme = {
     name = "Colloid-Purple-Dark-Compact-Nord";
     package = pkgs.colloid-gtk-theme.override {
-      colorVariants = ["dark"];
-      sizeVariants = ["compact"];
-      themeVariants = ["purple"];
+      colorVariants = [ "dark" ];
+      sizeVariants = [ "compact" ];
+      themeVariants = [ "purple" ];
       tweaks = [
         "nord"
         "black"

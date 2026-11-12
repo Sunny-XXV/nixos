@@ -17,5 +17,5 @@
     "100.64.0.0/10"
   ];
 
-  services.fail2ban.jails = {};
+  services.fail2ban.jails = { };
 }

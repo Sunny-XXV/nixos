@@ -1,4 +1,5 @@
-{pkgs, ...}: let
+{ pkgs, ... }:
+let
   launcher = pkgs.writeShellApplication {
     name = "launcher";
     runtimeInputs = with pkgs; [
@@ -67,6 +68,7 @@
       esac
     '';
   };
-in {
-  home.packages = [launcher];
+in
+{
+  home.packages = [ launcher ];
 }

@@ -2,77 +2,64 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.agentSkills;
   hmRoot = "${config.home.homeDirectory}/.config/nixos";
   skillsDir = ../../../dotfiles/agent-skills;
   skillsRoot = "${hmRoot}/dotfiles/agent-skills";
 
   entries = builtins.readDir skillsDir;
-  groupNames =
-    lib.filter
-    (name: entries.${name} == "directory")
-    (builtins.attrNames entries);
+  groupNames = lib.filter (name: entries.${name} == "directory") (builtins.attrNames entries);
 
   stripMd = name: lib.removeSuffix ".md" name;
 
-  skillEntries =
-    lib.concatMap
-    (group: let
+  skillEntries = lib.concatMap (
+    group:
+    let
       groupDir = skillsDir + "/${group}";
       groupRoot = "${skillsRoot}/${group}";
       groupEntries = builtins.readDir groupDir;
 
-      markdownSkills =
-        lib.filter
-        (
-          name:
-            groupEntries.${name}
-            == "regular"
-            && lib.hasSuffix ".md" name
-            && name != "README.md"
-        )
-        (builtins.attrNames groupEntries);
+      markdownSkills = lib.filter (
+        name: groupEntries.${name} == "regular" && lib.hasSuffix ".md" name && name != "README.md"
+      ) (builtins.attrNames groupEntries);
 
-      directorySkills =
-        lib.filter
-        (name: groupEntries.${name} == "directory" && builtins.pathExists (groupDir + "/${name}/SKILL.md"))
-        (builtins.attrNames groupEntries);
+      directorySkills = lib.filter (
+        name: groupEntries.${name} == "directory" && builtins.pathExists (groupDir + "/${name}/SKILL.md")
+      ) (builtins.attrNames groupEntries);
     in
-      (map (fileName: {
-          name = stripMd fileName;
-          source = "${groupRoot}/${fileName}";
-          target = "file";
-        })
-        markdownSkills)
-      ++ (map (name: {
-          inherit name;
-          source = "${groupRoot}/${name}";
-          target = "directory";
-        })
-        directorySkills))
-    groupNames;
+    (map (fileName: {
+      name = stripMd fileName;
+      source = "${groupRoot}/${fileName}";
+      target = "file";
+    }) markdownSkills)
+    ++ (map (name: {
+      inherit name;
+      source = "${groupRoot}/${name}";
+      target = "directory";
+    }) directorySkills)
+  ) groupNames;
 
   skillNames = map (skill: skill.name) skillEntries;
-  duplicateSkillNames =
-    lib.filter
-    (name: (lib.count (candidate: candidate == name) skillNames) > 1)
-    (lib.unique skillNames);
+  duplicateSkillNames = lib.filter (name: (lib.count (candidate: candidate == name) skillNames) > 1) (
+    lib.unique skillNames
+  );
 
-  mkSkillLinks = targetDir:
-    builtins.listToAttrs
-    (map (skill:
-      lib.nameValuePair
-      (
-        if skill.target == "directory"
-        then "${targetDir}/${skill.name}"
-        else "${targetDir}/${skill.name}/SKILL.md"
-      )
-      {
-        source = config.lib.file.mkOutOfStoreSymlink skill.source;
-      })
-    skillEntries);
-in {
+  mkSkillLinks =
+    targetDir:
+    builtins.listToAttrs (
+      map (
+        skill:
+        lib.nameValuePair
+          (if skill.target == "directory" then "${targetDir}/${skill.name}" else "${targetDir}/${skill.name}/SKILL.md")
+          {
+            source = config.lib.file.mkOutOfStoreSymlink skill.source;
+          }
+      ) skillEntries
+    );
+in
+{
   options.agentSkills = {
     enable = lib.mkOption {
       type = lib.types.bool;
@@ -94,7 +81,7 @@ in {
 
     extraPackages = lib.mkOption {
       type = lib.types.listOf lib.types.package;
-      default = [];
+      default = [ ];
       description = "Runtime packages required by scripts bundled with managed skills.";
     };
   };
@@ -102,7 +89,7 @@ in {
   config = lib.mkIf cfg.enable {
     assertions = [
       {
-        assertion = duplicateSkillNames == [];
+        assertion = duplicateSkillNames == [ ];
         message = "Duplicate agent skill names: ${lib.concatStringsSep ", " duplicateSkillNames}";
       }
     ];

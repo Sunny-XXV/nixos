@@ -1,9 +1,8 @@
 {
-  lib,
-  pkgs,
   username,
   ...
-}: {
+}:
+{
   services.openssh = {
     enable = true;
     settings = {
@@ -16,7 +15,10 @@
       ClientAliveCountMax = 5;
     };
     openFirewall = true;
-    ports = [22 24247];
+    ports = [
+      22
+      24247
+    ];
     extraConfig = ''
       Match Address 100.64.0.0/10
         PermitRootLogin prohibit-password

@@ -7,7 +7,7 @@
       80
       443
     ];
-    trustedInterfaces = ["tailscale0"];
+    trustedInterfaces = [ "tailscale0" ];
     checkReversePath = "loose";
   };
 }

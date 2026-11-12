@@ -1,4 +1,5 @@
-{username, ...}: let
+{ username, ... }:
+let
   trustedTap = name: {
     inherit name;
     trusted = true;
@@ -8,7 +9,8 @@
     inherit name;
     greedy = false;
   });
-in {
+in
+{
   nix-homebrew = {
     enable = true;
     user = username;
@@ -35,33 +37,32 @@ in {
     "mgba"
   ];
 
-  homebrew.casks =
-    [
-      "bettercmdtab"
-      "calibre"
-      "crossover"
-      "espanso"
-      "helium-browser"
-      "input-source-pro"
-      "karabiner-elements"
-      "moonlight"
-      "obs"
-      "orbstack"
-      "pearcleaner"
-      "raycast"
-      "readest"
-      "retroarch-metal"
-      "squirrel-app"
-      "stats"
-      "steam"
-      "tencent-meeting"
-      "vscodium"
-      "zed"
-      "zotero"
-    ]
-    ++ pinnedCasks [
-      "aldente"
-      "microsoft-word"
-      "parallels-client"
-    ];
+  homebrew.casks = [
+    "bettercmdtab"
+    "calibre"
+    "crossover"
+    "espanso"
+    "helium-browser"
+    "input-source-pro"
+    "karabiner-elements"
+    "moonlight"
+    "obs"
+    "orbstack"
+    "pearcleaner"
+    "raycast"
+    "readest"
+    "retroarch-metal"
+    "squirrel-app"
+    "stats"
+    "steam"
+    "tencent-meeting"
+    "vscodium"
+    "zed"
+    "zotero"
+  ]
+  ++ pinnedCasks [
+    "aldente"
+    "microsoft-word"
+    "parallels-client"
+  ];
 }

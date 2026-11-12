@@ -4,20 +4,22 @@
   pkgs,
   username,
   ...
-}: let
+}:
+let
   configTemplate = builtins.readFile ../../dotfiles/mihomo/config.template.yaml;
   configFile = config.sops.templates."mihomo-config.yaml".path;
   stateDir = "/Library/Application Support/mihomo";
   logFile = "/Library/Logs/mihomo.log";
-in {
-  environment.systemPackages = [pkgs.mihomo];
+in
+{
+  environment.systemPackages = [ pkgs.mihomo ];
 
   sops = {
     age = {
       keyFile = "${config.users.users.${username}.home}/.config/sops/age/keys.txt";
-      sshKeyPaths = [];
+      sshKeyPaths = [ ];
     };
-    gnupg.sshKeyPaths = [];
+    gnupg.sshKeyPaths = [ ];
 
     secrets."mihomo/sub_nacho_url" = {
       sopsFile = ./mihomo-secrets.yaml;
@@ -54,19 +56,19 @@ in {
     templates."mihomo-config.yaml" = {
       content =
         builtins.replaceStrings
-        [
-          "@MIHOMO_SUB_NACHO_URL@"
-          "@MIHOMO_SUB_POKEM_URL@"
-          "@MIHOMO_WARP_PRIVATE_KEY@"
-          "@MIHOMO_WARP_IP6_ADDRESS@"
-        ]
-        [
-          config.sops.placeholder."mihomo/sub_nacho_url"
-          config.sops.placeholder."mihomo/sub_pokem_url"
-          config.sops.placeholder."mihomo/warp_private_key"
-          config.sops.placeholder."mihomo/warp_ip6_address"
-        ]
-        configTemplate;
+          [
+            "@MIHOMO_SUB_NACHO_URL@"
+            "@MIHOMO_SUB_POKEM_URL@"
+            "@MIHOMO_WARP_PRIVATE_KEY@"
+            "@MIHOMO_WARP_IP6_ADDRESS@"
+          ]
+          [
+            config.sops.placeholder."mihomo/sub_nacho_url"
+            config.sops.placeholder."mihomo/sub_pokem_url"
+            config.sops.placeholder."mihomo/warp_private_key"
+            config.sops.placeholder."mihomo/warp_ip6_address"
+          ]
+          configTemplate;
       owner = "root";
       group = "wheel";
       mode = "0400";
@@ -76,7 +78,7 @@ in {
   # TUN needs root privileges. Provider, UI, and database state stays outside
   # the repository; the subscription URL exists only in the SOPS-rendered file.
   launchd.daemons.mihomo = {
-    path = [pkgs.coreutils];
+    path = [ pkgs.coreutils ];
     environment.SAFE_PATHS = "/run/secrets/rendered";
     script = ''
       for attempt in $(${pkgs.coreutils}/bin/seq 1 30); do

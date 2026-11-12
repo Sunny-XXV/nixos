@@ -1,3 +1,3 @@
 {
-  programs.fish.shellAliases = {};
+  programs.fish.shellAliases = { };
 }

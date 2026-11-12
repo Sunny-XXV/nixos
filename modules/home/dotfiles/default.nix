@@ -2,9 +2,11 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.dotfiles;
-in {
+in
+{
   options.dotfiles = {
     root = lib.mkOption {
       type = lib.types.str;
@@ -14,14 +16,12 @@ in {
 
     links = lib.mkOption {
       type = lib.types.attrsOf lib.types.str;
-      default = {};
+      default = { };
       description = "Home-relative targets mapped to paths under dotfiles.root.";
     };
   };
 
-  config.home.file =
-    lib.mapAttrs (_: source: {
-      source = config.lib.file.mkOutOfStoreSymlink "${cfg.root}/${source}";
-    })
-    cfg.links;
+  config.home.file = lib.mapAttrs (_: source: {
+    source = config.lib.file.mkOutOfStoreSymlink "${cfg.root}/${source}";
+  }) cfg.links;
 }

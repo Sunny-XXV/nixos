@@ -1,10 +1,10 @@
 {
   config,
   inputs,
-  pkgs,
   username,
   ...
-}: {
+}:
+{
   imports = [
     inputs.home-manager.nixosModules.home-manager
     inputs.sops-nix.nixosModules.sops
@@ -40,7 +40,7 @@
   networking.hostName = "Syy-PC";
 
   home-manager = {
-    extraSpecialArgs = {inherit inputs;};
+    extraSpecialArgs = { inherit inputs; };
     useGlobalPkgs = true;
     useUserPackages = true;
     users.${username} = {
@@ -83,7 +83,7 @@
   };
 
   # for Nvidia GPU
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
   hardware.graphics.enable = true;
   hardware.nvidia = {
     open = true;

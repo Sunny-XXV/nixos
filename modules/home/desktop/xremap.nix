@@ -1,12 +1,12 @@
-{inputs, ...}: {
-  imports = [inputs.xremap.homeManagerModules.default];
+{ inputs, ... }: {
+  imports = [ inputs.xremap.homeManagerModules.default ];
   services.xremap = {
     enable = true;
     watch = true;
     withNiri = true;
   };
-  services.xremap.deviceNames = ["Keychron Keychron K3 Max"];
-  systemd.user.services.xremap.Install.WantedBy = ["default.target"];
+  services.xremap.deviceNames = [ "Keychron Keychron K3 Max" ];
+  systemd.user.services.xremap.Install.WantedBy = [ "default.target" ];
 
   services.xremap.config.modmap = [
     {
@@ -25,7 +25,13 @@
   services.xremap.config.keymap = [
     {
       name = "terminal";
-      application = {only = ["Alacritty" "kitty" "foot"];};
+      application = {
+        only = [
+          "Alacritty"
+          "kitty"
+          "foot"
+        ];
+      };
       remap = {
         "Super-C" = "C-S-c";
         "Super-V" = "C-S-v";
@@ -33,7 +39,13 @@
     }
     {
       name = "osx-like";
-      application = {not = ["Alacritty" "kitty" "foot"];};
+      application = {
+        not = [
+          "Alacritty"
+          "kitty"
+          "foot"
+        ];
+      };
       remap = {
         "Super-c" = "C-c";
         "Super-v" = "C-v";

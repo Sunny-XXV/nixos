@@ -2,10 +2,12 @@
   config,
   pkgs,
   ...
-}: let
+}:
+let
   daePackage = pkgs.dae;
   daeConfigTemplate = builtins.readFile ../../dotfiles/dae/config.dae;
-in {
+in
+{
   sops.secrets."dae/sub_nacho" = {
     sopsFile = ./dae-secrets.yaml;
     key = "sub_nacho";
@@ -25,18 +27,18 @@ in {
   sops.templates."dae-config.dae" = {
     content =
       builtins.replaceStrings
-      [
-        "@DAE_SUB_NACHO@"
-        "@DAE_SUB_POKEM@"
-      ]
-      [
-        config.sops.placeholder."dae/sub_nacho"
-        config.sops.placeholder."dae/sub_pokem"
-      ]
-      daeConfigTemplate;
+        [
+          "@DAE_SUB_NACHO@"
+          "@DAE_SUB_POKEM@"
+        ]
+        [
+          config.sops.placeholder."dae/sub_nacho"
+          config.sops.placeholder."dae/sub_pokem"
+        ]
+        daeConfigTemplate;
     owner = "root";
     mode = "0400";
-    restartUnits = ["dae.service"];
+    restartUnits = [ "dae.service" ];
   };
 
   services.dae = {

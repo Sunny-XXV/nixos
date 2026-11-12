@@ -8,7 +8,11 @@
 
     settings = {
       mgr = {
-        ratio = [1 4 3];
+        ratio = [
+          1
+          4
+          3
+        ];
         sort_by = "alphabetical";
         sort_dir_first = true;
         sort_reverse = false;

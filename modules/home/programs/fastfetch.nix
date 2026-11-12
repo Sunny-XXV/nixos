@@ -1,5 +1,5 @@
-{pkgs, ...}: {
-  home.packages = [pkgs.pokeget-rs];
+{ pkgs, ... }: {
+  home.packages = [ pkgs.pokeget-rs ];
 
   programs.fastfetch = {
     enable = true;

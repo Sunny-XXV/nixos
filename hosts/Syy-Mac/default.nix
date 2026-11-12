@@ -3,7 +3,8 @@
   pkgs,
   username,
   ...
-}: {
+}:
+{
   imports = [
     inputs.nix-homebrew.darwinModules.nix-homebrew
     inputs.home-manager.darwinModules.home-manager
@@ -30,13 +31,13 @@
     configurationRevision = inputs.self.rev or inputs.self.dirtyRev or null;
   };
 
-  environment.shells = [pkgs.bashInteractive];
+  environment.shells = [ pkgs.bashInteractive ];
   programs.zsh.enable = false;
 
   users.users.${username}.home = "/Users/${username}";
   home-manager = {
     backupFileExtension = "hm-backup";
-    extraSpecialArgs = {inherit inputs;};
+    extraSpecialArgs = { inherit inputs; };
     useGlobalPkgs = true;
     useUserPackages = true;
     users.${username} = {

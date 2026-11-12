@@ -1,10 +1,10 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   environment.systemPackages = with pkgs; [
     git
     neovim
     wget
     rsync
-    alejandra
+    nixfmt
   ];
 
   environment.variables.EDITOR = "nvim";

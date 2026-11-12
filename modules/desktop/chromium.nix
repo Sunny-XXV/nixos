@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   environment.systemPackages = [
     (pkgs.chromium.override {
       commandLineArgs = [
@@ -10,5 +10,5 @@
     })
   ];
   programs.chromium.enable = true;
-  programs.chromium.extensions = [];
+  programs.chromium.extensions = [ ];
 }

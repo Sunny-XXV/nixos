@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ ... }:
+{
   programs.nixvim.plugins = {
     gitsigns.enable = true;
     indent-blankline.enable = true;

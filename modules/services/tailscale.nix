@@ -4,7 +4,8 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   isDarwin = lib.hasSuffix "-darwin" hostPlatform;
   isLinux = lib.hasSuffix "-linux" hostPlatform;
 
@@ -14,27 +15,32 @@
   hostName = lib.toLower (config.networking.hostName or "syy-pc");
   tailnetDomain = "${hostName}.${tailnet}";
 in
-  lib.mkMerge [
-    {
-      services.tailscale.enable = true;
-    }
+lib.mkMerge [
+  {
+    services.tailscale.enable = true;
+  }
 
-    (lib.optionalAttrs isLinux (let
+  (lib.optionalAttrs isLinux (
+    let
       nginxUser = config.services.nginx.user;
       tsDir = "/var/lib/tailscale";
       tsCertFile = "${tsDir}/certs/${tailnetDomain}.crt";
       tsKeyFile = "${tsDir}/certs/${tailnetDomain}.key";
       renewalWindowSeconds = toString (30 * 24 * 60 * 60);
-    in {
+    in
+    {
       services.tailscale = {
         openFirewall = true;
         permitCertUid = nginxUser;
         useRoutingFeatures = "server";
-        extraUpFlags = ["--ssh"];
-        extraSetFlags = ["--accept-dns=false" "--relay-server-port=${toString relayPort}"];
+        extraUpFlags = [ "--ssh" ];
+        extraSetFlags = [
+          "--accept-dns=false"
+          "--relay-server-port=${toString relayPort}"
+        ];
       };
 
-      networking.firewall.allowedUDPPorts = [relayPort];
+      networking.firewall.allowedUDPPorts = [ relayPort ];
 
       systemd.services.tailscaled.serviceConfig = {
         CPUWeight = 1000;
@@ -48,10 +54,22 @@ in
 
       systemd.services.tailscale-cert-generator = {
         description = "Ensure Tailscale certs exist and are fresh";
-        after = ["tailscaled.service" "network-online.target"];
-        wants = ["tailscaled.service" "network-online.target"];
-        wantedBy = ["multi-user.target"];
-        path = [pkgs.tailscale pkgs.acl pkgs.openssl pkgs.systemd pkgs.util-linux];
+        after = [
+          "tailscaled.service"
+          "network-online.target"
+        ];
+        wants = [
+          "tailscaled.service"
+          "network-online.target"
+        ];
+        wantedBy = [ "multi-user.target" ];
+        path = [
+          pkgs.tailscale
+          pkgs.acl
+          pkgs.openssl
+          pkgs.systemd
+          pkgs.util-linux
+        ];
         serviceConfig = {
           Type = "oneshot";
           User = "root";
@@ -107,7 +125,7 @@ in
 
       systemd.timers.tailscale-cert-generator = {
         description = "Refresh Tailscale certs";
-        wantedBy = ["timers.target"];
+        wantedBy = [ "timers.target" ];
         timerConfig = {
           OnCalendar = "daily";
           Persistent = true;
@@ -122,18 +140,19 @@ in
         "A /var/lib/tailscale/certs - - - - u:${nginxUser}:x"
       ];
 
-      systemd.services.nginx.wants = ["tailscale-cert-generator.service"];
-      systemd.services.nginx.after = ["tailscale-cert-generator.service"];
-    }))
+      systemd.services.nginx.wants = [ "tailscale-cert-generator.service" ];
+      systemd.services.nginx.after = [ "tailscale-cert-generator.service" ];
+    }
+  ))
 
-    (lib.optionalAttrs isDarwin {
-      launchd.daemons.tailscaled.serviceConfig = {
-        KeepAlive = true;
-        EnvironmentVariables = {
-          HTTP_PROXY = "http://127.0.0.1:7890";
-          HTTPS_PROXY = "http://127.0.0.1:7890";
-          ALL_PROXY = "socks5://127.0.0.1:7890";
-        };
+  (lib.optionalAttrs isDarwin {
+    launchd.daemons.tailscaled.serviceConfig = {
+      KeepAlive = true;
+      EnvironmentVariables = {
+        HTTP_PROXY = "http://127.0.0.1:7890";
+        HTTPS_PROXY = "http://127.0.0.1:7890";
+        ALL_PROXY = "socks5://127.0.0.1:7890";
       };
-    })
-  ]
+    };
+  })
+]

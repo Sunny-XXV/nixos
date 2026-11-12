@@ -3,13 +3,16 @@
   pkgs,
   username,
   ...
-}: let
+}:
+let
   home = config.users.users.${username}.home;
-  toggleBluetooth = state:
+  toggleBluetooth =
+    state:
     pkgs.writeShellScript "sleep-bt-${state}" ''
       exec ${pkgs.blueutil}/bin/blueutil -p ${state}
     '';
-in {
+in
+{
   environment.systemPackages = with pkgs; [
     blueutil
     sleepwatcher

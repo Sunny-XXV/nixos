@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ ... }:
+{
   fonts.fontconfig.enable = true;
   fonts.fontconfig.antialiasing = true;
 
