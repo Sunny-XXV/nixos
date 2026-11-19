@@ -319,7 +319,7 @@
                                     "key_code": "t",
                                     "modifiers": { "mandatory": ["option"] }
                                 },
-                                "to": [{ "shell_command": "osascript -e 'tell application \"Ghostty\" to activate'" }],
+                                "to": [{ "shell_command": "osascript -e 'tell application \"Rex Beta\" to activate'" }],
                                 "type": "basic"
                             }
                         ]

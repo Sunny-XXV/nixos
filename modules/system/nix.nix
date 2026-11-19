@@ -1,4 +1,5 @@
 {
+  config,
   hostPlatform,
   lib,
   pkgs,
@@ -11,15 +12,7 @@ let
 in
 lib.mkMerge [
   {
-    # nixpkgs currently passes -Dmimalloc to Lix 2.95, whose Meson project does
-    # not define that option. Keep one shared workaround until Lix 2.96.
-    nix.package = pkgs.lixPackageSets.stable.lix.overrideAttrs (old: {
-      mesonFlags =
-        if lib.versionOlder old.version "2.96" then
-          builtins.filter (flag: !lib.hasPrefix "-Dmimalloc=" flag) old.mesonFlags
-        else
-          old.mesonFlags;
-    });
+    nix.package = pkgs.lixPackageSets.stable.lix;
 
     nix = {
       channel.enable = false;
@@ -58,10 +51,28 @@ lib.mkMerge [
     nix.optimise.automatic = true;
     nix.gc = {
       automatic = true;
-      options = "--delete-older-than 7d";
+      options = "--delete-older-than 3d";
     };
 
     nixpkgs.config.allowUnfree = true;
+
+    sops.secrets."nix/github_pat" = {
+      sopsFile = ./github-secrets.yaml;
+      key = "github_pat";
+    };
+
+    sops.templates."nix-access-tokens.conf" = {
+      content = ''
+        access-tokens = github.com=${config.sops.placeholder."nix/github_pat"}
+      '';
+      owner = username;
+      mode = "0400";
+    };
+
+    # Use !include so nix.conf validation passes even before sops renders the secret
+    nix.extraOptions = ''
+      !include ${config.sops.templates."nix-access-tokens.conf".path}
+    '';
   }
 
   (lib.optionalAttrs isLinux {
@@ -70,8 +81,13 @@ lib.mkMerge [
   })
 
   (lib.optionalAttrs isDarwin {
+    nix.settings = {
+      max-jobs = 2;
+      cores = 2;
+    };
+
     nix.optimise.interval = {
-      Hour = 3;
+      Hour = 10;
       Minute = 45;
     };
   })

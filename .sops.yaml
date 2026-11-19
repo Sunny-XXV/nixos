@@ -6,3 +6,5 @@ creation_rules:
   - path_regex: modules/services/mihomo-secrets\.yaml$
     age:
       - *sunya_age
+  - path_regex: modules/system/github-secrets\.yaml$
+    age: *sunya_age

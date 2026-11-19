@@ -1,4 +1,32 @@
-{ pkgs, ... }: {
+{ lib, pkgs, ... }:
+let
+  pokegetCompact = pkgs.writeShellApplication {
+    name = "pokeget-compact";
+    runtimeInputs = [ pkgs.pokeget-rs ];
+    text = ''
+      max_lines=15
+      best=""
+      best_lines=999
+      for _ in 1 2 3 4 5 6 7 8; do
+        out=$(pokeget random --hide-name)
+        lines=0
+        while IFS= read -r _; do
+          lines=$((lines + 1))
+        done <<< "$out"
+        if [ "$lines" -le "$max_lines" ]; then
+          printf '%s\n' "$out"
+          exit 0
+        fi
+        if [ "$lines" -lt "$best_lines" ]; then
+          best="$out"
+          best_lines="$lines"
+        fi
+      done
+      printf '%s\n' "$best"
+    '';
+  };
+in
+{
   home.packages = [ pkgs.pokeget-rs ];
 
   programs.fastfetch = {
@@ -6,11 +34,11 @@
     settings = {
       logo = {
         type = "command-raw";
-        source = "pokeget random --hide-name";
+        source = lib.getExe pokegetCompact;
         padding = {
-          left = 3;
-          right = 3;
-          top = 2;
+          left = 2;
+          right = 2;
+          top = 1;
         };
       };
       modules = [
@@ -21,11 +49,14 @@
         "host"
         "kernel"
         "uptime"
-        "packages"
+        # "packages"
         "shell"
-        "display"
-        "wm"
-        "font"
+        {
+          "type" = "display";
+          "format" = "{width}x{height}{?scale-factor} @ {refresh-rate} Hz";
+        }
+        # "wm"
+        # "font"
         {
           "type" = "cpu";
           "showPeCoreCount" = true;
@@ -37,7 +68,10 @@
           "temp" = true;
         }
         "memory"
-        "disk"
+        {
+          "type" = "disk";
+          "format" = "{size-used} / {size-total} ({size-percentage}) - {filesystem}";
+        }
         {
           "type" = "battery";
           "temp" = true;

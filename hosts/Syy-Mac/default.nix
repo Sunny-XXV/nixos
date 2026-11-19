@@ -13,6 +13,8 @@
     ../../modules/system/nix.nix
     ../../modules/system/basic.nix
     ../../modules/system/darwin-pref.nix
+    ../../modules/system/darwin-debloat.nix
+    ../../modules/security/sops.nix
     ../../modules/desktop/homebrew.nix
     ../../modules/desktop/darwin-apps.nix
     ../../modules/desktop/fonts.nix

@@ -5,21 +5,24 @@ patch:
   style:
     color_scheme: native
     color_scheme_dark: native
-    candidate_list_layout: linear
+    candidate_list_layout: stacked
     text_orientation: horizontal
     inline_preedit: true
     corner_radius: 6
     hilited_corner_radius: 4
-    border_height: 1
-    border_width: 1
+    border_height: -1
+    border_width: -1
+    line_spacing: 5
     font_face: ""
     font_point: 15
     label_font_point: 13
     comment_font_point: 13
 
   app_options:
-    # 终端与编辑器：默认英文，且按 Esc (CapsLock) 退出插入模式时自动切回英文
     com.mitchellh.ghostty:
+      ascii_mode: true
+      vim_mode: true
+    com.superlogical.rex:
       ascii_mode: true
       vim_mode: true
     com.googlecode.iterm2:
@@ -31,7 +34,6 @@ patch:
     com.vscodium:
       ascii_mode: true
       vim_mode: true
-    # 启动器与单键快捷键应用：初始默认英文
     com.raycast.macos:
       ascii_mode: true
     info.sioyek.sioyek:
