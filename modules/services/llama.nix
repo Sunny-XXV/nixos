@@ -48,7 +48,7 @@ in
             owner = "ggml-org";
             repo = "llama.cpp";
             tag = "b${finalAttrs.version}";
-            hash = "sha256-J+NOeQYs1ojNjgogf54BSiBJLhKQj5i8SamBblV5jVg=";
+            hash = "sha256-asxBAkNQfXzA9soFTsOfvYBxk/PSZndOquYpNnCTjVk=";
           };
           patches = [ ];
 
