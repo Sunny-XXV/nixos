@@ -43,7 +43,7 @@ in
     (_final: prev: {
       llama-cpp = prev.llama-cpp.overrideAttrs (
         finalAttrs: previousAttrs: {
-          version = "12211";
+          version = "12503";
           src = prev.fetchFromGitHub {
             owner = "ggml-org";
             repo = "llama.cpp";
