@@ -54,6 +54,8 @@
         EnableStandardClickToShowDesktop = false;
         EnableTiledWindowMargins = false;
         HideDesktop = true;
+        StandardHideWidgets = true;
+        StageManagerHideWidgets = true;
       };
 
       trackpad = {
