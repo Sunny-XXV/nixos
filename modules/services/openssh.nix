@@ -1,7 +1,4 @@
-{
-  username,
-  ...
-}:
+{ meta, ... }:
 {
   services.openssh = {
     enable = true;
@@ -9,7 +6,7 @@
       X11Forwarding = true;
       PermitRootLogin = "no";
       PasswordAuthentication = false;
-      KbdInteractiveAuthentication = true;
+      KbdInteractiveAuthentication = false;
       UsePAM = true;
       ClientAliveInterval = 60;
       ClientAliveCountMax = 5;
@@ -25,18 +22,12 @@
     '';
   };
 
-  users.users.${username} = {
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPJAJ0CBSOEo5ZSqEFcG1rQJk5QdxrbQcuIPcEczsLwH ydsunyan123@gmail.com"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIpReUt3bToa+UM0TZx0aFGWBvWpFHBPb03sDsKDo7ab ydsunyan123@gmail.com"
-    ];
+  users.users.${meta.username} = {
+    openssh.authorizedKeys.keys = meta.sshKeys;
   };
 
   users.users.root = {
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPJAJ0CBSOEo5ZSqEFcG1rQJk5QdxrbQcuIPcEczsLwH ydsunyan123@gmail.com"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIpReUt3bToa+UM0TZx0aFGWBvWpFHBPb03sDsKDo7ab ydsunyan123@gmail.com"
-    ];
+    openssh.authorizedKeys.keys = meta.sshKeys;
   };
 
   systemd.services.sshd.serviceConfig = {

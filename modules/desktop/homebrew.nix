@@ -1,4 +1,4 @@
-{ username, ... }:
+{ meta, ... }:
 let
   # for already-installed casks added or removed here,
   # run `brew pin/unpin --cask <name>` once manually.
@@ -10,14 +10,14 @@ in
 {
   nix-homebrew = {
     enable = true;
-    user = username;
+    user = meta.username;
     autoMigrate = true;
     mutableTaps = true;
   };
 
   homebrew = {
     enable = true;
-    user = username;
+    user = meta.username;
 
     onActivation = {
       autoUpdate = true;

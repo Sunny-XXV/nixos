@@ -1,4 +1,5 @@
-{ config, ... }: {
+{ config, meta, ... }:
+{
   programs.delta.enable = true;
   programs.delta.enableGitIntegration = true;
 
@@ -16,16 +17,15 @@
       ".venv/"
       ".vscode/"
       "node_modules/"
-      "AGENTS.md"
     ];
 
     settings = {
       user = {
         name = config.home.username;
-        email = "ydsunyan123@gmail.com";
+        email = meta.email;
       };
 
-      help.autocorrect = 1;
+      help.autocorrect = "prompt";
       color.ui = true;
       pull.rebase = true;
       init.defaultBranch = "master";

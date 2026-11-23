@@ -1,12 +1,6 @@
-{
-  config,
-  lib,
-  pkgs,
-  username,
-  ...
-}:
+{ config, lib, meta, pkgs, ... }:
 let
-  user = username;
+  user = meta.username;
   group = "users";
   rcloneConfig = config.sops.secrets."rclone/config".path;
 

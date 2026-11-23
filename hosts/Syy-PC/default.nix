@@ -1,9 +1,4 @@
-{
-  config,
-  inputs,
-  username,
-  ...
-}:
+{ config, inputs, meta, ... }:
 {
   imports = [
     inputs.home-manager.nixosModules.home-manager
@@ -18,7 +13,6 @@
     ../../modules/system/basic.nix
     ../../modules/system/boot.nix
 
-    ../../modules/services/nginx.nix
     ../../modules/services/earlyoom.nix
     ../../modules/services/fail2ban.nix
     ../../modules/services/firewall.nix
@@ -40,10 +34,10 @@
   networking.hostName = "Syy-PC";
 
   home-manager = {
-    extraSpecialArgs = { inherit inputs; };
+    extraSpecialArgs = { inherit inputs meta; };
     useGlobalPkgs = true;
     useUserPackages = true;
-    users.${username} = {
+    users.${meta.username} = {
       imports = [
         ../../modules/home/environment.nix
         ../../modules/home/dotfiles

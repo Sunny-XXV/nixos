@@ -1,7 +1,8 @@
-{ username, ... }: {
-  users.users.${username} = {
+{ meta, ... }:
+{
+  users.users.${meta.username} = {
     isNormalUser = true;
-    description = username;
+    description = meta.username;
     extraGroups = [
       "networkmanager"
       "wheel"
@@ -9,20 +10,6 @@
       "audio"
       "video"
       "render"
-      "input"
-      "uinput"
-    ];
-    packages = [ ];
-  };
-
-  users.users.guest = {
-    isNormalUser = true;
-    hashedPassword = "!";
-    extraGroups = [
-      "networkmanager"
-      "podman"
-      "audio"
-      "video"
       "input"
       "uinput"
     ];

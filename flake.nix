@@ -44,8 +44,22 @@
       ...
     }:
     let
-      username = "sunya";
-      commonSpecialArgs = { inherit inputs username; };
+      meta = {
+        username = "sunya";
+        email = "ydsunyan123@gmail.com";
+        hosts = {
+          pc = "syy-pc";
+          mac = "syy-mac";
+        };
+        tailnet = "taile2b66b.ts.net";
+        sshKeys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPJAJ0CBSOEo5ZSqEFcG1rQJk5QdxrbQcuIPcEczsLwH ydsunyan123@gmail.com"
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIpReUt3bToa+UM0TZx0aFGWBvWpFHBPb03sDsKDo7ab ydsunyan123@gmail.com"
+        ];
+      };
+      commonSpecialArgs = {
+        inherit inputs meta;
+      };
       systems = [
         "x86_64-linux"
         "aarch64-darwin"

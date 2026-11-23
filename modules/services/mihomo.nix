@@ -1,10 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  username,
-  ...
-}:
+{ config, lib, meta, pkgs, ... }:
 let
   configTemplate = builtins.readFile ../../dotfiles/mihomo/config.template.yaml;
   configFile = config.sops.templates."mihomo-config.yaml".path;
@@ -16,7 +10,7 @@ in
 
   sops = {
     age = {
-      keyFile = "${config.users.users.${username}.home}/.config/sops/age/keys.txt";
+      keyFile = "${config.users.users.${meta.username}.home}/.config/sops/age/keys.txt";
       sshKeyPaths = [ ];
     };
     gnupg.sshKeyPaths = [ ];

@@ -1,8 +1,4 @@
-{
-  pkgs,
-  username,
-  ...
-}:
+{ meta, pkgs, ... }:
 let
   defaultMode = "2560x1600@60";
 
@@ -40,7 +36,7 @@ in
   services.greetd = {
     enable = true;
     settings.default_session = {
-      user = username;
+      user = meta.username;
       command = "${pkgs.niri}/bin/niri-session";
     };
   };
@@ -65,7 +61,7 @@ in
     };
     applications = {
       env = {
-        PATH = "$(PATH):/run/current-system/sw/bin:/etc/profiles/per-user/${username}/bin";
+        PATH = "$(PATH):/run/current-system/sw/bin:/etc/profiles/per-user/${meta.username}/bin";
       };
       apps = [
         {

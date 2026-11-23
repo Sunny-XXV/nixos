@@ -1,9 +1,4 @@
-{
-  inputs,
-  pkgs,
-  username,
-  ...
-}:
+{ inputs, meta, pkgs, ... }:
 {
   imports = [
     inputs.nix-homebrew.darwinModules.nix-homebrew
@@ -28,7 +23,7 @@
   nixpkgs.hostPlatform = "aarch64-darwin";
 
   system = {
-    primaryUser = username;
+    primaryUser = meta.username;
     stateVersion = 6;
     configurationRevision = inputs.self.rev or inputs.self.dirtyRev or null;
   };
@@ -36,13 +31,13 @@
   environment.shells = [ pkgs.bashInteractive ];
   programs.zsh.enable = false;
 
-  users.users.${username}.home = "/Users/${username}";
+  users.users.${meta.username}.home = "/Users/${meta.username}";
   home-manager = {
     backupFileExtension = "hm-backup";
-    extraSpecialArgs = { inherit inputs; };
+    extraSpecialArgs = { inherit inputs meta; };
     useGlobalPkgs = true;
     useUserPackages = true;
-    users.${username} = {
+    users.${meta.username} = {
       imports = [
         ../../modules/home/environment.nix
         ../../modules/home/dotfiles

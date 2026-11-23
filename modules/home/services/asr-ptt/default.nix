@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ config, lib, meta, pkgs, ... }:
 let
   runtimeDir = "/tmp/asr-ptt";
   logFile = "${runtimeDir}/ptt.log";
@@ -11,13 +6,7 @@ let
 
   asrPttDaemon = pkgs.writeShellApplication {
     name = "asr-ptt-daemon";
-    runtimeInputs = with pkgs; [
-      sox
-      jq
-      coreutils
-      gnused
-      gawk
-    ];
+    runtimeInputs = with pkgs; [ sox jq coreutils gnused gawk ];
     text = builtins.readFile ./ptt-daemon.sh;
   };
 
@@ -43,7 +32,7 @@ in
         LC_ALL = "en_US.UTF-8";
         ASR_RUNTIME_DIR = runtimeDir;
         ASR_HOTWORDS_FILE = hotwordsFile;
-        ASR_SERVER_URL = "http://syy-pc:9931/v1/audio/transcriptions";
+        ASR_SERVER_URL = "http://${meta.hosts.pc}:9931/v1/audio/transcriptions";
       };
       RunAtLoad = true;
       KeepAlive = true;
