@@ -1,13 +1,10 @@
 { username, ... }:
 let
-  trustedTap = name: {
-    inherit name;
-    trusted = true;
-  };
-
+  # for already-installed casks added or removed here,
+  # run `brew pin/unpin --cask <name>` once manually.
   pinnedCasks = map (name: {
     inherit name;
-    greedy = false;
+    postinstall = "brew pin --cask ${name}";
   });
 in
 {
@@ -29,10 +26,6 @@ in
     };
   };
 
-  homebrew.taps = map trustedTap [
-    "barutsrb/tap"
-  ];
-
   homebrew.brews = [
     "mgba"
   ];
@@ -43,7 +36,7 @@ in
     "crossover"
     "espanso"
     "helium-browser"
-    "input-source-pro"
+    # "input-source-pro"
     "karabiner-elements"
     "moonlight"
     "obs"
@@ -53,7 +46,6 @@ in
     "readest"
     "retroarch-metal"
     "squirrel-app"
-    "stats"
     "steam"
     "tencent-meeting"
     "vscodium"

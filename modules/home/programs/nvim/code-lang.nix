@@ -42,7 +42,10 @@
       };
       nil_ls = {
         enable = true;
-        settings.formatting.command = [ "nixfmt" ];
+        settings = {
+          formatting.command = [ "nixfmt" ];
+          nix.flake.autoArchive = false;
+        };
       };
     };
   };

@@ -7,7 +7,7 @@
 let
   runtimeDir = "/tmp/asr-ptt";
   logFile = "${runtimeDir}/ptt.log";
-  hotwordsFile = "${config.home.homeDirectory}/.config/nixos/modules/home/services/asr/hotwords.txt";
+  hotwordsFile = "${config.home.homeDirectory}/.config/nixos/modules/home/services/asr-ptt/hotwords.txt";
 
   asrPttDaemon = pkgs.writeShellApplication {
     name = "asr-ptt-daemon";

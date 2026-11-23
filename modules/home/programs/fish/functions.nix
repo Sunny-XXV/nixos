@@ -46,10 +46,6 @@
       body = "fastfetch $argv";
     };
 
-    ls = {
-      body = "command ls -F --color=auto $argv";
-    };
-
     fkill = {
       body = ''
         set -l pids (ps -ef | sed 1d | fzf -m | awk '{print $2}')
@@ -81,9 +77,9 @@
       if set -q _flag_help
         echo "Usage: safe [options] -- <command>"
         echo "Options:"
-        echo "  -m, --mem <size>   MemoryMax limit (default: 4G)"
+        echo "  -m, --mem <size>   MemoryMax limit (default: 24G)"
         echo "  -s, --swap <size>  MemorySwapMax limit (default: 0)"
-        echo "  -c, --cpu <weight> CPUWeight (1-100, default: 50)"
+        echo "  -c, --cpu <weight> CPUWeight (1-100, default: 30)"
         echo "  -n, --name <name>  Unit name description"
         return 0
       end

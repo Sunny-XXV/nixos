@@ -5,7 +5,7 @@
   ...
 }:
 let
-  pkgsExt = pkgs.extend inputs.vscode-extensions.overlays.default;
+  vscodeExt = inputs.vscode-extensions.overlays.default pkgs pkgs;
   isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
   isLinux = pkgs.stdenv.hostPlatform.isLinux;
 in
@@ -16,10 +16,10 @@ in
   // lib.optionalAttrs isDarwin {
     package = null;
     mutableExtensionsDir = false;
-    profiles.default.extensions = with pkgsExt.vscode-marketplace; [
+    profiles.default.extensions = with vscodeExt.vscode-marketplace; [
       drcika.apc-extension
       fisheva.eva-theme
-      pkgsExt.open-vsx.jeanp413.open-remote-ssh
+      vscodeExt.open-vsx.jeanp413.open-remote-ssh
       pkief.material-icon-theme
       vscodevim.vim
     ];

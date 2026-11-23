@@ -8,17 +8,13 @@
       url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-homebrew.url = "git+https://github.com/zhaofengli/nix-homebrew.git";
+    nix-homebrew.url = "github:zhaofengli/nix-homebrew";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixvim = {
       url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    pi = {
-      url = "github:earendil-works/pi/stable";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     sops-nix = {
@@ -86,17 +82,13 @@
 
       nixosConfigurations.Syy-PC = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = commonSpecialArgs // {
-          hostPlatform = "x86_64-linux";
-        };
+        specialArgs = commonSpecialArgs;
         modules = [ ./hosts/Syy-PC ];
       };
 
       darwinConfigurations.Syy-Mac = nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
-        specialArgs = commonSpecialArgs // {
-          hostPlatform = "aarch64-darwin";
-        };
+        specialArgs = commonSpecialArgs;
         modules = [ ./hosts/Syy-Mac ];
       };
     };

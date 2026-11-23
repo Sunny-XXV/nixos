@@ -55,12 +55,10 @@
         ../../modules/home/programs/eza.nix
         ../../modules/home/programs/fastfetch.nix
         ../../modules/home/programs/fish
-        ../../modules/home/programs/fonts.nix
         ../../modules/home/programs/fzf.nix
         ../../modules/home/programs/git.nix
         ../../modules/home/programs/gpg.nix
         ../../modules/home/programs/rbw.nix
-        ../../modules/home/programs/ghostty.nix
         ../../modules/home/programs/man.nix
         ../../modules/home/programs/nvim
         ../../modules/home/programs/pi-agent.nix

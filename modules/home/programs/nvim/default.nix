@@ -1,6 +1,5 @@
 {
   inputs,
-  pkgs,
   ...
 }:
 {
@@ -20,7 +19,7 @@
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
-    nixpkgs.source = pkgs.path;
+    nixpkgs.useGlobalPackages = true;
 
     opts = {
       clipboard = "unnamedplus";
