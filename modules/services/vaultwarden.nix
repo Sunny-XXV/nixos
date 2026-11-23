@@ -1,13 +1,13 @@
 {
   config,
-  pkgs,
   lib,
+  meta,
+  pkgs,
   ...
 }:
 let
   dataDir = config.services.vaultwarden.config.DATA_FOLDER;
-  tailnetDomain = "${lib.toLower config.networking.hostName}.taile2b66b.ts.net";
-  tsCertDir = "/var/lib/tailscale/certs";
+  tailnetDomain = "${lib.toLower config.networking.hostName}.${meta.tailnet}";
   backup = {
     remote = "infini_cloud:vaultwarden";
     localStateDir = "/var/lib/vaultwarden-backup";
@@ -90,36 +90,19 @@ in
     webVaultPackage = pkgs.vaultwarden.webvault;
   };
 
-  services.nginx.virtualHosts.${tailnetDomain} = {
-    http2 = true;
-    listen = [
-      {
-        addr = "0.0.0.0";
-        port = 8454;
-        ssl = true;
-      }
-      {
-        addr = "[::]";
-        port = 8454;
-        ssl = true;
-      }
-    ];
+  services.caddy = {
+    enable = true;
+    globalConfig = ''
+      auto_https disable_redirects
+    '';
+    virtualHosts."https://${tailnetDomain}:8454".extraConfig = ''
+      reverse_proxy http://127.0.0.1:${toString config.services.vaultwarden.config.ROCKET_PORT}
+    '';
+  };
 
-    forceSSL = true;
-    sslCertificate = "${tsCertDir}/${tailnetDomain}.crt";
-    sslCertificateKey = "${tsCertDir}/${tailnetDomain}.key";
-
-    locations = {
-      "/" = {
-        proxyPass = "http://127.0.0.1:${toString config.services.vaultwarden.config.ROCKET_PORT}";
-        recommendedProxySettings = true;
-      };
-
-      "/notifications/hub" = {
-        proxyPass = "http://127.0.0.1:${toString config.services.vaultwarden.config.ROCKET_PORT}";
-        proxyWebsockets = true;
-      };
-    };
+  systemd.services.caddy = {
+    after = [ "tailscaled.service" ];
+    wants = [ "tailscaled.service" ];
   };
 
   systemd.services.vaultwarden-backup = {
