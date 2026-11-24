@@ -1,4 +1,9 @@
-{ config, inputs, meta, ... }:
+{
+  config,
+  inputs,
+  meta,
+  ...
+}:
 {
   imports = [
     inputs.home-manager.nixosModules.home-manager
@@ -72,6 +77,7 @@
         ../../modules/home/desktop/xremap.nix
         ../../modules/home/programs/gpg.nix
         ../../modules/home/programs/rbw.nix
+        ../../modules/home/services/rex.nix
       ];
     };
   };

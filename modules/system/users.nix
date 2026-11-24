@@ -2,6 +2,7 @@
 {
   users.users.${meta.username} = {
     isNormalUser = true;
+    linger = true;
     description = meta.username;
     extraGroups = [
       "networkmanager"

@@ -1,4 +1,9 @@
-{ inputs, meta, pkgs, ... }:
+{
+  inputs,
+  meta,
+  pkgs,
+  ...
+}:
 {
   imports = [
     inputs.nix-homebrew.darwinModules.nix-homebrew
@@ -68,6 +73,7 @@
         ../../modules/home/desktop/rime.nix
         ../../modules/home/services/asr-ptt
         ../../modules/home/services/espanso.nix
+        ../../modules/home/services/rex.nix
       ];
     };
   };
