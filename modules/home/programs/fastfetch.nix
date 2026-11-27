@@ -32,6 +32,7 @@ in
   programs.fastfetch = {
     enable = true;
     settings = {
+      display.duration.abbreviation = true;
       logo = {
         type = "command-raw";
         source = lib.getExe pokegetCompact;
@@ -49,14 +50,11 @@ in
         "host"
         "kernel"
         "uptime"
-        # "packages"
         "shell"
         {
           "type" = "display";
           "format" = "{width}x{height}{?scale-factor} @ {refresh-rate} Hz";
         }
-        # "wm"
-        # "font"
         {
           "type" = "cpu";
           "showPeCoreCount" = true;
@@ -74,7 +72,8 @@ in
         }
         {
           "type" = "battery";
-          "temp" = true;
+          "key" = "Battery";
+          "format" = "{capacity}{?time-formatted} ({time-formatted} left){?}{?status} [{status}]{?}";
         }
         {
           "type" = "localip";

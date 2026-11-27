@@ -31,30 +31,25 @@ in
   ];
 
   homebrew.casks = [
-    "bettercmdtab"
     "calibre"
-    "crossover"
     "espanso"
     "helium-browser"
     # "input-source-pro"
     "karabiner-elements"
     "moonlight"
     "obs"
-    "orbstack"
     "pearcleaner"
     "raycast"
     "readest"
     "retroarch-metal"
     "squirrel-app"
     "steam"
-    "tencent-meeting"
     "vscodium"
-    "zed"
-    "zotero"
   ]
   ++ pinnedCasks [
     "aldente"
     "microsoft-word"
     "parallels-client"
+    "tencent-meeting"
   ];
 }

@@ -41,11 +41,7 @@
                         "manipulators": [
                             {
                                 "from": { "key_code": "f6" },
-                                "to": [
-                                    {
-                                        "shell_command": "if pgrep -x caffeinate >/dev/null; then pkill -x caffeinate; rm -f /tmp/caffeinate.pid; osascript -e 'display notification \"Mac is De-Caffeinated\" with title \"Caffeinate\"'; else nohup caffeinate -di &>/dev/null & echo $! > /tmp/caffeinate.pid; osascript -e 'display notification \"Mac is Caffeinated\" with title \"Caffeinate\"'; fi"
-                                    }
-                                ],
+                                "to": [{ "shell_command": "if pgrep -x caffeinate >/dev/null; then pkill -x caffeinate; rm -f /tmp/caffeinate.pid; osascript -e 'display notification \"Mac is De-Caffeinated\" with title \"Caffeinate\"'; else nohup caffeinate -i &>/dev/null & echo $! > /tmp/caffeinate.pid; osascript -e 'display notification \"Mac is Caffeinated\" with title \"Caffeinate\"'; fi" }],
                                 "type": "basic"
                             }
                         ]
@@ -183,94 +179,6 @@
                         ]
                     },
                     {
-                        "description": "[LCmd/RCmd] to En / Ch IM (Input Source Lang)",
-                        "enabled": false,
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "left_command",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "parameters": {
-                                    "basic.to_if_alone_threshold_milliseconds": 0,
-                                    "basic.to_if_alone_timeout_milliseconds": 300,
-                                    "basic.to_if_held_down_threshold_milliseconds": 100
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "left_command",
-                                        "lazy": true
-                                    }
-                                ],
-                                "to_if_alone": [{ "select_input_source": { "language": "en" } }],
-                                "to_if_held_down": [{ "key_code": "left_command" }],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "right_command",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "parameters": {
-                                    "basic.to_if_alone_threshold_milliseconds": 0,
-                                    "basic.to_if_alone_timeout_milliseconds": 300,
-                                    "basic.to_if_held_down_threshold_milliseconds": 100
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "right_command",
-                                        "lazy": true
-                                    }
-                                ],
-                                "to_if_alone": [{ "select_input_source": { "language": "zh-Hans" } }],
-                                "to_if_held_down": [{ "key_code": "right_command" }],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "[LShift] En / Ch IM switching (Input Source ID)",
-                        "enabled": false,
-                        "manipulators": [
-                            {
-                                "conditions": [
-                                    {
-                                        "input_sources": [{ "input_source_id": "com.apple.keylayout.US" }],
-                                        "type": "input_source_if"
-                                    }
-                                ],
-                                "from": { "key_code": "left_shift" },
-                                "to": [{ "key_code": "left_shift" }],
-                                "to_if_alone": [
-                                    {
-                                        "halt": true,
-                                        "select_input_source": { "input_source_id": "im.rime.inputmethod.Squirrel.Hans" }
-                                    },
-                                    { "key_code": "left_shift" }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "input_sources": [{ "input_source_id": "im.rime.inputmethod.Squirrel.Hans" }],
-                                        "type": "input_source_if"
-                                    }
-                                ],
-                                "from": { "key_code": "left_shift" },
-                                "to": [{ "key_code": "left_shift" }],
-                                "to_if_alone": [
-                                    {
-                                        "halt": true,
-                                        "select_input_source": { "input_source_id": "com.apple.keylayout.US" }
-                                    },
-                                    { "key_code": "left_shift" }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
                         "description": "[Opt+ Z] activate Zotero",
                         "enabled": false,
                         "manipulators": [
@@ -299,7 +207,7 @@
                         ]
                     },
                     {
-                        "description": "[Option + M] activate Mail",
+                        "description": "[Opt + M] activate Mail",
                         "manipulators": [
                             {
                                 "from": {
@@ -312,7 +220,7 @@
                         ]
                     },
                     {
-                        "description": "[Option + T] activate Terminal",
+                        "description": "[Opt + T] activate Terminal",
                         "manipulators": [
                             {
                                 "from": {
@@ -325,7 +233,7 @@
                         ]
                     },
                     {
-                        "description": "[Option + G] activate Telegram",
+                        "description": "[Opt + G] activate Telegram",
                         "manipulators": [
                             {
                                 "from": {
@@ -339,6 +247,7 @@
                     },
                     {
                         "description": "[Opt+ C] activate Coding App",
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "from": {
@@ -364,7 +273,7 @@
                         ]
                     },
                     {
-                        "description": "Keyboard Backlight: fn + up/down arrow",
+                        "description": "[Fn + Up/Down] Keyboard Backlight",
                         "manipulators": [
                             {
                                 "from": {

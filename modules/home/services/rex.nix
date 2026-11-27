@@ -8,6 +8,22 @@
 let
   homeDir = config.home.homeDirectory;
   logFile = "${homeDir}/Library/Logs/rex-server.log";
+  rexServerDarwin = pkgs.writeShellScript "rex-server-darwin" ''
+    set -euo pipefail
+    trap 'exit 0' TERM INT
+
+    socket="/var/run/tailscaled.socket"
+    tailscale="${pkgs.tailscale}/bin/tailscale"
+
+    while [ ! -S "$socket" ] || ! "$tailscale" --socket "$socket" ip -4 >/dev/null 2>&1; do
+      ${pkgs.coreutils}/bin/sleep 1
+    done
+
+    exec "${homeDir}/.local/bin/rex" server run \
+      --extra-listen tailnet://:7297 \
+      --tailscaled-socket "$socket" \
+      --log-format text
+  '';
 in
 {
   imports = [
@@ -26,13 +42,7 @@ in
     config = {
       Label = "org.nix-community.home.rex";
       ProgramArguments = [
-        "${homeDir}/.local/bin/rex"
-        "server"
-        "run"
-        "--extra-listen"
-        "tailnet://:7297"
-        "--log-format"
-        "text"
+        "${rexServerDarwin}"
       ];
       EnvironmentVariables = {
         LANG = "en_US.UTF-8";
