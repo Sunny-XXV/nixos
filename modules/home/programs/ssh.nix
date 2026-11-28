@@ -13,6 +13,11 @@ let
   };
 in
 {
+  services.ssh-agent = lib.mkIf (!isDarwin) {
+    enable = true;
+    defaultMaximumIdentityLifetime = 86400;
+  };
+
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
