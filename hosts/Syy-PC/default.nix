@@ -40,6 +40,7 @@
   networking.hostName = "Syy-PC";
 
   home-manager = {
+    backupFileExtension = "hm-backup";
     extraSpecialArgs = { inherit inputs meta; };
     useGlobalPkgs = true;
     useUserPackages = true;
@@ -76,7 +77,6 @@
         ../../modules/home/desktop/portals.nix
         ../../modules/home/desktop/theme.nix
         ../../modules/home/desktop/xremap.nix
-        ../../modules/home/programs/gpg.nix
         ../../modules/home/programs/rbw.nix
         ../../modules/home/services/rex.nix
       ];
@@ -97,15 +97,20 @@
   nix.settings = {
     substituters = [
       "https://nix-community.cachix.org"
+      "https://cache.nixos-cuda.org"
       # "https://cache.garnix.io"
     ];
     trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="
       # "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
     ];
   };
 
   nixpkgs.config.cudaSupport = true;
+
+  services.btrfs.autoScrub.enable = true;
+  services.fstrim.enable = true;
 
   # misc
   hardware.i2c.enable = true;

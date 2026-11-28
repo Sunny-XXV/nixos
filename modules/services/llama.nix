@@ -1,4 +1,9 @@
-{ lib, options, pkgs, ... }:
+{
+  lib,
+  options,
+  pkgs,
+  ...
+}:
 let
   isDarwin = options ? launchd;
   isLinux = options ? systemd;
@@ -32,49 +37,46 @@ let
     explicitBool = false;
     formatArg = lib.generators.mkValueStringDefault { };
   }) settings;
+
+  llamaPackage = pkgs.llama-cpp.overrideAttrs (
+    finalAttrs: previousAttrs: {
+      version = "12503";
+      src = pkgs.fetchFromGitHub {
+        owner = "ggml-org";
+        repo = "llama.cpp";
+        tag = "b${finalAttrs.version}";
+        hash = "sha256-asxBAkNQfXzA9soFTsOfvYBxk/PSZndOquYpNnCTjVk=";
+      };
+      patches = [ ];
+
+      nativeBuildInputs = builtins.filter (
+        drv: drv != pkgs.nodejs && drv != pkgs.npmHooks.npmConfigHook
+      ) previousAttrs.nativeBuildInputs;
+
+      npmDeps = null;
+      preConfigure = ''
+        prependToVar cmakeFlags "-DLLAMA_BUILD_COMMIT:STRING=$(cat COMMIT)"
+      '';
+      cmakeFlags = (previousAttrs.cmakeFlags or [ ]) ++ [
+        "-DLLAMA_BUILD_UI=OFF"
+        "-DLLAMA_USE_PREBUILT_UI=OFF"
+      ];
+
+      disabledTests = (previousAttrs.disabledTests or [ ]) ++ [
+        "test-llama-context-model"
+      ];
+    }
+  );
 in
 {
   config = lib.mkMerge [
     {
-      nixpkgs.overlays = [
-        (_final: prev: {
-          llama-cpp = prev.llama-cpp.overrideAttrs (
-            finalAttrs: previousAttrs: {
-              version = "12503";
-              src = prev.fetchFromGitHub {
-                owner = "ggml-org";
-                repo = "llama.cpp";
-                tag = "b${finalAttrs.version}";
-                hash = "sha256-asxBAkNQfXzA9soFTsOfvYBxk/PSZndOquYpNnCTjVk=";
-              };
-              patches = [ ];
-
-              nativeBuildInputs = builtins.filter (
-                drv: drv != prev.nodejs && drv != prev.npmHooks.npmConfigHook
-              ) previousAttrs.nativeBuildInputs;
-
-              npmDeps = null;
-              preConfigure = ''
-                prependToVar cmakeFlags "-DLLAMA_BUILD_COMMIT:STRING=$(cat COMMIT)"
-              '';
-              cmakeFlags = (previousAttrs.cmakeFlags or [ ]) ++ [
-                "-DLLAMA_BUILD_UI=OFF"
-                "-DLLAMA_USE_PREBUILT_UI=OFF"
-              ];
-
-              disabledTests = (previousAttrs.disabledTests or [ ]) ++ [
-                "test-llama-context-model"
-              ];
-            }
-          );
-        })
-      ];
-
-      environment.systemPackages = [ pkgs.llama-cpp ];
+      environment.systemPackages = [ llamaPackage ];
     }
     (lib.optionalAttrs isLinux {
       services.llama-cpp = {
         enable = true;
+        package = llamaPackage;
         inherit settings;
       };
 
@@ -87,7 +89,7 @@ in
       launchd.daemons.llama-cpp = {
         script = ''
           test -r "${modelFile}" -a -r "${mmprojFile}" || exit 0
-          exec ${lib.escapeShellArgs ([ (lib.getExe' pkgs.llama-cpp "llama-server") ] ++ cliArgs)}
+          exec ${lib.escapeShellArgs ([ (lib.getExe' llamaPackage "llama-server") ] ++ cliArgs)}
         '';
         serviceConfig = {
           RunAtLoad = true;

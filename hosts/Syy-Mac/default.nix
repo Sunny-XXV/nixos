@@ -24,7 +24,11 @@
     ../../modules/services/mihomo.nix
   ];
 
-  networking.hostName = "Syy-Mac";
+  networking = {
+    hostName = "Syy-Mac";
+    computerName = "Syy-Mac";
+    localHostName = "Syy-Mac";
+  };
   nixpkgs.hostPlatform = "aarch64-darwin";
 
   system = {
@@ -57,7 +61,6 @@
         ../../modules/home/programs/fish
         ../../modules/home/programs/fzf.nix
         ../../modules/home/programs/git.nix
-        ../../modules/home/programs/gpg.nix
         ../../modules/home/programs/rbw.nix
         ../../modules/home/programs/man.nix
         ../../modules/home/programs/nvim

@@ -43,6 +43,7 @@ let
   }
   // lib.optionalAttrs isDarwin {
     external-controller = "127.0.0.1:${toString controllerPort}";
+    dns.nameserver-policy."+.ts.net" = "100.100.100.100";
   };
 
   configTemplate =

@@ -1,4 +1,10 @@
-{ config, lib, meta, pkgs, ... }:
+{
+  config,
+  lib,
+  meta,
+  pkgs,
+  ...
+}:
 let
   user = meta.username;
   group = "users";

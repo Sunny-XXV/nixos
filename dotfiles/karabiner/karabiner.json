@@ -12,7 +12,7 @@
                         "manipulators": [
                             {
                                 "from": {
-                                    "modifiers": { "optional": ["caps_lock"] },
+                                    "modifiers": { "optional": [ "caps_lock" ] },
                                     "simultaneous": [
                                         { "key_code": "left_control" },
                                         { "key_code": "left_option" }
@@ -22,7 +22,7 @@
                                         "key_down_order": "insensitive",
                                         "key_up_order": "insensitive",
                                         "key_up_when": "any",
-                                        "to_after_key_up": [{ "shell_command": "[ -p /tmp/asr-ptt/control.fifo ] && printf 'stop\\n' > /tmp/asr-ptt/control.fifo &" }]
+                                        "to_after_key_up": [ { "shell_command": "[ -p /tmp/asr-ptt/control.fifo ] && printf 'stop\\n' > /tmp/asr-ptt/control.fifo &" } ]
                                     }
                                 },
                                 "parameters": { "basic.simultaneous_threshold_milliseconds": 300 },
@@ -41,7 +41,7 @@
                         "manipulators": [
                             {
                                 "from": { "key_code": "f6" },
-                                "to": [{ "shell_command": "if pgrep -x caffeinate >/dev/null; then pkill -x caffeinate; rm -f /tmp/caffeinate.pid; osascript -e 'display notification \"Mac is De-Caffeinated\" with title \"Caffeinate\"'; else nohup caffeinate -i &>/dev/null & echo $! > /tmp/caffeinate.pid; osascript -e 'display notification \"Mac is Caffeinated\" with title \"Caffeinate\"'; fi" }],
+                                "to": [ { "shell_command": "if pgrep -x caffeinate >/dev/null; then pkill -x caffeinate; rm -f /tmp/caffeinate.pid; osascript -e 'display notification \"Mac is De-Caffeinated\" with title \"Caffeinate\"'; else nohup caffeinate -i &>/dev/null & echo $! > /tmp/caffeinate.pid; osascript -e 'display notification \"Mac is Caffeinated\" with title \"Caffeinate\"'; fi" } ],
                                 "type": "basic"
                             }
                         ]
@@ -52,10 +52,10 @@
                             {
                                 "from": {
                                     "key_code": "caps_lock",
-                                    "modifiers": { "optional": ["any"] }
+                                    "modifiers": { "optional": [ "any" ] }
                                 },
-                                "to": [{ "key_code": "left_control" }],
-                                "to_if_alone": [{ "key_code": "escape" }],
+                                "to": [ { "key_code": "left_control" } ],
+                                "to_if_alone": [ { "key_code": "escape" } ],
                                 "type": "basic"
                             }
                         ]
@@ -66,7 +66,7 @@
                             {
                                 "from": {
                                     "key_code": "tab",
-                                    "modifiers": { "optional": ["any"] }
+                                    "modifiers": { "optional": [ "any" ] }
                                 },
                                 "parameters": { "basic.to_if_alone_timeout_milliseconds": 200 },
                                 "to_after_key_up": [
@@ -77,7 +77,7 @@
                                         }
                                     }
                                 ],
-                                "to_if_alone": [{ "key_code": "tab" }],
+                                "to_if_alone": [ { "key_code": "tab" } ],
                                 "to_if_held_down": [
                                     {
                                         "set_variable": {
@@ -97,7 +97,7 @@
                                     }
                                 ],
                                 "from": { "key_code": "h" },
-                                "to": [{ "key_code": "left_arrow" }],
+                                "to": [ { "key_code": "left_arrow" } ],
                                 "type": "basic"
                             },
                             {
@@ -109,7 +109,7 @@
                                     }
                                 ],
                                 "from": { "key_code": "j" },
-                                "to": [{ "key_code": "down_arrow" }],
+                                "to": [ { "key_code": "down_arrow" } ],
                                 "type": "basic"
                             },
                             {
@@ -121,7 +121,7 @@
                                     }
                                 ],
                                 "from": { "key_code": "k" },
-                                "to": [{ "key_code": "up_arrow" }],
+                                "to": [ { "key_code": "up_arrow" } ],
                                 "type": "basic"
                             },
                             {
@@ -133,7 +133,7 @@
                                     }
                                 ],
                                 "from": { "key_code": "l" },
-                                "to": [{ "key_code": "right_arrow" }],
+                                "to": [ { "key_code": "right_arrow" } ],
                                 "type": "basic"
                             }
                         ]
@@ -144,14 +144,14 @@
                             {
                                 "from": {
                                     "modifiers": {
-                                        "mandatory": ["command", "option"],
-                                        "optional": ["any"]
+                                        "mandatory": [ "command", "option" ],
+                                        "optional": [ "any" ]
                                     },
                                     "pointing_button": "button1"
                                 },
                                 "to": [
                                     {
-                                        "modifiers": ["command", "control"],
+                                        "modifiers": [ "command", "control" ],
                                         "pointing_button": "button1"
                                     }
                                 ],
@@ -164,16 +164,16 @@
                         "manipulators": [
                             {
                                 "from": { "key_code": "left_command" },
-                                "to": [{ "key_code": "left_command" }],
-                                "to_if_alone": [{ "key_code": "f19" }],
-                                "to_if_held_down": [{ "key_code": "left_command" }],
+                                "to": [ { "key_code": "left_command" } ],
+                                "to_if_alone": [ { "key_code": "f19" } ],
+                                "to_if_held_down": [ { "key_code": "left_command" } ],
                                 "type": "basic"
                             },
                             {
                                 "from": { "key_code": "right_command" },
-                                "to": [{ "key_code": "right_command" }],
-                                "to_if_alone": [{ "key_code": "f18" }],
-                                "to_if_held_down": [{ "key_code": "right_command" }],
+                                "to": [ { "key_code": "right_command" } ],
+                                "to_if_alone": [ { "key_code": "f18" } ],
+                                "to_if_held_down": [ { "key_code": "right_command" } ],
                                 "type": "basic"
                             }
                         ]
@@ -185,9 +185,9 @@
                             {
                                 "from": {
                                     "key_code": "z",
-                                    "modifiers": { "mandatory": ["option"] }
+                                    "modifiers": { "mandatory": [ "option" ] }
                                 },
-                                "to": [{ "shell_command": "osascript -e 'tell application \"Zotero\" to activate'" }],
+                                "to": [ { "shell_command": "open -a \"Zotero\"" } ],
                                 "type": "basic"
                             }
                         ]
@@ -199,9 +199,9 @@
                             {
                                 "from": {
                                     "key_code": "w",
-                                    "modifiers": { "mandatory": ["option"] }
+                                    "modifiers": { "mandatory": [ "option" ] }
                                 },
-                                "to": [{ "shell_command": "osascript -e 'tell application \"Microsoft Word\" to activate'" }],
+                                "to": [ { "shell_command": "open -a \"Microsoft Word\"" } ],
                                 "type": "basic"
                             }
                         ]
@@ -212,9 +212,9 @@
                             {
                                 "from": {
                                     "key_code": "m",
-                                    "modifiers": { "mandatory": ["option"] }
+                                    "modifiers": { "mandatory": [ "option" ] }
                                 },
-                                "to": [{ "shell_command": "osascript -e 'tell application \"Mail\" to activate'" }],
+                                "to": [ { "shell_command": "open -a \"Mail\"" } ],
                                 "type": "basic"
                             }
                         ]
@@ -225,9 +225,9 @@
                             {
                                 "from": {
                                     "key_code": "t",
-                                    "modifiers": { "mandatory": ["option"] }
+                                    "modifiers": { "mandatory": [ "option" ] }
                                 },
-                                "to": [{ "shell_command": "osascript -e 'tell application \"Rex Beta\" to activate'" }],
+                                "to": [ { "shell_command": "open -a \"Rex\"" } ],
                                 "type": "basic"
                             }
                         ]
@@ -238,9 +238,9 @@
                             {
                                 "from": {
                                     "key_code": "g",
-                                    "modifiers": { "mandatory": ["option"] }
+                                    "modifiers": { "mandatory": [ "option" ] }
                                 },
-                                "to": [{ "shell_command": "osascript -e 'tell application \"Nagram\" to activate'" }],
+                                "to": [ { "shell_command": "open -a \"Nagram\"" } ],
                                 "type": "basic"
                             }
                         ]
@@ -252,9 +252,9 @@
                             {
                                 "from": {
                                     "key_code": "c",
-                                    "modifiers": { "mandatory": ["option"] }
+                                    "modifiers": { "mandatory": [ "option" ] }
                                 },
-                                "to": [{ "shell_command": "osascript -e 'tell application \"VSCodium\" to activate'" }],
+                                "to": [ { "shell_command": "open -a \"VSCodium\"" } ],
                                 "type": "basic"
                             }
                         ]
@@ -265,9 +265,9 @@
                             {
                                 "from": {
                                     "key_code": "b",
-                                    "modifiers": { "mandatory": ["option"] }
+                                    "modifiers": { "mandatory": [ "option" ] }
                                 },
-                                "to": [{ "shell_command": "osascript -e 'tell application \"Helium\" to activate'" }],
+                                "to": [ { "shell_command": "open -a \"Helium\"" } ],
                                 "type": "basic"
                             }
                         ]
@@ -279,22 +279,22 @@
                                 "from": {
                                     "key_code": "down_arrow",
                                     "modifiers": {
-                                        "mandatory": ["fn"],
-                                        "optional": ["caps_lock"]
+                                        "mandatory": [ "fn" ],
+                                        "optional": [ "caps_lock" ]
                                     }
                                 },
-                                "to": [{ "key_code": "illumination_decrement" }],
+                                "to": [ { "key_code": "illumination_decrement" } ],
                                 "type": "basic"
                             },
                             {
                                 "from": {
                                     "key_code": "up_arrow",
                                     "modifiers": {
-                                        "mandatory": ["fn"],
-                                        "optional": ["caps_lock"]
+                                        "mandatory": [ "fn" ],
+                                        "optional": [ "caps_lock" ]
                                     }
                                 },
-                                "to": [{ "key_code": "illumination_increment" }],
+                                "to": [ { "key_code": "illumination_increment" } ],
                                 "type": "basic"
                             }
                         ]

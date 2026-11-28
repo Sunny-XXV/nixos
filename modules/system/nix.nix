@@ -1,4 +1,11 @@
-{ config, lib, meta, options, pkgs, ... }:
+{
+  config,
+  lib,
+  meta,
+  options,
+  pkgs,
+  ...
+}:
 let
   isDarwin = options ? launchd;
   isLinux = options ? systemd;
@@ -12,9 +19,18 @@ in
         channel.enable = false;
 
         settings = {
-          trusted-users = [ "root" meta.username ];
-          experimental-features = [ "nix-command" "flakes" ];
-          extra-deprecated-features = [ "broken-string-escape" "or-as-identifier" ];
+          trusted-users = [
+            "root"
+            meta.username
+          ];
+          experimental-features = [
+            "nix-command"
+            "flakes"
+          ];
+          extra-deprecated-features = [
+            "broken-string-escape"
+            "or-as-identifier"
+          ];
 
           substituters = [
             # "https://mirrors.ustc.edu.cn/nix-channels/store"
@@ -34,9 +50,14 @@ in
       };
 
       nix.optimise.automatic = true;
-      nix.gc = {
-        automatic = true;
-        options = "--delete-older-than 3d";
+
+      programs.nh = {
+        enable = true;
+        flake = "${config.users.users.${meta.username}.home}/.config/nixos";
+        clean = {
+          enable = true;
+          extraArgs = "--keep 3 --keep-since 7d";
+        };
       };
 
       nixpkgs.config.allowUnfree = true;
@@ -61,14 +82,14 @@ in
     }
 
     (lib.optionalAttrs isLinux {
-      nix.gc.dates = "weekly";
       programs.nix-ld.enable = true;
     })
 
     (lib.optionalAttrs isDarwin {
+      nix.daemonProcessType = "Adaptive";
       nix.settings = {
-        max-jobs = 2;
-        cores = 2;
+        max-jobs = "auto";
+        cores = 0;
       };
 
       nix.optimise.interval = {

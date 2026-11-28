@@ -177,9 +177,9 @@ binds {
     Super+Shift+K     { move-window-up-or-to-workspace-up; }
 
     Super+Shift+Left  { move-column-left; }
-    Super+Shift+Down  { move-column-right; }
-    Super+Shift+Up    { move-window-down-or-to-workspace-down; }
-    Super+Shift+Right { move-window-up-or-to-workspace-up; }
+    Super+Shift+Right { move-column-right; }
+    Super+Shift+Down  { move-window-down-or-to-workspace-down; }
+    Super+Shift+Up    { move-window-up-or-to-workspace-up; }
 
     Super+Shift+WheelScrollDown  cooldown-ms=150 { move-column-to-workspace-down; }
     Super+Shift+WheelScrollUp    cooldown-ms=150 { move-column-to-workspace-up; }

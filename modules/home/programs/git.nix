@@ -22,14 +22,13 @@
     settings = {
       user = {
         name = config.home.username;
-        email = meta.email;
+        inherit (meta) email;
       };
 
       help.autocorrect = "prompt";
       color.ui = true;
       pull.rebase = true;
       init.defaultBranch = "master";
-      # commit.gpgsign = true;
 
       core = {
         whitespace = "trailing-space,space-before-tab";
@@ -40,14 +39,10 @@
       };
     };
 
-    signing = {
-      # for GPG key
-      # key = "694FD0DC9528E0B9";
-      # signByDefault = true;
-
-      # for SSH key
-      # key = "~/.ssh/id_ed25519.pub";
-      # signByDefault = true;
-    };
+    # signing = {
+    #   format = "ssh";
+    #   key = "~/.ssh/id_ed25519.pub";
+    #   signByDefault = true;
+    # };
   };
 }

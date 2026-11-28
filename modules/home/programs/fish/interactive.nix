@@ -8,7 +8,7 @@
       set -g fzf_preview_dir_cmd eza --all --color=always
       set -g fzf_fd_opts --hidden --follow --exclude .git --max-depth 5
 
-      if test -n "$SSH_TTY"; and test -z "$TMUX"
+      if test -n "$SSH_TTY"; and test -z "$TMUX"; and test -z "$REX_BLOCK"; and test -z "$ZED_TERM"; and not contains -- "$TERM_PROGRAM" zed vscode
         exec tmux new-session -A -s ${config.home.username}
       end
     '';
