@@ -49,15 +49,30 @@ in
 
   systemd.user.services.niri.enableDefaultPath = false;
 
+  security.pam.loginLimits = [
+    {
+      domain = meta.username;
+      type = "-";
+      item = "nice";
+      value = "-20";
+    }
+  ];
+
+  systemd.services."user@".serviceConfig.LimitNICE = -20;
+
   services.sunshine = {
     enable = true;
     autoStart = true;
-    capSysAdmin = true;
+    capSysAdmin = false;
     openFirewall = true;
     settings = {
       capture = "wlr";
       encoder = "nvenc";
       output_name = "HDMI-A-1";
+      nvenc_preset = 1;
+      nvenc_twopass = "quarter_res";
+      nvenc_spatial_aq = "enabled";
+      fec_percentage = 20;
     };
     applications = {
       env = {

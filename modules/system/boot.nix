@@ -26,6 +26,12 @@
     "net.core.default_qdisc" = "fq";
     "net.ipv4.tcp_congestion_control" = "bbr";
 
+    "net.core.rmem_max" = 16777216;
+    "net.core.wmem_max" = 16777216;
+    "net.core.rmem_default" = 1048576;
+    "net.core.wmem_default" = 1048576;
+    "net.core.netdev_max_backlog" = 4096;
+
     "vm.swappiness" = 10;
 
     "kernel.sysrq" = 1;
