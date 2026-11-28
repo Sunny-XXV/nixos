@@ -31,6 +31,8 @@ let
   // lib.optionalAttrs isLinux {
     # Reachable via lo and tailscale0 (trustedInterfaces); blocked on LAN/WAN by networking.firewall.
     external-controller = "0.0.0.0:${toString controllerPort}";
+    # auto-detect-interface binds #DIRECT to the physical NIC; bind MagicDNS queries explicitly to tailscale0.
+    dns.nameserver-policy."+.ts.net" = "100.100.100.100#tailscale0";
     tun = {
       device = tunDevice;
       auto-redirect = true;
@@ -38,11 +40,6 @@ let
       gso-max-size = 65536;
       exclude-interface = [ "tailscale0" ];
     };
-    prependRules = [
-      "PROCESS-NAME,tailscaled,DIRECT"
-      "PROCESS-NAME,tailscale,DIRECT"
-      "PROCESS-NAME,NetworkManager,DIRECT"
-    ];
   }
   // lib.optionalAttrs isDarwin {
     external-controller = "127.0.0.1:${toString controllerPort}";
@@ -65,8 +62,8 @@ let
           .["proxy-providers"].pokemon.url = $o["proxy-providers"].pokemon.url |
           (.proxies[] | select(.name == "WARP")) |= (. + $o.proxies.warp) |
           .["external-controller"] = $o["external-controller"] |
-          .tun *= ($o.tun // {}) |
-          .rules = (($o.prependRules // []) + .rules)
+          .dns *= ($o.dns // {}) |
+          .tun *= ($o.tun // {})
         ' "$baseConfig" "$overlayJsonPath" > "$out"
       '';
 
