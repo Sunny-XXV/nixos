@@ -94,9 +94,9 @@ profile:
   store-selected: true
   store-fake-ip: true
 tcp-concurrent: true
-keep-alive-interval: 15
-keep-alive-idle: 15
-disable-keep-alive: true
+keep-alive-interval: 30
+keep-alive-idle: 60
+disable-keep-alive: false
 
 # dns
 dns:
@@ -246,6 +246,12 @@ proxies:
     mtu: 1280
     persistent-keepalive: 25
     remote-dns-resolve: true
+    dns:
+      - 1.1.1.1
+      - 1.0.0.1
+    ip-stack:
+      mode: mips
+      congestion-controller: bbr
     dialer-proxy: WARP前置
 
 # proxy groups
