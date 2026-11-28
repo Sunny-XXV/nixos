@@ -23,7 +23,8 @@
     ../../modules/services/firewall.nix
     ../../modules/services/llama.nix
     ../../modules/services/openssh.nix
-    ../../modules/services/dae.nix
+    # ../../modules/services/dae.nix
+    ../../modules/services/mihomo.nix
     ../../modules/services/rclone.nix
     ../../modules/services/remote-desktop.nix
     ../../modules/security/sops.nix

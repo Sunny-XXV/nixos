@@ -1,12 +1,12 @@
-Providers: &Providers { exclude-filter: "(?i)Expire|到期|剩余|Traffic|官网|官方网站|流量|套餐",  type: http, interval: 86400, health-check: { enable: true, url: https://www.gstatic.com/generate_204, interval: 300 } }
+Providers: &Providers { exclude-filter: "(?i)Expire|到期|剩余|Traffic|官网|官方网站|流量|套餐", type: http, interval: 86400, health-check: { enable: true, url: https://www.gstatic.com/generate_204, interval: 300 } }
 proxy-providers:
   nachoneko:
     <<: *Providers
-    url: "@MIHOMO_SUB_NACHO_URL@"
+    url: ""
     path: ./proxy_providers/nachoneko.yaml
   pokemon:
     <<: *Providers
-    url: "@MIHOMO_SUB_POKEM_URL@"
+    url: ""
     path: ./proxy_providers/pokemon.yaml
 
 # Public domain MRS files use behavior=domain; IP MRS files use ipcidr.
@@ -115,6 +115,10 @@ dns:
     - "+.ts.net"
     - "+.tailscale.com"
     - "+.tailscale.io"
+    - "+.stun.*.*"
+    - "+.stun.*.*.*"
+    - "stun.*.*"
+    - "stun.*.*.*"
     - "+.msftconnecttest.com"
     - "+.msftncsi.com"
     - "localhost.ptlogin2.qq.com"
@@ -132,7 +136,14 @@ dns:
     - tls://223.5.5.5
     - tls://119.29.29.29
   nameserver-policy:
-    "+.ts.net": "system"
+    "+.ts.net": "100.100.100.100#DIRECT"
+    # Resolve Tailscale control/DERP domains directly so Tailscale never deadlocks when proxy nodes are down.
+    "+.tailscale.com":
+      - "https://223.5.5.5/dns-query#DIRECT"
+      - "https://1.12.12.12/dns-query#DIRECT"
+    "+.tailscale.io":
+      - "https://223.5.5.5/dns-query#DIRECT"
+      - "https://1.12.12.12/dns-query#DIRECT"
     "rule-set:cn-domain":
       - "https://223.5.5.5/dns-query#DIRECT"
       - "https://1.12.12.12/dns-query#DIRECT"
@@ -162,6 +173,7 @@ tun:
   auto-route: true
   auto-redirect: false
   auto-detect-interface: true
+  endpoint-independent-nat: true
   dns-hijack:
     - any:53
     - tcp://any:53
@@ -170,6 +182,8 @@ tun:
     - 100.64.0.0/10
     - 172.16.0.0/12
     - 192.168.0.0/16
+    - fc00::/7
+    - fe80::/10
   mtu: 1500
 
 # sniffer
@@ -212,11 +226,11 @@ sniffer:
     - "Mijia Cloud"
     - "+.push.apple.com"
 
-# externel controller
+# external controller
 external-controller: 127.0.0.1:9090
 secret: ""
-external-ui: "./ui/zashboard"
-external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
+external-controller-cors:
+  allow-private-network: false
 
 # standalone proxies
 proxies:
@@ -225,8 +239,8 @@ proxies:
     server: engage.cloudflareclient.com
     port: 2408
     ip: 172.16.0.2/32
-    ipv6: "@MIHOMO_WARP_IP6_ADDRESS@"
-    private-key: "@MIHOMO_WARP_PRIVATE_KEY@"
+    ipv6: ""
+    private-key: ""
     public-key: bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=
     udp: true
     mtu: 1280
@@ -268,7 +282,7 @@ proxy-groups:
   # - { name: TikTok, <<: *SelectTW, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/TikTok.png }
   - { name: Telegram, <<: *SelectProxy, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Telegram.png }
   - { name: Twitter, <<: *SelectProxy, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Twitter.png }
-  - { name: YouTube, <<: *SelectProxy, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/YouTube.png}
+  - { name: YouTube, <<: *SelectProxy, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/YouTube.png }
   - { name: 漏网之鱼, <<: *SelectProxy, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Final.png }
   - { name: 直连, <<: *SelectDirect, icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Direct.png, hidden: true }
   - { name: 香港, <<: *UrlTest, filter: '🇭🇰|(?i)(香港|港|\bHK\b|hong\s*kong)', icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png }
@@ -294,6 +308,7 @@ rules:
   - DOMAIN-SUFFIX,lan,DIRECT
   - DOMAIN-SUFFIX,ts.net,DIRECT
   - DOMAIN,localhost,DIRECT
+  - DOMAIN-SUFFIX,moelink.top,DIRECT
   - DST-PORT,25,REJECT
   - AND,((NETWORK,udp),(DST-PORT,443)),REJECT
   - RULE-SET,anthropic,Anthropic
